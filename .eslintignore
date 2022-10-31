@@ -1,0 +1,4 @@
+/config/sequelize.js
+/node_modules/*
+/images/*
+/public/*
