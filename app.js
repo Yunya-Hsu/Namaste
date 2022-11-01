@@ -3,7 +3,7 @@ const http = require('http')
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const exphbs = require('express-handlebars')
+const { engine } = require('express-handlebars')
 const server = http.createServer(app)
 const io = require('socket.io')(server, {
   cors: {
@@ -17,12 +17,22 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-app.engine('hbs', exphbs({ extname: '.hbs' }))
-app.set('view engine', 'hbs')
+app.engine('handlebars', engine())
+app.set('view engine', 'handlebars')
+app.set('views', './views')
 
+app.get('/', (req, res) => {
+  res.render('index',
+    {
+      studio: {
+        name: 'Inn Yoga',
+        mainColor: 'pink'
+      }
+    }
+  )
+})
 
 require('./controllers/socketIo.js')(io)
-
 
 server.listen(port, () => {
   console.log(`server is listen on ${port}`)
