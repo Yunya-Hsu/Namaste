@@ -11,6 +11,7 @@ const io = require('socket.io')(server, {
   }
 })
 const port = process.env.SERVER_PORT || 3000
+const router = require('./routes/index')
 
 app.use(express.static('public'))
 app.use(express.json())
@@ -21,17 +22,7 @@ app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', './views')
 
-app.get('/', (req, res) => {
-  res.render('index',
-    {
-      studio: {
-        name: 'Inn Yoga',
-        mainColor: 'pink'
-      }
-    }
-  )
-})
-
+app.use(router)
 require('./controllers/socketIo.js')(io)
 
 server.listen(port, () => {

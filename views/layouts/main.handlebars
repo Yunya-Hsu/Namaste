@@ -4,22 +4,32 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  {{!-- adjust title base on studio name --}}
   <title>
     {{#if studio.name}}
-    {{studio.name}}
+      {{studio.name}}
     {{else}}
-    Namaste
+      Namaste
     {{/if}}
   </title>
-</head>
-<body style="background-color: {{studio.mainColor}}">
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">{{studio.name}}</a>
-    </div>
-  </nav>
 
+  {{!-- google font --}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap"
+    rel="stylesheet">
+
+  {{!-- css style --}}
+  <link rel="stylesheet" href="/style/style.css"></link>
+  <link rel="stylesheet" href="/style/nav.css">
+  </link>
+  <link rel="stylesheet" href="/style/super_admin.css">
+  </link>
+</head>
+
+<body style="background-color: {{studio.backgroundColor}}">
   {{{ body }}}
-  
 </body>
+
 </html>

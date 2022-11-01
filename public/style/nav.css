@@ -1,0 +1,38 @@
+.nav-bar {
+  margin: 0 auto;
+  padding: 20px 0 25px 0;
+  background-color: #ffffff;
+}
+
+#nav-logo {
+  min-width: 30px;
+  min-height: 30px;
+  max-width: 70px;
+  margin: 0 20px 0 0;
+}
+
+#nav-studio-name {
+  font-size: 34px;
+  color: #7f6b5e;
+  letter-spacing: 4px;
+}
+
+
+
+.nav-li {
+  list-style-type: none;
+  margin: 0 8px;
+}
+
+.nav-link{
+  font-size: 18px;
+  cursor: pointer;
+  margin: 0 15px;
+  color: #7f6b5e;
+  text-decoration: none;
+  letter-spacing: 2px;
+}
+
+.nav-link:hover {
+  color: #C3A491;
+}

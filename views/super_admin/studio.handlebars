@@ -1,0 +1,85 @@
+{{> super_admin_nav}}
+
+<div class="d-flex align-items-stretch justify-concent-center super-admin-div">
+  <section id="super-admin-title-left">
+    <span>Create Studio</span>
+    <hr id="hr">
+  </section>
+
+  <section id="super-admin-create-studio-section">
+    <form action="/admin/studio" method="POST" enctype="multipart/form-data" id="super-admin-create-studio-form">
+      <div>
+        <label for="name">教室名稱 *</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div>
+        <label>Logo 圖檔 *</label>
+        <input type="file" id="logo" name="logo" class="upload-pic-btn" required>
+      </div>
+      
+      <div>
+        <label for="introduction_title">簡介</label>
+        <input type="text" id="introduction_title" name="introduction_title">
+        
+      </div>
+
+      <div>
+        <label for="introduction_detail">詳細介紹</label>
+        <textarea rows="5" id="introduction_detail" name="introduction_detail"></textarea>
+      </div>
+
+      <div>
+        <label>介紹圖片</label>
+        <input type="file" id="introduction_photo" name="introduction_photo" class="upload-pic-btn">
+      </div>
+
+      <div>
+        <label for="subdomain">Subdomain *</label>
+        <input type="text" id="subdomain" name="subdomain" required>
+      </div>
+
+      <div>
+        <label for="manager">管理人員 email 帳號 *</label>
+        <input type="text" id="manager" name="manager" required>
+      </div>
+
+      <div>
+        <label for="address">地址 *</label>
+        <input type="text" id="address" name="address" required>
+      </div>
+
+      <div>
+        <label for="address_description">地址詳細資訊</label>
+        <textarea rows="5" id="address_description" name="address_description"></textarea>
+      </div>
+
+      <div>
+        <label for="phone">電話</label>
+        <input type="text" id="phone" name="phone">
+      </div>
+
+      <div>
+        <label for="tappay_app_key">TapPay App Key *</label>
+        <input type="text" id="tappay_app_key" name="tappay_app_key" required>
+      </div>
+
+      <div>
+        <label for="tappay_partner_key">TapPay Partner Key *</label>
+        <input type="text" id="tappay_partner_key" name="tappay_partner_key" required>
+      </div>
+
+      <div>
+        <label for="tappay_id">TapPay ID *</label>
+        <input type="text" id="tappay_id" name="tappay_id" required>
+      </div>
+
+      <button>建立</button>
+
+
+
+
+
+    </form>
+  </section>
+</div>
