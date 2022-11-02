@@ -8,9 +8,17 @@
 
   <section id="super-admin-create-studio-section">
     <form action="/admin/studio" method="POST" enctype="multipart/form-data" id="super-admin-create-studio-form">
+      {{#if errorMessage}}
+        {{errorMessage.errorMessage}}
+      {{/if}}
+
+      {{#if successMessage}}
+        {{successMessage.successMessage}}
+      {{/if}}
+
       <div>
         <label for="name">教室名稱 *</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name" {{#if input.name}} value={{input.name}} {{/if}} required>
       </div>
 
       <div>
@@ -20,13 +28,17 @@
       
       <div>
         <label for="introduction_title">簡介</label>
-        <input type="text" id="introduction_title" name="introduction_title">
+        <input type="text" id="introduction_title" name="introduction_title" {{#if input.introduction_title}} value={{input.introduction_title}} {{/if}}>
         
       </div>
 
       <div>
         <label for="introduction_detail">詳細介紹</label>
-        <textarea rows="5" id="introduction_detail" name="introduction_detail"></textarea>
+        {{#if input.introduction_detail}}
+          <textarea rows="5" id="introduction_detail" name="introduction_detail">{{input.introduction_detail}}</textarea>
+        {{else}}
+          <textarea rows="5" id="introduction_detail" name="introduction_detail"></textarea>
+        {{/if}}
       </div>
 
       <div>
@@ -36,17 +48,17 @@
 
       <div>
         <label for="subdomain">Subdomain *</label>
-        <input type="text" id="subdomain" name="subdomain" required>
+        <input type="text" id="subdomain" name="subdomain" {{#if input.subdomain}} value={{input.subdomain}} {{/if}} required>
       </div>
 
       <div>
         <label for="manager">管理人員 email 帳號 *</label>
-        <input type="text" id="manager" name="manager" required>
+        <input type="text" id="manager" name="manager" {{#if input.manager}} value={{input.manager}} {{/if}} required>
       </div>
 
       <div>
         <label for="address">地址 *</label>
-        <input type="text" id="address" name="address" required>
+        <input type="text" id="address" name="address" {{#if input.address}} value={{input.address}} {{/if}} required>
       </div>
 
       <div>
@@ -56,30 +68,25 @@
 
       <div>
         <label for="phone">電話</label>
-        <input type="text" id="phone" name="phone">
+        <input type="text" id="phone" name="phone" {{#if input.phone}} value={{input.phone}} {{/if}}>
       </div>
 
       <div>
         <label for="tappay_app_key">TapPay App Key *</label>
-        <input type="text" id="tappay_app_key" name="tappay_app_key" required>
+        <input type="text" id="tappay_app_key" name="tappay_app_key" {{#if input.tappay_app_key}} value={{input.tappay_app_key}} {{/if}} required>
       </div>
 
       <div>
         <label for="tappay_partner_key">TapPay Partner Key *</label>
-        <input type="text" id="tappay_partner_key" name="tappay_partner_key" required>
+        <input type="text" id="tappay_partner_key" name="tappay_partner_key" {{#if input.tappay_partner_key}} value={{input.tappay_partner_key}} {{/if}} required>
       </div>
 
       <div>
         <label for="tappay_id">TapPay ID *</label>
-        <input type="text" id="tappay_id" name="tappay_id" required>
+        <input type="text" id="tappay_id" name="tappay_id" {{#if input.tappay_id}} value={{input.tappay_id}} {{/if}} required>
       </div>
 
-      <button>建立</button>
-
-
-
-
-
+      <button type="submit">建立</button>
     </form>
   </section>
 </div>
