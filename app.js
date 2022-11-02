@@ -6,6 +6,7 @@ const path = require('path')
 const cors = require('cors')
 const { engine } = require('express-handlebars')
 const session = require('express-session')
+const passport = require('./config/passport')
 const flash = require('connect-flash')
 
 const server = http.createServer(app)
@@ -20,19 +21,27 @@ const router = require('./routes/index')
 app.use(express.static('public'))
 app.use('/images', express.static(path.join(__dirname, 'images'))) // 讓外部檔案也可以使用 images 裡面的檔案
 
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  saveUninitialized: true,
-  resave: false
-}))
-app.use(flash())
-
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', './views')
+
+app.use(cors())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: true,
+  resave: false,
+  cookie: { maxAge: 10 * 60 * 1000 } // FIXME: 單位毫秒，目前設置一分鐘到期，magic number 請移出
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.errorMessage = req.flash('errorMessage')
+  res.locals.successMessage = req.flash('successMessage')
+  next()
+})
 
 app.use(router)
 require('./controllers/socketIo.js')(io)

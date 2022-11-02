@@ -1,0 +1,11 @@
+{{#if errorMessage}}
+  <script>
+    swal("Error", "{{ errorMessage }}", "error")
+  </script>
+{{/if}}
+
+{{#if successMessage}}
+  <script>
+    swal("Success", "{{ successMessage }}", "success")
+  </script>
+{{/if}}
