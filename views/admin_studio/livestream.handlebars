@@ -1,0 +1,193 @@
+{{> super_admin_nav}}
+{{!-- TODO: --}}
+
+
+
+
+
+<div>
+  <h1>老師的直播平台</h1>
+  <video width="500" height="500" autoplay id="myVideo" muted playsinline style="border: 1px solid blue"></video>
+  <button class="joinBtn">開啟影像</button>
+  <button class="callBtn">直播</button>
+</div>
+
+
+<!-- socket io 套件 -->
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+  integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+
+
+
+
+
+<!-- 自己寫的腳本 -->
+<script>
+  const socket = io()
+
+  const studentId = [12, 45, 699, 38, 40, 2998, 1, 99, 200, 1000]
+  const roomId = 2438
+  const role = 'teacher'
+
+  const joinBtn = document.querySelector('.joinBtn')
+  const callBtn = document.querySelector('.callBtn')
+
+  const myVideo = document.querySelector('#myVideo')
+
+  let pc = {}
+  let localStream
+  let sdp
+
+
+  joinBtn.addEventListener('click', async () => {
+    try {
+      await getLocalMedia() // 初始化影像
+      // 依照學生 id 清單建立 peer connections 存到 pc 這個 object 裡面
+      for (let i of studentId) {
+        createPeer(i)
+      }
+      joinRoom()
+
+      // 以下監聽，還沒真的開始做事情
+      onIceCandidates()
+      // onIceconnectionStateChange()
+    } catch (err) {
+      console.log(err)
+      alert(err)
+    }
+
+  })
+
+
+  // 初始化影像/聲音
+  async function getLocalMedia() {
+    const mediaStreamConstrain = {
+      audio: true,
+      video: true
+    }
+
+    // 利用 getUserMedia API 取得音訊和影像
+    localStream = await navigator.mediaDevices.getUserMedia(mediaStreamConstrain)
+    // 把取得的影像丟給 myVideo 這個 video (html)
+    myVideo.srcObject = localStream
+  }
+
+  // 建立 P2P 連接（電腦大多位於 NAT 之後，因此使用 STUN 技術，向 STUN server 取得候選 ip）
+  function createPeer(id) {
+    if (pc[id] !== undefined) {
+      return
+    }
+
+    const configuration = {
+      iceServers: [{
+        urls: 'stun:stun.l.google.com:19302' // Google's public STUN server
+      }]
+    }
+    pc[id] = new RTCPeerConnection(configuration) // 建立一個 peer connection instance
+    pc[id].addStream(localStream) // 增加本地流
+  }
+
+  // 加入房間
+  function joinRoom() {
+    // 使用 socket io 向 server 發送訊號
+    socket.emit('joinRoom', {
+      roomId,
+      account: role
+    })
+  }
+
+
+
+
+
+
+
+
+
+  // 按下「直播」
+  callBtn.addEventListener('click', async () => {
+    createSDP('Offer') // 建立 SDP offer 並存到 n 個 pc 裡面
+  })
+
+  async function createSDP(type, receivedStudentId) {
+    // pc.createOffer 或 pc.createAnswer 需要的基本參數
+    const signalOption = {
+      offerToReceiveAudio: 1, // 是否傳送聲音流給對方
+      offerToReceiveVideo: 1, // 是否傳送影像流給對方
+    }
+
+    try {
+      if (!pc) {
+        return alert('尚未開啟視訊')
+      }
+
+      if (type === 'Offer') {
+        // 每一個 pc 都需要設置 local description
+        for (let i of studentId) {
+          const sdp = await pc[i].createOffer(signalOption)
+          await pc[i].setLocalDescription(sdp)
+          socket.emit("peerConnectSignaling", {
+            roomId,
+            studentId: i,
+            desc: pc[i].localDescription
+          })
+        }
+      } else if (type === 'Answer' && pc[receivedStudentId]) {
+        // 依照收到的 SDP 為對應的 pc 設置 remote description
+        const sdp = await pc[receivedStudentId].createAnswer(signalOption)
+        pc[receivedStudentId].setLocalDescription(sdp)
+        socket.emit("peerConnectSignaling", {
+          roomId,
+          studentId: receivedStudentId,
+          desc: pc.localDescription
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+  // 監聽 onicecandidate 狀態
+  function onIceCandidates() {
+    // 為每一個 pc 建立監聽，如果建立了 ICE candidate，就用 socket.io 送去給 Server
+    for (let pc of studentId) {
+      pc.onicecandidate = ({ candidate }) => {
+        if (!candidate) { return }
+
+        socket.emit('peerConnectSignaling', {
+          roomId,
+          studentId: pc,
+          candidate
+        })
+      }
+    }
+  }
+
+  // // 監聽 ICE 連接狀態變更與否，iceConnectionState 共 7 種，若變更則印出狀態
+  // function onIceconnectionStateChange() {
+  //   pc.oniceconnectionstatechange = (evt) => {
+  //     console.log('ICE 伺服器狀態變更 => ', evt.target.iceConnectionState)
+  //   }
+  // }
+
+
+
+
+  // 監聽 peerConnectSignaling ，再判斷收到結果是 SDP 還是 ICE 候選位置
+  socket.on(roomId, async (message) => {
+    if (message.joinRoom && pc[message.studentId]) { // 如果在老師開啟直播後，學生才加入
+      return createSDP('Offer')
+    }
+    if (message.desc && pc[message.studentId]) { // 如果收到 SDP
+      await pc[message.studentId].setRemoteDescription(new RTCSessionDescription(message.desc)) // 呼叫 setRemoteDescription 儲存收到的 SDP
+      return createSDP('Answer', message.studentId)
+    }
+    if (message.candidate) { // 如果收到的是 ICE 候選位置
+      return pc[message.studentId].addIceCandidate(new RTCIceCandidate(message.candidate)) // 儲存收到的 ice candidate
+    }
+  })
+
+</script>
+
+{{> messages}}
