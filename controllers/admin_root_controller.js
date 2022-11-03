@@ -2,7 +2,7 @@
 const moment = require('moment')
 
 // models
-const Admin = require('../models/admin_model')
+const Admin = require('../models/admin_root_model')
 
 // basic parameters
 const studio = require('../models/namaste_parameters')
@@ -13,7 +13,7 @@ const requirementOfCreateStudio = ['name', 'subdomain', 'manager', 'address', 't
 const renderCreateStudioPage = (req, res) => {
   const input = req.flash('createStudioInput')[0]
 
-  return res.render('super_admin/studio', { studio, input })
+  return res.render('admin_root/studio', { studio, input })
 }
 
 const createStudio = async (req, res) => {

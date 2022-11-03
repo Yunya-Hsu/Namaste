@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 // controllers
-const Admin = require('../../controllers/admin_controller')
+const Admin = require('../../controllers/admin_root_controller')
 
 // middleware
 const upload = require('../../middleware/multer')
