@@ -268,6 +268,326 @@ const SEED_PERMISSION = [
   }
 ]
 
+
+
+const SEED_TEACHER = [
+  {
+    name: '露露',
+    major: '伸展瑜珈、哈達瑜珈',
+    studio_id: '1',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: '露露',
+    major: '哈達瑜珈',
+    studio_id: '2',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: '露露',
+    major: '哈達瑜珈',
+    studio_id: '3',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: '露露',
+    major: '基礎新手班',
+    studio_id: '4',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: '寶拉',
+    major: '孕婦瑜珈',
+    studio_id: '2',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: '寶拉',
+    major: '孕婦瑜珈，基礎伸展',
+    studio_id: '4',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: 'Marie',
+    major: '瑜珈入門',
+    studio_id: '1',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: 'Marie',
+    major: '瑜珈入門',
+    studio_id: '2',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: 'Marie',
+    major: '體態雕塑、瑜珈入門',
+    studio_id: '5',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: 'ARA',
+    major: '皮拉提斯',
+    studio_id: '2',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: 'ARA',
+    major: '舒壓療癒',
+    studio_id: '3',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    name: 'ARA',
+    major: '皮拉提斯、墊上療癒',
+    studio_id: '5',
+    created_at: currentTime,
+    updated_at: currentTime
+  }
+]
+
+
+
+const SEED_COURSE = [
+  {
+    title: '溫和瑜珈',
+    teacher_id: 1,
+    studio_id: 1,
+    user_id: 2,
+    point: 3,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '陰陽瑜珈',
+    teacher_id: 1,
+    studio_id: 1,
+    user_id: 2,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '伸展瑜珈',
+    teacher_id: 7,
+    studio_id: 1,
+    user_id: 4,
+    point: 3,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '流動瑜珈',
+    teacher_id: 7,
+    studio_id: 1,
+    user_id: 4,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '瑜珈提斯',
+    teacher_id: 7,
+    studio_id: 1,
+    user_id: 4,
+    point: 3,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '流動瑜珈',
+    teacher_id: 2,
+    studio_id: 2,
+    user_id: 1,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '流動瑜珈',
+    teacher_id: 5,
+    studio_id: 2,
+    user_id: 2,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '修復瑜珈',
+    teacher_id: 8,
+    studio_id: 2,
+    user_id: 4,
+    point: 3,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '手倒立專班',
+    teacher_id: 8,
+    studio_id: 2,
+    user_id: 4,
+    point: 5,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '樂齡瑜珈',
+    teacher_id: 10,
+    studio_id: 2,
+    user_id: 5,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '正位瑜珈',
+    teacher_id: 10,
+    studio_id: 2,
+    user_id: 5,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '孕婦瑜珈',
+    teacher_id: 3,
+    studio_id: 3,
+    user_id: 2,
+    point: 5,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '皮拉提斯',
+    teacher_id: 11,
+    studio_id: 3,
+    user_id: 5,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '初學者瑜珈',
+    teacher_id: 11,
+    studio_id: 3,
+    user_id: 5,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '溫和瑜珈',
+    teacher_id: 4,
+    studio_id: 4,
+    user_id: 2,
+    point: 3,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '溫和伸展',
+    teacher_id: 4,
+    studio_id: 4,
+    user_id: 2,
+    point: 3,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '皮拉提斯',
+    teacher_id: 6,
+    studio_id: 4,
+    user_id: 3,
+    point: 5,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '燃脂雕塑',
+    teacher_id: 6,
+    studio_id: 4,
+    user_id: 3,
+    point: 5,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '滾筒療癒',
+    teacher_id: 9,
+    studio_id: 5,
+    user_id: 4,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    title: '伸展瑜珈',
+    teacher_id: 12,
+    studio_id: 5,
+    user_id: 5,
+    point: 4,
+    is_published: 1,
+    publish_at: currentTime,
+    created_at: currentTime,
+    updated_at: currentTime
+  }
+]
+
+
+
+
+
+
+
 module.exports = {
   SEED_ROLES,
   PASSWORD,
@@ -276,5 +596,7 @@ module.exports = {
   SEED_USERS_TEACHER,
   SEED_USERS_STUDENT,
   SEED_STUDIO,
-  SEED_PERMISSION
+  SEED_PERMISSION,
+  SEED_TEACHER,
+  SEED_COURSE
 }
