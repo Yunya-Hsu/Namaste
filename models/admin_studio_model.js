@@ -15,7 +15,7 @@ const getCourseDetail = async (studioSubdomain, courseDetailId) => {
 
 const getLivestreamStudents = async courseDetailId => {
   const [result] = await db.execute(
-    'SELECT user_id FROM registrations WHERE course_detail_id = (?)',
+    'SELECT registrations.user_id, users.name FROM registrations LEFT JOIN users ON registrations.user_id = users.id WHERE course_detail_id = (?);',
     [courseDetailId]
   )
   return result

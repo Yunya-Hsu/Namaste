@@ -79,9 +79,20 @@ const signIn = async (req, res) => {
   return res.json({ data: 'success' })
 }
 
+const logout = (req, res) => {
+  req.logout(function (err) {
+    if (err) {
+      return console.log(err)
+    }
+    req.flash('successMessages', 'session terminated')
+    res.redirect('/user/login')
+  })
+}
+
 module.exports = {
   renderRegisterPage,
   registerUser,
   renderLoginPage,
-  signIn
+  signIn,
+  logout
 }

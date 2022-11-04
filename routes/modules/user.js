@@ -15,6 +15,7 @@ router.post('/login',
   passport.authenticate('local', { failureRedirect: '/user/register' }),
   User.signIn
 )
+router.get('/logout', User.logout)
 
 
 

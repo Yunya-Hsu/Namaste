@@ -21,11 +21,11 @@ router.use('/user', user)
 
 
 
-router.use('/:studioSubdomain/admin/live', authenticated, authLivestream, AdminStudio.renderLivePage)
+router.use('/:studioSubdomain/admin/live', authenticated, AdminStudio.renderLivePage)
 router.use('/:studioSubdomain/admin', AdminStudio.renderHomePage)
 
 
-router.use('/:studioSubdomain/live', Studio.renderLivePage)
+router.use('/:studioSubdomain/live', authenticated, Studio.renderLivePage)
 router.use('/:studioSubdomain', Studio.renderHomePage)
 
 

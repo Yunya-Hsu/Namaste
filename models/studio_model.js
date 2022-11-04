@@ -1,20 +1,24 @@
 const db = require('../config/mysql')
 
-const getStudioBySubdomain = async subdomain => {
-  const [[result]] = await db.execute('SELECT * FROM studios WHERE subdomain = (?)', [subdomain])
-  return result
-}
-
-const checkRegistration = async (userId, courseDetailId) => {
+const verifyRegistration = async (userId, courseDetailId) => {
   const [[result]] = await db.execute(
-    'SELECT * FROM registration WHERE user_id = (?) AND course_detail_id = (?)',
+    'SELECT id FROM registrations WHERE user_id = (?) AND course_detail_id = (?)',
     [userId, courseDetailId]
   )
   return result
 }
 
+const getStudioBySubdomain = async subdomain => {
+  const [[result]] = await db.execute(
+    'SELECT id FROM studios WHERE subdomain = (?)',
+    [subdomain]
+  )
+  return result
+}
+
+
 
 module.exports = {
   getStudioBySubdomain,
-  checkRegistration
+  verifyRegistration
 }

@@ -32,12 +32,11 @@ const renderTeacherPage = (req, res) => {
 
 const renderLivePage = async (req, res) => {
   // 測試網址
-  // http://localhost:3000/appleTreeStudio/admin/live?courseDetailId=1
-
+  // http://localhost:3000/todayYoga/admin/live?courseDetailId=1
   const { studioSubdomain } = req.params
   const courseDetailId = req.query.courseDetailId
 
-  // 撈出課程資料
+  // 撈出課程資料（確認該堂課是不是該教室的）
   const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
   if (!courseDetail) {
     return res.redirect('/404.html') // FIXME:
@@ -45,14 +44,24 @@ const renderLivePage = async (req, res) => {
 
   // 檢查登入者是不是該堂課的老師(有沒有直播的權限)
   if (courseDetail.user_id !== req.user.id) {
-    req.flash('errorMessage', 'Permission denied, no right to do livestream')
+    req.flash('errorMessage', 'Permission denied: 沒有直播權限')
     return res.redirect('/')
   }
 
   // 撈出註冊該堂課的學生
   const studentList = await StudioAdmin.getLivestreamStudents(courseDetailId)
-  console.log('studentList: ', studentList);
-  res.render('admin_studio/livestream', { studentList })
+  const studentIdList = []
+  const studentNameList = []
+  for (const each of studentList) {
+    studentIdList.push(each.user_id)
+    studentNameList.push(each.name)
+  }
+
+  res.render('admin_studio/livestream', {
+    studentIdList,
+    studentNameList,
+    courseDetailId
+  })
 }
 
 

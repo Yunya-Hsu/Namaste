@@ -26,6 +26,7 @@ app.set('view engine', 'handlebars')
 app.set('views', './views')
 
 app.use(cors())
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(session({
@@ -40,10 +41,12 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.errorMessage = req.flash('errorMessage')
   res.locals.successMessage = req.flash('successMessage')
+  res.locals.loginUser = req.user || null
   next()
 })
 
 app.use(router)
+
 require('./controllers/socketIo.js')(io)
 
 server.listen(port, () => {

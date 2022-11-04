@@ -1,4 +1,5 @@
 // models
+const StudioAdmin = require('../models/admin_studio_model')
 const Studio = require('../models/studio_model')
 
 const renderHomePage = async (req, res) => {
@@ -9,7 +10,6 @@ const renderHomePage = async (req, res) => {
     return res.redirect('/404.html') // FIXME:
   }
 
-  // render studio
   res.render('studio/home', { studio })
 }
 
@@ -39,22 +39,30 @@ const renderTeacherPage = (req, res) => {
 
 const renderLivePage = async (req, res) => {
   // 測試網址
-  // http://localhost:3000/todayYoga/live?courseDetailId=123
-  const { studioName } = req.params
-  const studio = await Studio.getStudioBySubdomain(studioName)
-  if (!studio) {
+  // http://localhost:3000/todayYoga/live?courseDetailId=1
+  const { studioSubdomain } = req.params
+  const courseDetailId = req.query.courseDetailId
+  const userId = req.user.id
+
+  // 撈出課程資料（確認該堂課是不是該教室的）
+  const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
+  if (!courseDetail) {
     return res.redirect('/404.html') // FIXME:
   }
 
-  // 確認登入者是否有註冊此課程
-  const courseDetailId = req.query.courseDetailId
-  const result = Studio.checkRegistration(req.user_id, courseDetailId)
-  if (!result) {
-    return res.back()
+
+  // 檢查登入者有沒有註冊此課程
+  const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, studioSubdomain)
+  if (!verifyRegistration) {
+    req.flash('errorMessage', 'Permission denied: 未註冊此課程')
+    return res.redirect('/')
   }
 
 
-  res.send('This is student live page')
+  res.render('studio/livestream', {
+    courseDetailId,
+    userId
+  })
 }
 
 
