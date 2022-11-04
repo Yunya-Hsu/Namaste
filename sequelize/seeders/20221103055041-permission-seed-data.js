@@ -1,5 +1,5 @@
 'use strict'
-const { SEED_PERMISSION } = require('../../models/seed_data')
+const { SEED_PERMISSION } = require('../seed_data')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

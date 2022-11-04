@@ -1,5 +1,5 @@
 'use strict'
-const { PASSWORD, SEED_USERS_SUPER_ADMIN, SEED_USERS_STUDIO_OWNER, SEED_USERS_TEACHER, SEED_USERS_STUDENT } = require('../../models/seed_data')
+const { PASSWORD, SEED_USERS_SUPER_ADMIN, SEED_USERS_STUDIO_OWNER, SEED_USERS_TEACHER, SEED_USERS_STUDENT } = require('../seed_data')
 const argon2 = require('argon2')
 
 /** @type {import('sequelize-cli').Migration} */

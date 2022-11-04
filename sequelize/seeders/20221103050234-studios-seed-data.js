@@ -1,5 +1,5 @@
 'use strict'
-const { SEED_STUDIO } = require('../../models/seed_data')
+const { SEED_STUDIO } = require('../seed_data')
 
 
 /** @type {import('sequelize-cli').Migration} */

@@ -28,8 +28,8 @@ const SEED_ROLES = [
 const PASSWORD = 'test1234'
 const SEED_USERS_SUPER_ADMIN = [
   {
-    name: 'Yunya',
-    email: 'yunya@test.com',
+    name: 'Root',
+    email: 'root@test.com',
     created_at: currentTime,
     updated_at: currentTime
   }
@@ -62,8 +62,8 @@ const SEED_USERS_STUDIO_OWNER = [
 ]
 const SEED_USERS_TEACHER = [
   {
-    name: 'Mimi Lin',
-    email: 'mimi_lin@test.com',
+    name: 'Azole Lai',
+    email: 'azole_lai@test.com',
     created_at: currentTime,
     updated_at: currentTime
   },
@@ -106,56 +106,48 @@ const SEED_USERS_TEACHER = [
 ]
 const SEED_USERS_STUDENT = [
   {
-    role_id: 4,
     name: '子佑',
     email: 'tzuyu@test.com',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    role_id: 4,
     name: 'David',
     email: 'david@test.com',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    role_id: 4,
     name: 'Yenchu',
     email: 'yenchu@test.com',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    role_id: 4,
     name: 'Timmy',
     email: 'timmy@test.com',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    role_id: 4,
     name: 'Kuan Hao',
     email: 'kuan-hao@test.com',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    role_id: 4,
     name: 'cks',
     email: 'cks@test.com',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    role_id: 4,
     name: 'ps',
     email: 'ps@test.com',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    role_id: 4,
     name: 'shane',
     email: 'shane@test.com',
     created_at: currentTime,
@@ -252,17 +244,52 @@ const SEED_STUDIO = [
 
 const SEED_PERMISSION = [
   {
-    permission: 'create, update, delete studio',
+    permission: 'create studio(s)',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    permission: 'create, update, delete studio information',
+    permission: 'delete studio(s)',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    permission: 'livestream',
+    permission: 'update studio(s)',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    permission: 'update dedicated studio information',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    permission: 'create studio price rules',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    permission: 'update studio price rules',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    permission: 'delete studio price rules',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    permission: 'create studio teacher',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    permission: 'update studio teacher',
+    created_at: currentTime,
+    updated_at: currentTime
+  },
+  {
+    permission: 'delete studio teacher',
     created_at: currentTime,
     updated_at: currentTime
   }
@@ -272,84 +299,84 @@ const SEED_PERMISSION = [
 
 const SEED_TEACHER = [
   {
-    name: '露露',
+    name: '賴賴',
     major: '伸展瑜珈、哈達瑜珈',
     studio_id: '1',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: '露露',
+    name: '賴賴',
     major: '哈達瑜珈',
     studio_id: '2',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: '露露',
+    name: 'Dora',
     major: '哈達瑜珈',
     studio_id: '3',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: '露露',
+    name: 'Dora',
     major: '基礎新手班',
     studio_id: '4',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: '寶拉',
+    name: 'Johnny',
     major: '孕婦瑜珈',
     studio_id: '2',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: '寶拉',
+    name: 'Andrew',
     major: '孕婦瑜珈，基礎伸展',
     studio_id: '4',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: 'Marie',
+    name: 'Stella',
     major: '瑜珈入門',
     studio_id: '1',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: 'Marie',
+    name: 'Joyce',
     major: '瑜珈入門',
     studio_id: '2',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: 'Marie',
+    name: 'Joyce',
     major: '體態雕塑、瑜珈入門',
     studio_id: '5',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: 'ARA',
+    name: 'Min',
     major: '皮拉提斯',
     studio_id: '2',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: 'ARA',
+    name: 'Min',
     major: '舒壓療癒',
     studio_id: '3',
     created_at: currentTime,
     updated_at: currentTime
   },
   {
-    name: 'ARA',
+    name: 'Min',
     major: '皮拉提斯、墊上療癒',
     studio_id: '5',
     created_at: currentTime,
@@ -362,9 +389,9 @@ const SEED_TEACHER = [
 const SEED_COURSE = [
   {
     title: '溫和瑜珈',
-    teacher_id: 1,
     studio_id: 1,
-    user_id: 2,
+    teacher_id: 1,
+    user_id: 6,
     point: 3,
     is_published: 1,
     publish_at: currentTime,
@@ -373,9 +400,9 @@ const SEED_COURSE = [
   },
   {
     title: '陰陽瑜珈',
-    teacher_id: 1,
     studio_id: 1,
-    user_id: 2,
+    teacher_id: 1,
+    user_id: 6,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -384,9 +411,9 @@ const SEED_COURSE = [
   },
   {
     title: '伸展瑜珈',
-    teacher_id: 7,
     studio_id: 1,
-    user_id: 4,
+    teacher_id: 1,
+    user_id: 6,
     point: 3,
     is_published: 1,
     publish_at: currentTime,
@@ -395,9 +422,9 @@ const SEED_COURSE = [
   },
   {
     title: '流動瑜珈',
-    teacher_id: 7,
     studio_id: 1,
-    user_id: 4,
+    teacher_id: 7,
+    user_id: 10,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -406,9 +433,9 @@ const SEED_COURSE = [
   },
   {
     title: '瑜珈提斯',
-    teacher_id: 7,
     studio_id: 1,
-    user_id: 4,
+    teacher_id: 7,
+    user_id: 10,
     point: 3,
     is_published: 1,
     publish_at: currentTime,
@@ -417,9 +444,9 @@ const SEED_COURSE = [
   },
   {
     title: '流動瑜珈',
-    teacher_id: 2,
     studio_id: 2,
-    user_id: 1,
+    teacher_id: 2,
+    user_id: 6,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -428,9 +455,9 @@ const SEED_COURSE = [
   },
   {
     title: '流動瑜珈',
-    teacher_id: 5,
     studio_id: 2,
-    user_id: 2,
+    teacher_id: 2,
+    user_id: 6,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -439,9 +466,9 @@ const SEED_COURSE = [
   },
   {
     title: '修復瑜珈',
-    teacher_id: 8,
     studio_id: 2,
-    user_id: 4,
+    teacher_id: 5,
+    user_id: 8,
     point: 3,
     is_published: 1,
     publish_at: currentTime,
@@ -450,9 +477,9 @@ const SEED_COURSE = [
   },
   {
     title: '手倒立專班',
-    teacher_id: 8,
     studio_id: 2,
-    user_id: 4,
+    teacher_id: 8,
+    user_id: 11,
     point: 5,
     is_published: 1,
     publish_at: currentTime,
@@ -461,9 +488,9 @@ const SEED_COURSE = [
   },
   {
     title: '樂齡瑜珈',
-    teacher_id: 10,
     studio_id: 2,
-    user_id: 5,
+    teacher_id: 10,
+    user_id: 12,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -472,9 +499,9 @@ const SEED_COURSE = [
   },
   {
     title: '正位瑜珈',
-    teacher_id: 10,
     studio_id: 2,
-    user_id: 5,
+    teacher_id: 10,
+    user_id: 12,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -483,9 +510,9 @@ const SEED_COURSE = [
   },
   {
     title: '孕婦瑜珈',
-    teacher_id: 3,
     studio_id: 3,
-    user_id: 2,
+    teacher_id: 3,
+    user_id: 7,
     point: 5,
     is_published: 1,
     publish_at: currentTime,
@@ -494,9 +521,9 @@ const SEED_COURSE = [
   },
   {
     title: '皮拉提斯',
-    teacher_id: 11,
     studio_id: 3,
-    user_id: 5,
+    teacher_id: 11,
+    user_id: 12,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -505,9 +532,9 @@ const SEED_COURSE = [
   },
   {
     title: '初學者瑜珈',
-    teacher_id: 11,
     studio_id: 3,
-    user_id: 5,
+    teacher_id: 11,
+    user_id: 12,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -516,9 +543,9 @@ const SEED_COURSE = [
   },
   {
     title: '溫和瑜珈',
-    teacher_id: 4,
     studio_id: 4,
-    user_id: 2,
+    teacher_id: 4,
+    user_id: 7,
     point: 3,
     is_published: 1,
     publish_at: currentTime,
@@ -527,9 +554,9 @@ const SEED_COURSE = [
   },
   {
     title: '溫和伸展',
-    teacher_id: 4,
     studio_id: 4,
-    user_id: 2,
+    teacher_id: 4,
+    user_id: 7,
     point: 3,
     is_published: 1,
     publish_at: currentTime,
@@ -538,9 +565,9 @@ const SEED_COURSE = [
   },
   {
     title: '皮拉提斯',
-    teacher_id: 6,
     studio_id: 4,
-    user_id: 3,
+    teacher_id: 6,
+    user_id: 9,
     point: 5,
     is_published: 1,
     publish_at: currentTime,
@@ -549,9 +576,9 @@ const SEED_COURSE = [
   },
   {
     title: '燃脂雕塑',
-    teacher_id: 6,
     studio_id: 4,
-    user_id: 3,
+    teacher_id: 6,
+    user_id: 9,
     point: 5,
     is_published: 1,
     publish_at: currentTime,
@@ -560,9 +587,9 @@ const SEED_COURSE = [
   },
   {
     title: '滾筒療癒',
-    teacher_id: 9,
     studio_id: 5,
-    user_id: 4,
+    teacher_id: 9,
+    user_id: 11,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -571,9 +598,9 @@ const SEED_COURSE = [
   },
   {
     title: '伸展瑜珈',
-    teacher_id: 12,
     studio_id: 5,
-    user_id: 5,
+    teacher_id: 12,
+    user_id: 12,
     point: 4,
     is_published: 1,
     publish_at: currentTime,
@@ -581,7 +608,6 @@ const SEED_COURSE = [
     updated_at: currentTime
   }
 ]
-
 
 
 
