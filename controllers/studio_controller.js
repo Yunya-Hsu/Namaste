@@ -5,7 +5,7 @@ const Studio = require('../models/studio_model')
 const renderHomePage = async (req, res) => {
   // search studio from DB
   const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioBySubdomain(studioSubdomain)
+  const studio = await Studio.getStudioBySubdomain(studioSubdomain) // FIXME:
   if (!studio) {
     return res.redirect('/404.html') // FIXME:
   }
@@ -13,19 +13,19 @@ const renderHomePage = async (req, res) => {
   res.render('studio/home', { studio })
 }
 
-const renderPricePage = (req, res) => {
+const renderPricePage = async (req, res) => {
   const { studioName } = req.params
 
   res.send(`<h1 style="color: pink">This is ${studioName} price page</h1>`)
 }
 
-const renderCoursePage = (req, res) => {
+const renderCoursePage = async (req, res) => {
   const { studioName } = req.params
 
   res.send(`<h1 style="color: pink">This is ${studioName} course page</h1>`)
 }
 
-const renderTeacherPage = (req, res) => {
+const renderTeacherPage = async (req, res) => {
   const { studioName } = req.params
 
   res.send(`<h1 style="color: pink">This is ${studioName} teacher page</h1>`)

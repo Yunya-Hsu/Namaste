@@ -3,7 +3,7 @@ const StudioAdmin = require('../models/admin_studio_model')
 
 
 
-const renderHomePage = (req, res) => {
+const renderHomePage = async (req, res) => {
   const { studioSubdomain } = req.params
   if (!studioSubdomain) {
     return res.redirect('/')
@@ -12,19 +12,19 @@ const renderHomePage = (req, res) => {
   res.send(`<h1>This is ${studioSubdomain} home page, 後台</h1>`)
 }
 
-const renderPricePage = (req, res) => {
+const renderPricePage = async (req, res) => {
   const { studioSubdomain } = req.params
 
   res.send(`<h1>This is ${studioSubdomain} price page, 後台</h1>`)
 }
 
-const renderCoursePage = (req, res) => {
+const renderCoursePage = async (req, res) => {
   const { studioSubdomain } = req.params
 
   res.send(`<h1>This is ${studioSubdomain} course page, 後台</h1>`)
 }
 
-const renderTeacherPage = (req, res) => {
+const renderTeacherPage = async (req, res) => {
   const { studioSubdomain } = req.params
 
   res.send(`<h1>This is ${studioSubdomain} teacher page, 後台</h1>`)

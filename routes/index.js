@@ -9,8 +9,9 @@ const user = require('./modules/user')
 const AdminStudio = require('../controllers/admin_studio_controller')
 const Studio = require('../controllers/studio_controller')
 
-// middleware
-const { authenticated, authLivestream } = require('../middleware/auth')
+// middleware & utils
+const { authenticated } = require('../middleware/auth')
+const { wrapAsync } = require('../util/util')
 
 // routers
 router.use('/admin', adminRoot)
@@ -21,19 +22,15 @@ router.use('/user', user)
 
 
 
-router.use('/:studioSubdomain/admin/live', authenticated, AdminStudio.renderLivePage)
-router.use('/:studioSubdomain/admin', AdminStudio.renderHomePage)
+router.use('/:studioSubdomain/admin/live', authenticated, wrapAsync(AdminStudio.renderLivePage))
+router.use('/:studioSubdomain/admin', wrapAsync(AdminStudio.renderHomePage))
 
 
-router.use('/:studioSubdomain/live', authenticated, Studio.renderLivePage)
-router.use('/:studioSubdomain', Studio.renderHomePage)
+router.use('/:studioSubdomain/live', authenticated, wrapAsync(Studio.renderLivePage))
+router.use('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
 
 
-
-
-
-
-router.use('/', (req, res) => {
+router.get('/', (req, res) => {
   res.render('home')
 })
 

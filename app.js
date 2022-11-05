@@ -8,6 +8,7 @@ const { engine } = require('express-handlebars')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
+const moment = require('moment')
 
 const server = http.createServer(app)
 const io = require('socket.io')(server, {
@@ -46,6 +47,16 @@ app.use((req, res, next) => {
 })
 
 app.use(router)
+
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, '/public/404.html'))
+})
+
+
+app.use((err, req, res, next) => {
+  console.log(moment().format('YYYY-MM-DD HH:mm:ss'), err)
+  res.status(500).sendFile(path.join(__dirname, '/public/500.html'))
+})
 
 require('./controllers/socketIo.js')(io)
 

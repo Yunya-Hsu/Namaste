@@ -3,19 +3,22 @@ const router = require('express').Router()
 // controllers
 const User = require('../../controllers/user_controller')
 
-// 套件
+// middleware & utils
 const passport = require('../../config/passport')
+const { authenticated } = require('../../middleware/auth')
+const { wrapAsync } = require('../../util/util')
+
 
 // routers
-router.get('/register', User.renderRegisterPage)
-router.post('/register', User.registerUser)
+router.get('/register', wrapAsync(User.renderRegisterPage))
+router.post('/register', wrapAsync(User.registerUser))
 
-router.get('/login', User.renderLoginPage)
+router.get('/login', wrapAsync(User.renderLoginPage))
 router.post('/login',
-  passport.authenticate('local', { failureRedirect: '/user/register' }),
-  User.signIn
+  passport.authenticate('local', { failureRedirect: '/user/login' }),
+  wrapAsync(User.login)
 )
-router.get('/logout', User.logout)
+router.get('/logout', authenticated, wrapAsync(User.logout))
 
 
 

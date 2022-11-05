@@ -10,13 +10,12 @@ const requirementOfCreateStudio = ['name', 'subdomain', 'manager', 'address', 't
 
 
 
-const renderCreateStudioPage = (req, res) => {
+const renderCreateStudioPage = async (req, res, next) => {
   const input = req.flash('createStudioInput')[0]
-
   return res.render('admin_root/studio', { studio, input })
 }
 
-const createStudio = async (req, res) => {
+const createStudio = async (req, res, next) => {
   // 檢查前端資料，若不足則擋下
   if (!req.files.logo || !requirementOfCreateStudio.every(e => req.body[e] !== '')) {
     req.flash('createStudioInput', req.body)
@@ -40,7 +39,7 @@ const createStudio = async (req, res) => {
     req.flash('createStudioInput', req.body)
     req.flash('errorMessage', `${req.body.manager} does not exist`)
     return res.redirect('/admin/studio')
-  } else if (managerRoleId !== 1) {
+  } else if (managerRoleId !== 2) { // TODO: check if it's ok
     req.flash('createStudioInput', req.body)
     req.flash('errorMessage', 'this user is not boss')
     return res.redirect('/admin/studio')
@@ -53,7 +52,7 @@ const createStudio = async (req, res) => {
   const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
 
   await Admin.createStudio(name, introduction_title, introduction_detail, subdomain, managerRoleId, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, logo, introduction_photo, currentTime, currentTime)
-  req.flash('successMessage', `Create studio: ${name} successfully`)
+  req.flash('successMessage', `Studio "${name}" is created.`)
   return res.redirect('/admin/studio')
 }
 

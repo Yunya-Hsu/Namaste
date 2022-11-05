@@ -8,7 +8,7 @@ const studio = require('../models/namaste_parameters')
 
 
 
-const renderRegisterPage = (req, res) => {
+const renderRegisterPage = async (req, res) => {
   const input = req.flash('registerInput')[0]
   res.render('user/register', { studio, input })
 }
@@ -68,23 +68,24 @@ const registerUser = async (req, res) => {
   )
 }
 
-const renderLoginPage = (req, res) => {
+const renderLoginPage = async (req, res) => {
   res.render('user/login', { studio })
 }
 
-const signIn = async (req, res) => {
+const login = async (req, res, next) => {
   if (req.user.role_id === 0) {
     return res.redirect('/admin/studio')
   }
-  return res.json({ data: 'success' })
+  req.flash('successMessage', 'Login successfully')
+  res.redirect('/')
 }
 
-const logout = (req, res) => {
+const logout = async (req, res, next) => {
   req.logout(function (err) {
     if (err) {
       return console.log(err)
     }
-    req.flash('successMessages', 'session terminated')
+    req.flash('successMessage', 'Logout')
     res.redirect('/user/login')
   })
 }
@@ -93,6 +94,6 @@ module.exports = {
   renderRegisterPage,
   registerUser,
   renderLoginPage,
-  signIn,
+  login,
   logout
 }
