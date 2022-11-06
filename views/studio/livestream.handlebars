@@ -5,7 +5,13 @@
 <div class="d-flex align-items-stretch justify-concent-center livestream-div">
   
   <section id="super-admin-title-left">
-    <span>課程資訊</span>
+    <span>
+      {{#if courseName}}
+        {{courseName}}
+      {{else}}
+        課程資訊
+      {{/if}}
+      </span>
     <hr id="hr">
   </section>
 

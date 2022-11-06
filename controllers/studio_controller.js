@@ -58,10 +58,10 @@ const renderLivePage = async (req, res) => {
     return res.redirect('/')
   }
 
-
   res.render('studio/livestream', {
     courseDetailId,
-    userId
+    userId,
+    courseName: verifyRegistration.course_title
   })
 }
 

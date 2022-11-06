@@ -2,7 +2,7 @@ const db = require('../config/mysql')
 
 const verifyRegistration = async (userId, courseDetailId) => {
   const [[result]] = await db.execute(
-    'SELECT id FROM registrations WHERE user_id = (?) AND course_detail_id = (?)',
+    'SELECT id, course_title FROM registrations WHERE user_id = (?) AND course_detail_id = (?)',
     [userId, courseDetailId]
   )
   return result
