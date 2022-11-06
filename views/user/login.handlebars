@@ -1,0 +1,25 @@
+{{!-- TODO: change to user nav --}}
+{{> super_admin_nav}}
+
+
+
+<section class="d-flex justify-content-evenly">
+  <div class="sign-form-div">
+    <span class="signin-signup-title">登入</span>
+
+    <form class="sign-form d-flex flex-column" action="/user/login" method="POST" enctype="application/json">
+
+      <label for="email">E-mail</label>
+      <input type="text" name="email" id="email" required>
+
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required>
+
+      <button type="submit" id="sign-in-btn">Submit</button>
+    </form>
+
+  </div>
+
+</section>
+
+{{!-- TODO: add footer --}}

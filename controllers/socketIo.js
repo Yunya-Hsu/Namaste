@@ -3,13 +3,13 @@ module.exports = io => {
     console.log(`socket 用戶連接 ${socket.id}`)
 
     socket.on('joinRoom', message => {
-      socket.join(message.roomId)
-      io.sockets.to(message.roomId).emit(message.roomId, message)
+      socket.join(message.courseDetailId)
+      io.sockets.to(message.courseDetailId).emit(message.courseDetailId, message)
     })
 
     socket.on('peerConnectSignaling', message => {
       // io.sockets.in(message.roomId).emit(message.roomId, message)
-      socket.broadcast.to(message.roomId).emit(message.roomId, message)
+      socket.broadcast.to(message.courseDetailId).emit(message.courseDetailId, message)
     })
 
     socket.on('disconnect', () => {

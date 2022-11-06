@@ -22,14 +22,24 @@
 
   {{!-- css style --}}
   <link rel="stylesheet" href="/style/style.css"></link>
-  <link rel="stylesheet" href="/style/nav.css">
+  <link rel="stylesheet" href="/style/nav.css"></link>
+  <link rel="stylesheet" href="/style/super_admin.css"></link>
+  <link rel="stylesheet" href="/style/user.css"></link>
+  <link rel="stylesheet" href="/style/livestream.css">
   </link>
-  <link rel="stylesheet" href="/style/super_admin.css">
-  </link>
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
-<body style="background-color: {{studio.backgroundColor}}">
+
+<body 
+  {{#if studio.backgroundColor}} style="background-color: {{studio.backgroundColor}}" 
+  {{else}} style="background-color: #F8F6F5" 
+  {{/if}}
+>
+
   {{{ body }}}
+  {{> messages}}
 </body>
 
 </html>

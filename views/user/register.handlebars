@@ -1,0 +1,35 @@
+{{!-- TODO: change to user nav --}}
+{{> super_admin_nav}}
+
+
+
+<section class="d-flex justify-content-evenly">
+
+  <div class="sign-form-div">
+    <span class="signin-signup-title">註冊</span>
+
+    <form class="sign-form d-flex flex-column" action="/user/register" method="POST" enctype="application/json">
+
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" {{#if input.name}} value={{input.name}} {{/if}} required>
+
+      <label for="email">E-mail</label>
+      <input type="text" name="email" id="email" {{#if input.email}} value={{input.email}} {{/if}} required>
+
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" {{#if input.password}} value={{input.password}} {{/if}} required>
+
+      <label for="confirmedPassword">Confirmed Password</label>
+      <input type="password" name="confirmedPassword" id="confirmedPassword" {{#if input.confirmedPassword}} value={{input.confirmedPassword}} {{/if}} required>
+      
+      <button type="submit" id="sign-up-btn">Submit</button>
+    </form>
+
+  </div>
+
+</section>
+
+
+
+
+{{!-- TODO: add footer --}}
