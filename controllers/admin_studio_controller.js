@@ -45,7 +45,7 @@ const createPriceRule = async (req, res) => {
   }
 
   // insert data
-  const publishAt = moment(publish_at).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
   await StudioAdmin.createPriceRule(studio.id, category, price, point, remark, term, publishAt, currentTime, currentTime)
   req.flash('successMessage', 'Price rule is created')
