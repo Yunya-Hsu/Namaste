@@ -1,7 +1,10 @@
+const moment = require('moment')
+
 // models
 const StudioAdmin = require('../models/admin_studio_model')
 
-
+// basic parameters
+const requirementOfPriceRule = ['category', 'price', 'point', 'term', 'publish_at']
 
 const renderHomePage = async (req, res) => {
   const { studioSubdomain } = req.params
@@ -13,9 +16,40 @@ const renderHomePage = async (req, res) => {
 }
 
 const renderPricePage = async (req, res) => {
-  const { studioSubdomain } = req.params
+  const studio = req.user.studio
+  const input = req.flash('createPriceRoleInput')[0]
 
-  res.send(`<h1>This is ${studioSubdomain} price page, 後台</h1>`)
+  res.render('admin_studio/price', {
+    studio,
+    input
+  })
+}
+
+const createPriceRule = async (req, res) => {
+  // eslint-disable-next-line camelcase
+  const { category, price, point, remark, term, publish_at } = req.body
+  const studio = req.user.studio
+
+  // 檢查前端資料，若不足則擋下
+  if (!requirementOfPriceRule.every(e => req.body[e] !== '')) {
+    req.flash('createPriceRoleInput', req.body)
+    req.flash('errorMessage', 'missing information')
+    return res.redirect(`/${studio.subdomain}/admin/price`)
+  }
+
+  // check if price, point, term are numbers
+  if (isNaN(+price) || isNaN(+point) || isNaN(+term)) {
+    req.flash('createPriceRoleInput', req.body)
+    req.flash('errorMessage', '價格、點數、使用期限必須為「數字」')
+    return res.redirect(`/${studio.subdomain}/admin/price`)
+  }
+
+  // insert data
+  const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
+  const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
+  await StudioAdmin.createPriceRule(studio.id, category, price, point, remark, term, publishAt, currentTime, currentTime)
+  req.flash('successMessage', 'Price rule is created')
+  res.redirect(`/${studio.subdomain}/admin/price`)
 }
 
 const renderCoursePage = async (req, res) => {
@@ -70,6 +104,7 @@ const renderLivePage = async (req, res) => {
 module.exports = {
   renderHomePage,
   renderPricePage,
+  createPriceRule,
   renderCoursePage,
   renderTeacherPage,
   renderLivePage

@@ -1,0 +1,58 @@
+<nav class="nav-bar d-flex justify-concent-evenly align-items-end">
+
+  <div id="nav-left" class="d-flex justify-concent-around align-items-end">
+    <a href="/{{ studio.subdomain}}">
+      <img src={{ studio.logo }} alt="logo" id="nav-logo">
+    </a>
+    <div id="nav-studio-name">{{ studio.name }}</div>
+  </div>
+
+  <div id="nav-right" class="d-flex justify-concent-around align-items-center">
+    <ul id="nav-links" class="d-flex">
+
+      <li class="nav-li">
+        <a href="/{{ studio.subdomain}}/price" class="nav-link">
+          收費標準
+        </a>
+      </li>
+
+      <li class="nav-li">
+        <a href="/{{ studio.subdomain}}/courses" class="nav-link">
+          預約課程
+        </a>
+      </li>
+
+      <li class="nav-li">
+        <a href="/{{ studio.subdomain}}/about" class="nav-link">
+          教室資訊
+        </a>
+      </li>
+
+      {{#if loginUser}}
+      <li class="nav-li">
+        <a href="/user/profile" class="nav-link">
+          個人資訊
+        </a>
+      </li>
+
+      <li class="nav-li">
+        <a href="/user/logout" class="nav-link">
+          登出
+        </a>
+      </li>
+      {{else}}
+      <li class="nav-li">
+        <a href="/user/login" class="nav-link">
+          登入
+        </a>
+      </li>
+      <li class="nav-li">
+        <a href="/user/register" class="nav-link">
+          註冊
+        </a>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+
+</nav>
