@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 // models
 const StudioAdmin = require('../models/admin_studio_model')
 const Studio = require('../models/studio_model')
@@ -9,14 +11,28 @@ const renderHomePage = async (req, res) => {
   if (!studio) {
     return res.redirect('/404.html') // FIXME:
   }
+  studio.logo = process.env.SERVER_IP + studio.logo
 
   res.render('studio/home', { studio })
 }
 
 const renderPricePage = async (req, res) => {
-  const { studioName } = req.params
+  // 確認是否有該教室
+  const { studioSubdomain } = req.params
+  const studio = await Studio.getStudioBySubdomain(studioSubdomain)
+  if (!studio) {
+    return res.redirect('/404.html') // FIXME:
+  }
+  studio.logo = process.env.SERVER_IP + studio.logo
 
-  res.send(`<h1 style="color: pink">This is ${studioName} price page</h1>`)
+  // 取出該教室的價格
+  const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
+  const priceRules = await Studio.getPriceRules(studio.id, currentTime)
+  if (priceRules.length <= 0) {
+    return res.render('studio/price', { studio })
+  }
+
+  res.render('studio/price', { studio, priceRules })
 }
 
 const renderCoursePage = async (req, res) => {
@@ -25,7 +41,7 @@ const renderCoursePage = async (req, res) => {
   res.send(`<h1 style="color: pink">This is ${studioName} course page</h1>`)
 }
 
-const renderTeacherPage = async (req, res) => {
+const renderAboutPage = async (req, res) => {
   const { studioName } = req.params
 
   res.send(`<h1 style="color: pink">This is ${studioName} teacher page</h1>`)
@@ -70,6 +86,6 @@ module.exports = {
   renderHomePage,
   renderPricePage,
   renderCoursePage,
-  renderTeacherPage,
+  renderAboutPage,
   renderLivePage
 }
