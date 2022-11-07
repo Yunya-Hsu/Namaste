@@ -34,7 +34,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
   resave: false,
-  cookie: { maxAge: 10 * 60 * 1000 } // FIXME: 單位毫秒，目前設置一分鐘到期，magic number 請移出
+  cookie: { maxAge: 10 * 60 * 1000 } // FIXME: 單位毫秒，magic number 請移出
 }))
 app.use(passport.initialize())
 app.use(passport.session())

@@ -6,7 +6,7 @@
   </div>
 
   <div id="nav-right" class="d-flex justify-concent-around align-items-center">
-    <ul id="nav-links" class="d-flex">
+    <ul id="nav-links" class="d-flex align-items-center">
 
       {{#if loginUser}}
       <li class="nav-li">
@@ -15,18 +15,18 @@
         </a>
       </li>
       <li class="nav-li">
-        <a href="/user/logout" class="nav-link">
+        <a href="/user/logout" class="nav-link login-logout">
           登出
         </a>
       </li>
       {{else}}
       <li class="nav-li">
-        <a href="/user/login" class="nav-link">
+        <a href="/user/login" class="nav-link login-logout">
           登入
         </a>
       </li>
       <li class="nav-li">
-        <a href="/user/register" class="nav-link">
+        <a href="/user/register" class="nav-link register">
           註冊
         </a>
       </li>

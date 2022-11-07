@@ -22,7 +22,6 @@ router.use('/user', user)
 
 router.get('/:studioSubdomain/admin/live',
   auth.authenticated,
-  auth.authDedicatedStudio,
   wrapAsync(AdminStudio.renderLivePage)
 )
 

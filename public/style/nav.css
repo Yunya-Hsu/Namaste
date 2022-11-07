@@ -36,3 +36,29 @@
 .nav-link:hover {
   color: #C3A491;
 }
+
+.login-logout {
+  display: inline-block;
+  border-radius: 8px;
+  padding: 3px 25px;
+  background-color: #7f6b5e;
+  color: #ffffff;
+}
+
+.login-logout:hover {
+  background-color: #C3A491;
+  color: #5e4f45;
+}
+
+.register {
+  display: inline-block;
+  border-radius: 8px;
+  padding: 3px 25px;
+  background-color: #C3A491;
+  color: #5e4f45;
+}
+
+.register:hover {
+  background-color: #7f6b5e;
+  color: #ffffff;
+}
