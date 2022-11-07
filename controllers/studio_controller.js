@@ -1,4 +1,4 @@
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 // models
 const StudioAdmin = require('../models/admin_studio_model')
@@ -26,7 +26,7 @@ const renderPricePage = async (req, res) => {
   studio.logo = process.env.SERVER_IP + studio.logo
 
   // 取出該教室的價格
-  const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
   const priceRules = await Studio.getPriceRules(studio.id, currentTime)
   if (priceRules.length <= 0) {
     return res.render('studio/price', { studio })

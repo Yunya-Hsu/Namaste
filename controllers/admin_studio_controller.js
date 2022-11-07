@@ -1,4 +1,4 @@
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 // models
 const StudioAdmin = require('../models/admin_studio_model')
@@ -45,8 +45,8 @@ const createPriceRule = async (req, res) => {
   }
 
   // insert data
-  const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
-  const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
+  const publishAt = moment(publish_at).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
   await StudioAdmin.createPriceRule(studio.id, category, price, point, remark, term, publishAt, currentTime, currentTime)
   req.flash('successMessage', 'Price rule is created')
   res.redirect(`/${studio.subdomain}/admin/price`)
