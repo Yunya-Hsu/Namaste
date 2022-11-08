@@ -90,10 +90,15 @@ const logout = async (req, res, next) => {
   })
 }
 
+const renderProfilePage = async (req, res) => {
+  res.render('user/profile')
+}
+
 module.exports = {
   renderRegisterPage,
   registerUser,
   renderLoginPage,
   login,
-  logout
+  logout,
+  renderProfilePage
 }

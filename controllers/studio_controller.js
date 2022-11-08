@@ -1,4 +1,5 @@
 const moment = require('moment-timezone')
+const axios = require('axios')
 
 // models
 const StudioAdmin = require('../models/admin_studio_model')
@@ -47,7 +48,92 @@ const renderAboutPage = async (req, res) => {
   res.send(`<h1 style="color: pink">This is ${studioName} teacher page</h1>`)
 }
 
+const renderCheckoutPage = async (req, res) => {
+  // search studio from DB
+  const { studioSubdomain } = req.params
+  const studio = await Studio.getStudioForCheckout(studioSubdomain)
+  if (!studio) {
+    return res.redirect('/404.html') // FIXME:
+  }
+  studio.logo = process.env.SERVER_IP + studio.logo
 
+  // get the price rule
+  const priceRuleId = req.query.priceRuleId
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  const priceRule = await Studio.getDedicatedPriceRule(priceRuleId, currentTime, studio.id)
+  if (!priceRule) {
+    req.flash('errorMessage', '無此課程')
+    return res.redirect('back')
+  }
+  priceRule.expireDate = moment().tz('Asia/Taipei').add(priceRule.term, 'days').format('YYYY-MM-DD')
+
+  res.render('studio/checkout', {
+    studio,
+    priceRule
+  })
+}
+
+
+
+const checkout = async (req, res) => {
+  // 判斷 prime & price rule id 是否齊全
+  const { prime, priceRuleId, cardholder } = req.body
+  if (!prime || !priceRuleId || !cardholder.phone_number || !cardholder.name || !cardholder.email) {
+    return res.status(400).json({
+      error: 'without necessary information'
+    })
+  }
+
+  // 撈出訂單資料 & studio tappay 資料
+  const { studioSubdomain } = req.params
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  const studio = await Studio.getStudioForCheckout(studioSubdomain)
+  const priceRule = await Studio.getDedicatedPriceRule(priceRuleId, currentTime, studio.id)
+  if (!priceRule || !studio) {
+    return res.status(400).json({
+      error: 'wrong price rule'
+    })
+  }
+
+  // 建立 order
+  const expireDate = moment().tz('Asia/Taipei').add(priceRule.term, 'days').format('YYYY-MM-DD HH:mm:ss')
+  const newOrderId = await Studio.createOrder(req.user.id, studio.id, currentTime, priceRule.price, priceRule.point, expireDate)
+
+  // 向 tappay 請款
+  const postDataToTapPay = {
+    prime,
+    partner_key: studio.tappay_partner_key,
+    merchant_id: studio.tappay_id,
+    amount: priceRule.price,
+    details: `${studio.name} - ${priceRule.category}`,
+    cardholder,
+    remember: false
+  }
+  const tapPayResponse = await axios.post(
+    process.env.TAPPAY_URL,
+    postDataToTapPay,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': studio.tappay_partner_key
+      }
+    }
+  )
+
+  // 若 tapPayResponse status 不為 0，傳送 error message
+  if (tapPayResponse.data.status !== 0) {
+    console.log(`${newOrderId} has TapPay error: `)
+    console.log(tapPayResponse)
+    return res.status(400).json({
+      error: 'TapPay prime error',
+      data: { number: newOrderId }
+    })
+  }
+
+  // 若成功，更新 orders table 中的訂單狀態
+  await Studio.updateOrderStatus(newOrderId, tapPayResponse.data.rec_trade_id)
+  res.json({ data: 'success' })
+}
 
 
 
@@ -87,5 +173,7 @@ module.exports = {
   renderPricePage,
   renderCoursePage,
   renderAboutPage,
-  renderLivePage
+  renderLivePage,
+  renderCheckoutPage,
+  checkout
 }

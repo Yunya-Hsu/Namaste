@@ -51,6 +51,14 @@ router.get('/:studioSubdomain/live',
   auth.authenticated,
   wrapAsync(Studio.renderLivePage)
 )
+router.get('/:studioSubdomain/checkout',
+  auth.authenticated,
+  wrapAsync(Studio.renderCheckoutPage)
+)
+router.post('/:studioSubdomain/checkout',
+  auth.authenticated,
+  wrapAsync(Studio.checkout)
+)
 router.get('/:studioSubdomain/price', wrapAsync(Studio.renderPricePage))
 router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
 
