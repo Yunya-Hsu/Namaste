@@ -77,7 +77,7 @@
   const email = document.querySelector('#email')
   const tappaySubmit = document.querySelector('#tappay-submit-btn')
 
-  TPDirect.setupSDK({{ studio.tappay_app_id }}, "{{studio.tappay_app_key}}", "sandbox")
+  TPDirect.setupSDK({{ studio.tappay_app_id }}, "{{studio.tappay_app_key}}", "{{TappayServerType}}")
   
   const fields = {
     number: {

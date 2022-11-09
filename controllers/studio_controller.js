@@ -66,10 +66,12 @@ const renderCheckoutPage = async (req, res) => {
     return res.redirect('back')
   }
   priceRule.expireDate = moment().tz('Asia/Taipei').add(priceRule.term, 'days').format('YYYY-MM-DD')
+  const TappayServerType = process.env.TAPPAY_SERVER_TYPE
 
   res.render('studio/checkout', {
     studio,
-    priceRule
+    priceRule,
+    TappayServerType
   })
 }
 
