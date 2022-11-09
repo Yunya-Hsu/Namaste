@@ -5,6 +5,7 @@ const app = express()
 const path = require('path')
 const cors = require('cors')
 const { engine } = require('express-handlebars')
+const handlebarsHelpers = require('./util/handlebars-helpers')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
@@ -22,7 +23,7 @@ const router = require('./routes/index')
 app.use(express.static('public'))
 app.use('/images', express.static(path.join(__dirname, 'images'))) // 讓外部檔案也可以使用 images 裡面的檔案
 
-app.engine('handlebars', engine())
+app.engine('handlebars', engine({ helpers: handlebarsHelpers }))
 app.set('view engine', 'handlebars')
 app.set('views', './views')
 

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const db = require('../config/mysql')
 
 const getCourseDetail = async (studioSubdomain, courseDetailId) => {
@@ -65,10 +66,101 @@ const createPriceRule = async (studioId, category, price, point, remark, term, p
   }
 }
 
+const getStudioTeachers = async studioId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT id, name, major FROM teachers WHERE studio_id = (?);',
+      [studioId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getStudioCourses = async studioId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT courses.id AS id, courses.title AS title, teachers.name AS teacher FROM courses LEFT JOIN teachers ON courses.teacher_id = teachers.id WHERE courses.studio_id = (?);',
+      [studioId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const validateStudioTeacher = async (teacherId, studioId) => {
+  try {
+    const [result] = await db.execute(
+      'SELECT id FROM teachers WHERE id = (?) AND studio_id = (?);',
+      [teacherId, studioId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const validateLivestreamAccount = async userEmail => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT id FROM users WHERE email = (?);',
+      [userEmail]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const createCourse = async (title, description, teacher_id, studio_id, user_id, point, currentTime) => {
+  try {
+    const [result] = await db.execute(
+      'INSERT INTO courses (title, description, teacher_id, studio_id, user_id, point, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?);',
+      [title, description, teacher_id, studio_id, user_id, point, currentTime, currentTime]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getCourseById = async (courseId, studioId) => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT id FROM courses WHERE id = (?) AND studio_id = (?);',
+      [courseId, studioId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const createCourseDetail = async (courseId, date, startTime, duration, isOnline, limitation, onlineLimitation, publishAt, currentTime) => {
+  try {
+    const [result] = await db.execute(
+      'INSERT INTO course_details (course_id, date, start_time, duration, is_online, limitation, online_limitation, publish_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+      [courseId, date, startTime, duration, isOnline, limitation, onlineLimitation, publishAt, currentTime, currentTime]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 module.exports = {
   getCourseDetail,
   getLivestreamStudents,
   validateCRUDStudioPrice,
   getPriceRules,
-  createPriceRule
+  createPriceRule,
+  getStudioTeachers,
+  getStudioCourses,
+  validateStudioTeacher,
+  validateLivestreamAccount,
+  createCourse,
+  getCourseById,
+  createCourseDetail
 }
