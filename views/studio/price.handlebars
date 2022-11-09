@@ -1,0 +1,43 @@
+{{> nav_studio}}
+
+{{#if priceRules}}
+  <table>
+    <thead>
+      <tr>
+        <th>種類</th>
+        <th>價格</th>
+        <th>點數</th>
+        <th>備註</th>
+        <th>使用期限</th>
+        <th>購買</th>
+      </tr>
+    </thead>
+
+    {{#each priceRules}}
+    <tbody>
+      <tr>
+        <th>{{this.category}}</th>
+        <td>{{this.price}}</td>
+        <td>{{this.point}}</td>
+        <td>{{this.remark}}</td>
+        <td>{{this.term}}</td>
+        <td>
+          <a href="/{{../studio.subdomain}}/checkout?priceRuleId={{this.id}}">購買</a>
+        </td>
+      </tr>
+    </tbody>
+    {{/each}}
+    
+  </table>
+
+
+
+
+
+
+
+
+
+{{else}}
+  <span id="no-price">暫無價格</span>
+{{/if}}

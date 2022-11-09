@@ -9,19 +9,8 @@ const authenticated = (req, res, next) => {
   next()
 }
 
-const authLivestream = async (req, res, next) => {
-  const roleId = req.user.role_id
-  const result = await Auth.validateLivestream(roleId)
 
-  if (!result) {
-    req.flash('errorMessage', 'Permission denied')
-    return res.redirect('/')
-  }
-
-  next()
-}
-
-const authCRUDStudios = async (req, res, next) => {
+const authRootAdmin = async (req, res, next) => {
   const roleId = req.user.role_id
   const result = await Auth.validateCrudStudios(roleId)
 
@@ -30,11 +19,27 @@ const authCRUDStudios = async (req, res, next) => {
     return res.redirect('/')
   }
 
+  req.user.studio = result
+  next()
+}
+
+const authDedicatedStudio = async (req, res, next) => {
+  const { studioSubdomain } = req.params
+  const userId = req.user.id
+  const result = await Auth.validateCRUDStudioPrice(studioSubdomain, userId)
+
+  if (!result) {
+    req.flash('errorMessage', 'Permission denied')
+    return res.redirect('/')
+  }
+
+  result.subdomain = studioSubdomain
+  req.user.studio = result
   next()
 }
 
 module.exports = {
   authenticated,
-  authLivestream,
-  authCRUDStudios
+  authRootAdmin,
+  authDedicatedStudio
 }

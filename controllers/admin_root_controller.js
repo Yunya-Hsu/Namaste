@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 // models
 const Admin = require('../models/admin_root_model')
@@ -49,7 +49,7 @@ const createStudio = async (req, res, next) => {
   const { name, introduction_title, introduction_detail, subdomain, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id } = req.body
   const logo = req.files.logo[0].path
   const introduction_photo = req.files.introduction_photo ? req.files.introduction_photo[0].path : null
-  const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
 
   await Admin.createStudio(name, introduction_title, introduction_detail, subdomain, managerRoleId, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, logo, introduction_photo, currentTime, currentTime)
   req.flash('successMessage', `Studio "${name}" is created.`)

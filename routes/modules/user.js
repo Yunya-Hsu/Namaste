@@ -19,6 +19,7 @@ router.post('/login',
   wrapAsync(User.login)
 )
 router.get('/logout', authenticated, wrapAsync(User.logout))
+router.get('/profile', authenticated, wrapAsync(User.renderProfilePage))
 
 
 

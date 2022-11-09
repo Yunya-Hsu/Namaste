@@ -10,7 +10,7 @@ const AdminStudio = require('../controllers/admin_studio_controller')
 const Studio = require('../controllers/studio_controller')
 
 // middleware & utils
-const { authenticated } = require('../middleware/auth')
+const auth = require('../middleware/auth')
 const { wrapAsync } = require('../util/util')
 
 // routers
@@ -20,14 +20,47 @@ router.use('/user', user)
 
 
 
+router.get('/:studioSubdomain/admin/live',
+  auth.authenticated,
+  wrapAsync(AdminStudio.renderLivePage)
+)
 
 
-router.use('/:studioSubdomain/admin/live', authenticated, wrapAsync(AdminStudio.renderLivePage))
-router.use('/:studioSubdomain/admin', wrapAsync(AdminStudio.renderHomePage))
+router.get('/:studioSubdomain/admin/price',
+  auth.authenticated,
+  auth.authDedicatedStudio,
+  wrapAsync(AdminStudio.renderPricePage)
+)
+
+router.post('/:studioSubdomain/admin/price',
+  auth.authenticated,
+  auth.authDedicatedStudio,
+  wrapAsync(AdminStudio.createPriceRule)
+)
+
+router.get('/:studioSubdomain/admin',
+  auth.authenticated,
+  auth.authDedicatedStudio,
+  wrapAsync(AdminStudio.renderHomePage)
+)
 
 
-router.use('/:studioSubdomain/live', authenticated, wrapAsync(Studio.renderLivePage))
-router.use('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
+
+
+router.get('/:studioSubdomain/live',
+  auth.authenticated,
+  wrapAsync(Studio.renderLivePage)
+)
+router.get('/:studioSubdomain/checkout',
+  auth.authenticated,
+  wrapAsync(Studio.renderCheckoutPage)
+)
+router.post('/:studioSubdomain/checkout',
+  auth.authenticated,
+  wrapAsync(Studio.checkout)
+)
+router.get('/:studioSubdomain/price', wrapAsync(Studio.renderPricePage))
+router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
 
 
 router.get('/', (req, res) => {

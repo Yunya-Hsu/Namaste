@@ -5,18 +5,18 @@ const Admin = require('../../controllers/admin_root_controller')
 
 // middleware & utils
 const upload = require('../../middleware/multer')
-const { authenticated, authCRUDStudios } = require('../../middleware/auth')
+const auth = require('../../middleware/auth')
 const { wrapAsync } = require('../../util/util')
 
 // routers
 router.get('/studio',
-  authenticated,
-  authCRUDStudios,
+  auth.authenticated,
+  auth.authRootAdmin,
   wrapAsync(Admin.renderCreateStudioPage)
 )
 router.post('/studio',
-  authenticated,
-  authCRUDStudios,
+  auth.authenticated,
+  auth.authRootAdmin,
   upload.fields([
     { name: 'logo', maxCount: 1 },
     { name: 'introduction_photo', maxCount: 1 }

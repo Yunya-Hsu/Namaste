@@ -1,5 +1,5 @@
 const multer = require('multer')
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 const fileSizeLimit = 1048576 // 1048576 bytes = 1 MB
 const acceptedFileType = ['image/jpg', 'image/jpeg', 'image/png']
@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
   },
   // 設定檔案命名方式
   filename: (req, file, cb) => {
-    cb(null, moment().format() + '_' + file.originalname)
+    cb(null, moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss') + '_' + file.originalname)
   }
 })
 

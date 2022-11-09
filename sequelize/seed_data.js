@@ -1,4 +1,4 @@
-const currentTime = require('moment')().format('YYYY-MM-DD HH:mm:ss')
+const currentTime = require('moment-timezone')().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
 
 const SEED_ROLES = [
   {

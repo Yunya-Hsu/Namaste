@@ -8,7 +8,7 @@ const { engine } = require('express-handlebars')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 const server = http.createServer(app)
 const io = require('socket.io')(server, {
@@ -34,7 +34,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
   resave: false,
-  cookie: { maxAge: 10 * 60 * 1000 } // FIXME: 單位毫秒，目前設置一分鐘到期，magic number 請移出
+  cookie: { maxAge: 10 * 60 * 1000 } // FIXME: 單位毫秒，magic number 請移出
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -54,7 +54,7 @@ app.use((req, res) => {
 
 
 app.use((err, req, res, next) => {
-  console.log(moment().format('YYYY-MM-DD HH:mm:ss'), err)
+  console.log(moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss'), err)
   res.status(500).sendFile(path.join(__dirname, '/public/500.html'))
 })
 

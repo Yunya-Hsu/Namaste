@@ -1,4 +1,4 @@
-const moment = require('moment')
+const moment = require('moment-timezone')
 const validator = require('validator')
 const argon2 = require('argon2')
 
@@ -61,7 +61,7 @@ const registerUser = async (req, res) => {
 
   // 加密 password
   const hashPassword = await argon2.hash(password)
-  const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
   const userId = await User.createUser(name, email, hashPassword, currentTime, currentTime)
   return res.send(
     `<h1>create user, id: ${userId}</h1>`
@@ -90,10 +90,15 @@ const logout = async (req, res, next) => {
   })
 }
 
+const renderProfilePage = async (req, res) => {
+  res.render('user/profile')
+}
+
 module.exports = {
   renderRegisterPage,
   registerUser,
   renderLoginPage,
   login,
-  logout
+  logout,
+  renderProfilePage
 }
