@@ -167,7 +167,7 @@ const createCourseDetail = async (req, res) => {
   // 寫入 db
   const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.createCourseDetail(course_id, date, start_time, duration, limitation, is_online, online_limitation, publishAt, currentTime)
+  await StudioAdmin.createCourseDetail(course_id, date, start_time, duration, is_online, limitation, online_limitation, publishAt, currentTime)
   req.flash('successMessage', '課程上架成功！')
   return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
 }
