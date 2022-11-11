@@ -84,6 +84,11 @@ router.post('/:studioSubdomain/checkout',
   wrapAsync(Studio.checkout)
 )
 router.get('/:studioSubdomain/price', wrapAsync(Studio.renderPricePage))
+router.get('/:studioSubdomain/course', wrapAsync(Studio.renderCoursePage))
+router.get('/:studioSubdomain/registration',
+  auth.authenticated,
+  wrapAsync(Studio.registerCourse)
+)
 router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
 
 

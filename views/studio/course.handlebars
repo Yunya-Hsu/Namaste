@@ -1,0 +1,835 @@
+{{> nav_studio}}
+
+
+
+<form action="/{{ studio.subdomain }}/course" method="GET">
+  <input type="week" id="week" name="week">
+  <button type="submit">查詢</button>
+</form>
+
+<div class="d-flex flex-column" id="curriculum">
+  <section id="title" class="d-flex align-items-center justify-content-between align-items-stretch">
+    <div class="period"></div>
+
+    <div class="period">
+      週一 {{organizedCourseDetailList.Monday.date}}
+    </div>
+
+    <div class="period">
+      週二 {{organizedCourseDetailList.Tuesday.date}}
+    </div>
+
+    <div class="period">
+      週三 {{organizedCourseDetailList.Wednesday.date}}
+    </div>
+
+    <div class="period">
+      週四 {{organizedCourseDetailList.Thursday.date}}
+    </div>
+
+    <div class="period">
+      週五 {{organizedCourseDetailList.Friday.date}}
+    </div>
+
+    <div class="period">
+      週六 {{organizedCourseDetailList.Saturday.date}}
+    </div>
+
+    <div class="period">
+      週日 {{organizedCourseDetailList.Sunday.date}}
+    </div>
+
+  </section>
+
+  <section id="morning-section" class="d-flex align-items-center justify-content-between align-items-stretch">
+    <div class="period">
+      <span>Morning</span>
+    </div>
+
+    <div class="period morning">
+      {{#each organizedCourseDetailList.Monday.morning}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+
+
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="period morning">
+      {{#each organizedCourseDetailList.Tuesday.morning}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="period morning">
+      {{#each organizedCourseDetailList.Wednesday.morning}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="period morning">
+      {{#each organizedCourseDetailList.Thursday.morning}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="period morning">
+      {{#each organizedCourseDetailList.Friday.morning}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="period morning">
+      {{#each organizedCourseDetailList.Saturday.morning}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="period morning">
+      {{#each organizedCourseDetailList.Sunday.morning}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+
+  </section>
+
+
+
+
+
+  <section id="afternoon-section" class="d-flex align-items-center justify-content-between align-items-stretch">
+    <div class="period">
+      <span>Afternoon</span>
+    </div>
+
+    <div class="period afternoon">
+      {{#each organizedCourseDetailList.Monday.afternoon}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period afternoon">
+      {{#each organizedCourseDetailList.Tuesday.afternoon}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period afternoon">
+      {{#each organizedCourseDetailList.Wednesday.afternoon}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period afternoon">
+      {{#each organizedCourseDetailList.Thursday.afternoon}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period afternoon">
+      {{#each organizedCourseDetailList.Friday.afternoon}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period afternoon">
+      {{#each organizedCourseDetailList.Saturday.afternoon}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period afternoon">
+      {{#each organizedCourseDetailList.Sunday.afternoon}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+
+  
+  </section>
+
+
+
+
+
+
+  <section id="evening-section" class="d-flex align-items-center justify-content-between align-items-stretch">
+    <div class="period">
+      <span>Evening</span>
+    </div>
+
+    <div class="period evening">
+      {{#each organizedCourseDetailList.Monday.evening}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period evening">
+      {{#each organizedCourseDetailList.Tuesday.evening}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period evening">
+      {{#each organizedCourseDetailList.Wednesday.evening}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period evening">
+      {{#each organizedCourseDetailList.Thursday.evening}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period evening">
+      {{#each organizedCourseDetailList.Friday.evening}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period evening">
+      {{#each organizedCourseDetailList.Saturday.evening}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+    <div class="period evening">
+      {{#each organizedCourseDetailList.Sunday.evening}}
+      <div class="d-flex flex-column align-items-center course-detail">
+        <span class="course-title">{{this.title}}</span>
+        <span class="course-teacher">授課老師：{{this.name}}</span>
+        <span class="course-time">{{this.start_time}}-{{this.end_time}}</span>
+        <span class="course-point">點數：{{this.point}}</span>
+    
+    
+        <span>剩餘 {{this.limitation}} 空位</span>
+        {{#canBook this.limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{else}}
+        <button class="empty">預約已滿</button>
+        {{/canBook}}
+    
+        {{#compare this.is_online 1}}
+        <span>線上剩餘 {{../this.online_limitation}} 空位</span>
+        {{/compare}}
+    
+        {{#canBook this.online_limitation}}
+        <form action="/{{../../studio.subdomain}}/registration" method="GET">
+          <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
+          <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+          <button type="submit" class="register-course">預約</button>
+        </form>
+        {{/canBook}}
+    
+      </div>
+      {{/each}}
+    </div>
+    
+
+
+    
+  </section>
+
+</div>
+
