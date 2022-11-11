@@ -16,27 +16,27 @@
   flex-direction: column;
 }
 
-.justify-concent-start {
+.justify-content-start {
   justify-content: start;
 }
 
-.justify-concent-center {
+.justify-content-center {
   justify-content: center;
 }
 
-.justify-concent-between {
+.justify-content-between {
   justify-content: space-between;
 }
 
-.justify-concent-around {
+.justify-content-around {
   justify-content: space-around;
 }
 
-.justify-concent-evenly {
+.justify-content-evenly {
   justify-content: space-evenly;
 }
 
-.justify-concent-end {
+.justify-content-end {
   justify-content: end;
 }
 
@@ -57,3 +57,49 @@
 }
 /* flex related */
 
+
+
+
+
+#curriculum {
+  /* border: 1px solid red; */
+  margin: 40px 50px 70px 50px;
+}
+
+#morning-section,
+#evening-section {
+  background-color: #fff6ea;
+}
+
+#afternoon-section {
+  background-color: #fafff0;
+}
+
+.period {
+  /* margin: auto auto; */
+  width: 170px;
+  text-align: center;
+  padding: 0 5px 0 5px;
+  border-right: rgb(194, 194, 194) 1px solid;
+  border-left: rgb(194, 194, 194) 1px solid;
+}
+
+.course-detail {
+  margin: 5px 0;
+  background-color: #655848;
+}
+
+.course-detail>* {
+  color: #ffffff;
+}
+
+.course-detail>button {
+  display: block;
+  min-height: 25px;
+  width: 80%;
+  color: #655848;
+}
+
+.course-detail>button:hover {
+  cursor: pointer;
+}

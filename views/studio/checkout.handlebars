@@ -17,7 +17,7 @@
 
 
 
-<div class="d-flex align-items-stretch justify-concent-center">
+<div class="d-flex align-items-stretch justify-content-center">
   <section id="super-admin-title-left">
     <span>
       信用卡付款
@@ -156,7 +156,7 @@
     // 驗證 card number 欄位
     if (update.status.number === 2) { // 欄位有誤
       validateCardNumber.innerHTML = `
-        <div class="d-flex align-items-center justify-concent-end" style="color: red; width: 100%;">
+        <div class="d-flex align-items-center justify-content-end" style="color: red; width: 100%;">
           <span style="font-size: 10px">卡號輸入有誤</span>
         </div>
       `
@@ -169,7 +169,7 @@
     // 驗證 card expiration data 欄位
     if (update.status.expiry === 2) {
       validateExpirationDate.innerHTML = `
-        <div class="d-flex align-items-center justify-concent-end" style="color: red; width: 100%;">
+        <div class="d-flex align-items-center justify-content-end" style="color: red; width: 100%;">
           <span style="font-size: 10px">有效期限輸入有誤</span>
         </div>
       `
@@ -182,7 +182,7 @@
     // 驗證 card ccv 欄位
     if (update.status.ccv === 2) {
       validateCardCcv.innerHTML = `
-        <div class="d-flex align-items-center justify-concent-end" style="color: red; width: 100%;">
+        <div class="d-flex align-items-center justify-content-end" style="color: red; width: 100%;">
           <span style="font-size: 10px">CCV 輸入有誤</span>
         </div>
       `
@@ -236,6 +236,7 @@
         console.log(err)
         console.log(err.response.data)
         alert('付款失敗')
+        {{!-- FIXME: --}}
       }
     })
   })
