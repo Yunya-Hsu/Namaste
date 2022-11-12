@@ -7,15 +7,18 @@ const StudioAdmin = require('../models/admin_studio_model')
 const Studio = require('../models/studio_model')
 
 const renderHomePage = async (req, res) => {
-  // search studio from DB
+  // 確認是否有該教室
   const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioBySubdomain(studioSubdomain) // FIXME:
+  const studio = await Studio.getStudioForHomePage(studioSubdomain)
   if (!studio) {
     return res.redirect('/404.html') // FIXME:
   }
-  studio.logo = process.env.SERVER_IP + studio.logo
 
-  res.render('studio/home', { studio })
+  // 整理資料
+  studio.logo = process.env.SERVER_IP + studio.logo
+  studio.introduction_photo = process.env.SERVER_IP + studio.introduction_photo
+
+  return res.render('studio/home', { studio })
 }
 
 const renderPricePage = async (req, res) => {
@@ -220,7 +223,8 @@ const registerCourse = async (req, res, next) => {
   }
 
   // 撈出 user 訂單資訊，確認該 user 剩餘點數是否足夠、該對哪幾張訂單進行扣款
-  const userOrder = await Studio.getUserOrder(req.user.id, courseDetail.studio_id)
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  const userOrder = await Studio.getUserOrder(req.user.id, courseDetail.studio_id, currentTime)
   if (userOrder.length <= 0) {
     req.flash('errorMessage', '請先購買點數')
     return res.redirect('back')
@@ -249,7 +253,6 @@ const registerCourse = async (req, res, next) => {
   }
 
   // 扣除點數
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
   const registrationInsertId = await Studio.registerCourse(courseDetail, isBookOnlineCourse, requiredOrderList, deductionList, req.user.id, currentTime)
   if (!registrationInsertId) {
     req.flash('errorMessage', '預約失敗')
@@ -263,12 +266,16 @@ const registerCourse = async (req, res, next) => {
 
 
 const renderLivePage = async (req, res) => {
-  // 測試網址
-  // http://localhost:3000/todayYoga/live?courseDetailId=1
+  // search studio from DB
   const { studioSubdomain } = req.params
+  const studio = await Studio.getStudioForCheckout(studioSubdomain)
+  if (!studio) {
+    return res.redirect('/404.html') // FIXME:
+  }
+  studio.logo = process.env.SERVER_IP + studio.logo
+
   const courseDetailId = req.query.courseDetailId
   const userId = req.user.id
-
   // 撈出課程資料（確認該堂課是不是該教室的）
   const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
   if (!courseDetail) {
@@ -284,6 +291,7 @@ const renderLivePage = async (req, res) => {
   }
 
   res.render('studio/livestream', {
+    studio,
     courseDetailId,
     userId,
     courseName: verifyRegistration.course_title

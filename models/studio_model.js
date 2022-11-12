@@ -16,6 +16,18 @@ const getStudioBySubdomain = async subdomain => {
   return result
 }
 
+const getStudioForHomePage = async subdomain => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT id, name, logo, introduction_title, introduction_detail, introduction_photo, subdomain FROM studios WHERE subdomain = (?)',
+      [subdomain]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const getPriceRules = async (studioId, publishAt) => {
   try {
     const [result] = await db.execute(
@@ -99,7 +111,7 @@ const getRegistration = async (userId, courseDetailId) => {
 const getDedicatedCourseDetail = async courseDetailId => {
   try {
     const [[courseDetail]] = await db.execute(
-      'SELECT course_details.id, course_details.date, course_details.start_time, course_details.duration, course_details.is_online, course_details.limitation, course_details.online_limitation, courses.studio_id, courses.title, courses.point, studios.name AS studio_name, teachers.name AS teacher_name FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id LEFT JOIN studios ON studios.id = courses.studio_id LEFT JOIN teachers ON teachers.id = courses.teacher_id WHERE course_details.id = (?)',
+      'SELECT course_details.id, course_details.date, course_details.start_time, course_details.duration, course_details.is_online, course_details.limitation, course_details.online_limitation, courses.studio_id, courses.title, courses.point, studios.name AS studio_name, studios.subdomain AS studio_subdomain, teachers.name AS teacher_name FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id LEFT JOIN studios ON studios.id = courses.studio_id LEFT JOIN teachers ON teachers.id = courses.teacher_id WHERE course_details.id = (?)',
       [courseDetailId]
     )
     return courseDetail
@@ -108,11 +120,11 @@ const getDedicatedCourseDetail = async courseDetailId => {
   }
 }
 
-const getUserOrder = async (userId, studioId) => {
+const getUserOrder = async (userId, studioId, currentTime) => {
   try {
     const [userOrder] = await db.execute(
-      'SELECT id, remaining_point FROM orders WHERE user_id = (?) AND studio_id = (?) AND remaining_point > 0 ORDER BY expire_date',
-      [userId, studioId]
+      'SELECT id, remaining_point FROM orders WHERE user_id = (?) AND studio_id = (?) AND remaining_point > 0 AND expire_date > (?) ORDER BY expire_date',
+      [userId, studioId, currentTime]
     )
     return userOrder
   } catch (error) {
@@ -147,15 +159,15 @@ const registerCourse = async (courseDetail, isBookOnlineCourse, requiredOrderLis
     for (let i = 0; i < requiredOrderList.length; i++) {
       await conn.execute(
         'UPDATE orders SET remaining_point = remaining_point - (?) WHERE id = (?)',
-        [Number(deductionList[0]), Number(requiredOrderList[0])]
+        [Number(deductionList[i]), Number(requiredOrderList[i])]
       )
     }
 
 
     // 到 registration 新增一筆紀錄
     const [registration] = await conn.execute(
-      'INSERT INTO registrations (course_detail_id, user_id, studio_name, course_title, teacher_name, date, start_time, duration, point, is_online, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-      [courseDetail.id, userId, courseDetail.studio_name, courseDetail.title, courseDetail.teacher_name, courseDetail.date, courseDetail.start_time, courseDetail.duration, courseDetail.point, isBookOnlineCourse, currentTime, currentTime]
+      'INSERT INTO registrations (course_detail_id, user_id, studio_name, course_title, teacher_name, date, start_time, duration, point, is_online, created_at, updated_at, studio_subdomain) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+      [courseDetail.id, userId, courseDetail.studio_name, courseDetail.title, courseDetail.teacher_name, courseDetail.date, courseDetail.start_time, courseDetail.duration, courseDetail.point, isBookOnlineCourse, currentTime, currentTime, courseDetail.studio_subdomain]
     )
 
     await conn.commit()
@@ -171,6 +183,7 @@ const registerCourse = async (courseDetail, isBookOnlineCourse, requiredOrderLis
 
 module.exports = {
   getStudioBySubdomain,
+  getStudioForHomePage,
   verifyRegistration,
   getPriceRules,
   getStudioForCheckout,
