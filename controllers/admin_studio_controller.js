@@ -179,8 +179,6 @@ const renderTeacherPage = async (req, res) => {
 }
 
 const renderLivePage = async (req, res) => {
-  // 測試網址
-  // http://localhost:3000/todayYoga/admin/live?courseDetailId=1
   const { studioSubdomain } = req.params
   const courseDetailId = req.query.courseDetailId
 

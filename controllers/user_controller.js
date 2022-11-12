@@ -91,7 +91,16 @@ const logout = async (req, res, next) => {
 }
 
 const renderProfilePage = async (req, res) => {
-  res.render('user/profile')
+  // 取得 order 資料
+  const orderList = await User.getOrders(req.user.id)
+
+  // 取得 registration 資料
+  const registrationList = await User.getRegistration(req.user.id)
+
+  res.render('user/profile', {
+    orderList,
+    registrationList
+  })
 }
 
 module.exports = {

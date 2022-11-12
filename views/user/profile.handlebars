@@ -1,3 +1,75 @@
 {{> nav_general}}
 
 個人資訊頁
+
+<h1>歷史訂單</h1>
+<table>
+  <thead>
+    <tr>
+      <th>教室</th>
+      <th>購買日期</th>
+      <th>總金額</th>
+      <th>總點數</th>
+      <th>訂單狀態</th>
+      <th>到期日</th>
+      <th>剩餘點數</th>
+    </tr>
+  </thead>
+
+
+  {{#each orderList}}
+  <tbody>
+    <tr>
+      <th>{{this.studio_name}}</th>
+      <td>{{this.date}}</td>
+      <td>{{this.total}}</td>
+      <td>{{this.point}}</td>
+      <td>{{this.status}}</td>
+      <td>{{this.expire_date}}</td>
+      <td>{{this.remaining_point}}</td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
+
+
+
+
+
+
+
+<h1>預約課程</h1>
+<table>
+  <thead>
+    <tr>
+      <th>教室</th>
+      <th>課程名稱</th>
+      <th>授課老師</th>
+      <th>日期</th>
+      <th>時間</th>
+      <th>所需點數</th>
+      <th>瀏覽線上課程</th>
+    </tr>
+  </thead>
+
+
+  {{#each registrationList}}
+  <tbody>
+    <tr>
+      <th>{{this.studio_name}}</th>
+      <td>{{this.course_title}}</td>
+      <td>{{this.teacher_name}}</td>
+      <td>{{this.date}}</td>
+      <td>{{this.start_time}}</td>
+      <td>{{this.point}}</td>
+      <td>
+        {{#compare this.is_online 1}}
+        <a href="/{{../this.studio_subdomain}}/live?courseDetailId={{../this.course_detail_id}}">直播</a>
+        {{else}}
+        N/A
+        {{/compare}}
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
