@@ -38,6 +38,30 @@ router.post('/:studioSubdomain/admin/price',
   wrapAsync(AdminStudio.createPriceRule)
 )
 
+router.get('/:studioSubdomain/admin/course',
+  auth.authenticated,
+  auth.authDedicatedStudio,
+  wrapAsync(AdminStudio.renderCoursePage)
+)
+
+router.post('/:studioSubdomain/admin/course',
+  auth.authenticated,
+  auth.authDedicatedStudio,
+  wrapAsync(AdminStudio.createCourse)
+)
+
+router.get('/:studioSubdomain/admin/courseDetail',
+  auth.authenticated,
+  auth.authDedicatedStudio,
+  wrapAsync(AdminStudio.renderCourseDetailPage)
+)
+
+router.post('/:studioSubdomain/admin/courseDetail',
+  auth.authenticated,
+  auth.authDedicatedStudio,
+  wrapAsync(AdminStudio.createCourseDetail)
+)
+
 router.get('/:studioSubdomain/admin',
   auth.authenticated,
   auth.authDedicatedStudio,
@@ -60,7 +84,15 @@ router.post('/:studioSubdomain/checkout',
   wrapAsync(Studio.checkout)
 )
 router.get('/:studioSubdomain/price', wrapAsync(Studio.renderPricePage))
+router.get('/:studioSubdomain/course', wrapAsync(Studio.renderCoursePage))
+router.get('/:studioSubdomain/registration',
+  auth.authenticated,
+  wrapAsync(Studio.registerCourse)
+)
 router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
+
+
+
 
 
 router.get('/', (req, res) => {

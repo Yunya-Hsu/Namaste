@@ -26,7 +26,7 @@ const authRootAdmin = async (req, res, next) => {
 const authDedicatedStudio = async (req, res, next) => {
   const { studioSubdomain } = req.params
   const userId = req.user.id
-  const result = await Auth.validateCRUDStudioPrice(studioSubdomain, userId)
+  const result = await Auth.validateCRUDStudioPrice(studioSubdomain, userId) // FIXME:
 
   if (!result) {
     req.flash('errorMessage', 'Permission denied')

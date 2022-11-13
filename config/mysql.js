@@ -20,9 +20,9 @@ const mysqlConfig = {
 
 const mysqlEnv = mysqlConfig[env]
 mysqlEnv.waitForConnections = true
-mysql.connectionLimit = 10
-mysql.queueLimit = 0
-
+mysqlEnv.connectionLimit = 10
+mysqlEnv.queueLimit = 0
+mysqlEnv.dateStrings = true
 
 const db = mysql.createPool(mysqlEnv)
 module.exports = db.promise()
