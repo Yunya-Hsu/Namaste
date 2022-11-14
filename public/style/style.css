@@ -61,6 +61,13 @@
 
 
 
+
+
+
+
+
+/* studio - courses page */
+
 #curriculum {
   /* border: 1px solid red; */
   margin: 40px 50px 70px 50px;
@@ -103,3 +110,99 @@
 .course-detail>button:hover {
   cursor: pointer;
 }
+
+/* studio - courses page */
+
+
+
+
+
+
+
+
+
+
+/* studio - about page */
+
+.about-title {
+  height: 13vh;
+  width: 100%;
+  box-shadow: 0px 0px 15px 5px #DBD2C9;
+  background-color: #DBD2C9;
+}
+
+.about-title > p {
+  color: #ffffff;
+  font-size: 36px;
+  text-align: center;
+  letter-spacing: 15px;
+}
+
+#address-content {
+  margin: 5vh 10vw;
+  width: 80vw;
+}
+
+#address-content>h2 {
+  margin: 2vh 0;
+  padding: 0;
+  font-size: 24px;
+  letter-spacing: 5px;
+  font-weight: 600;
+  color: #7f6b5e;
+}
+
+#address-content>p {
+  margin: 0 0 5vh 0;
+  padding: 0;
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-weight: 300;
+}
+
+#google-map {
+  border: 0;
+  margin: 8vh 10vw;
+  width: 100vw;
+  height: 45vh;
+}
+
+#teachers {
+  margin: 10vh 0;
+  flex-wrap: wrap;
+}
+
+.teacher-card {
+  width: 35vw;
+  margin: 3vh 5vw;
+}
+
+.teacher-avatar {
+  min-width: 150px;
+  min-height: 150px;
+  border-radius: 100px;
+  margin: 0 5vh 0 0;
+}
+
+.teacher-name {
+  font-size: 24px;
+  font-weight: 200;
+  letter-spacing: 4px;
+  margin: 1vh 0;
+}
+
+.teacher-title {
+  color: #99806f;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  margin: 8px 0 3px 0;
+}
+
+.teacher-intro {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+ /* studio - about page */

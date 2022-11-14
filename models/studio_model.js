@@ -28,6 +28,30 @@ const getStudioForHomePage = async subdomain => {
   }
 }
 
+const getStudioForAbout = async subdomain => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT * FROM studios WHERE subdomain = (?)',
+      [subdomain]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getTeachers = async studioId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT * FROM teachers WHERE studio_id = (?)',
+      [studioId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const getPriceRules = async (studioId, publishAt) => {
   try {
     const [result] = await db.execute(
@@ -132,10 +156,6 @@ const getUserOrder = async (userId, studioId, currentTime) => {
   }
 }
 
-
-
-
-
 const registerCourse = async (courseDetail, isBookOnlineCourse, requiredOrderList, deductionList, userId, currentTime) => {
   const conn = await db.getConnection()
   try {
@@ -184,9 +204,11 @@ const registerCourse = async (courseDetail, isBookOnlineCourse, requiredOrderLis
 module.exports = {
   getStudioBySubdomain,
   getStudioForHomePage,
-  verifyRegistration,
-  getPriceRules,
+  getStudioForAbout,
+  getTeachers,
   getStudioForCheckout,
+  getPriceRules,
+  verifyRegistration,
   getDedicatedPriceRule,
   createOrder,
   updateOrderStatus,

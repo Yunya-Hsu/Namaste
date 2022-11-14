@@ -103,9 +103,25 @@ const renderCoursePage = async (req, res) => {
 }
 
 const renderAboutPage = async (req, res) => {
-  const { studioName } = req.params
+  // 確認是否有該教室
+  const { studioSubdomain } = req.params
+  const studio = await Studio.getStudioForAbout(studioSubdomain)
+  if (!studio) {
+    return res.redirect('/404.html') // FIXME:
+  }
 
-  res.send(`<h1 style="color: pink">This is ${studioName} teacher page</h1>`)
+  const teacherList = await Studio.getTeachers(studio.id)
+  studio.logo = process.env.SERVER_IP + studio.logo
+  for (const teacher of teacherList) {
+    if (teacher.avatar) {
+      teacher.avatar = process.env.SERVER_IP + teacher.avatar
+    }
+  }
+
+  res.render('studio/about', {
+    studio,
+    teacherList
+  })
 }
 
 const renderCheckoutPage = async (req, res) => {
