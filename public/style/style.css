@@ -66,8 +66,88 @@
 
 
 
-/* studio - courses page */
+/* studio - price page */
+#price-table {
+  margin: 5vh auto;
+  border-collapse: collapse;
+  border: none;
+}
 
+#price-head > tr > th {
+  background-color: #655848;
+  box-shadow: 2px 2px 10px 0 #655848;
+  padding: 3vh 0;
+  
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 4px;
+}
+
+
+
+.category, .price, .point, .remark, .term, .buy {
+  border-bottom: 2px solid #DBD2C9;
+  padding: 10vh 0 4vh 0;
+  
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 5px;
+  font-weight: 300;
+}
+
+.category {
+  width: 15vw;
+}
+
+.price {
+  width: 16vw;
+  font-weight: 500;
+  font-size: 24px;
+  color: #8E9BAE;
+}
+
+.point {
+  width: 7vw;
+}
+
+.remark {
+  width: 24vw;
+}
+
+.term {
+  width: 12vw;
+  font-weight: 400;
+  font-size: 20px;
+  color: #8E9BAE;
+}
+
+.buy {
+  width: 14vw;
+}
+
+.buy > a {
+  text-decoration: none;
+  padding: 8px 8px 8px 16px;
+  background-color: #DBD2C9;
+  border-radius: 3px;
+  color: #ffffff;
+}
+
+.buy>a:hover {
+  background-color: #655848;
+}
+/* studio - price page */
+
+
+
+
+
+
+
+
+
+/* studio - courses page */
 #curriculum {
   /* border: 1px solid red; */
   margin: 40px 50px 70px 50px;
@@ -110,7 +190,6 @@
 .course-detail>button:hover {
   cursor: pointer;
 }
-
 /* studio - courses page */
 
 
@@ -123,7 +202,6 @@
 
 
 /* studio - about page */
-
 .about-title {
   height: 13vh;
   width: 100%;
