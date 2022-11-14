@@ -148,48 +148,166 @@
 
 
 /* studio - courses page */
+#select-week {
+  display: block;
+  margin: 5vh auto 8vh auto;
+  text-align: center;
+}
+
+#select-week > input {
+  padding: 0 0 0 10px;
+  height: 45px;
+  width: 260px;
+  border: 1px solid #8E9BAE;
+
+  font-size: 18px;
+  font-weight: 200;
+  letter-spacing: 3px;
+}
+
+#select-week>button {
+  height: 40px;
+  width: 65px;
+  border: none;
+  background-color: #DBD2C9;
+  margin: 0 0 0 10px;
+
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 2px;
+  padding: 0 0 3px 2px;
+}
+
+#select-week>button:hover {
+  cursor: pointer;
+  background-color: #7f6b5e;
+  color:#ffffff;
+}
+
+
+
+
+
+
 #curriculum {
   /* border: 1px solid red; */
   margin: 40px 50px 70px 50px;
 }
 
-#morning-section,
-#evening-section {
-  background-color: #fff6ea;
-}
-
-#afternoon-section {
-  background-color: #fafff0;
+#title-section {
+  margin: 0 0 20px 0;
 }
 
 .period {
-  /* margin: auto auto; */
-  width: 170px;
+  min-width: 150px;
   text-align: center;
-  padding: 0 5px 0 5px;
-  border-right: rgb(194, 194, 194) 1px solid;
-  border-left: rgb(194, 194, 194) 1px solid;
+  font-size: 25px;
+  font-weight: 300;
 }
 
-.course-detail {
-  margin: 5px 0;
-  background-color: #655848;
+.time-slot {
+  font-size: 70px;
+  font-weight: 300;
+  letter-spacing: 12px;
+  color: #655848;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  padding: 0 0 0 60px;
 }
 
-.course-detail>* {
+.time-slot-section {
+  margin: 0 0 8vh 0;
+}
+
+/* card design */
+.design-1 {
+  margin: 20px 0;
+  background-color: #AD8B73;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #AD8B73;
+  color: #FFFFFF;
+  padding: 4px 0 6px 0;
+}
+
+.design-2 {
+  margin: 20px 0;
+  background-color: #FFFBE9;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #FFFBE9;
+  color: #665A48;
+  padding: 4px 0 6px 0;
+}
+
+.design-3 {
+  margin: 20px 0;
+  background-color: #E3CAA5;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #E3CAA5;
+  color: #665A48;
+  padding: 4px 0 6px 0;
+}
+
+.design-4 {
+  margin: 20px 0;
+  background-color: #B7C4CF;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #B7C4CF;
+  color: #FFFBE9;
+  padding: 4px 0 6px 0;
+}
+/* card design */
+
+
+
+
+/* card inside */
+.course-title {
+  font-size: 16px;
+}
+
+.course-teacher {
+  font-size: 13px;
+}
+
+.course-time {
+  font-size: 16px;
+}
+
+.course-limitation {
+  font-size: 14px;
+
+}
+
+.book-div {
+  margin: 3px 0;
+}
+
+.register-course {
+  background-color: #EEE3CB;
+  color: #967E76;
+  border: none;
+  border-radius: 7px;
+
+  padding: 1px 8px 2px 8px;
+  margin: 0 0 0 6px; 
+}
+
+.register-course:hover {
+  cursor: pointer;
+  background-color: #461111;
   color: #ffffff;
 }
 
-.course-detail>button {
-  display: block;
-  min-height: 25px;
-  width: 80%;
-  color: #655848;
+.empty {
+  background-color: #d7d5d5;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  
+  padding: 1px 8px 2px 8px;
+  margin: 0 0 0 4px;
 }
-
-.course-detail>button:hover {
-  cursor: pointer;
-}
+/* card inside */
 /* studio - courses page */
 
 
