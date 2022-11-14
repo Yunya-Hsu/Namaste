@@ -403,32 +403,44 @@ const SEED_TEACHER = [
   {
     name: 'DORA',
     major: '平衡伸展、基礎瑜珈',
-    studio_id: 1
+    studio_id: 1,
+    introduction: 'RYS500. E-RYT200. YACEP美國瑜珈聯盟五百小時、資深兩百小時、繼續教育提供者註冊導師',
+    avatar: 'images/seeder/dora.jpg'
   },
   {
     name: '花花',
     major: '核心慢流動、肩胸開展',
-    studio_id: 1
+    studio_id: 1,
+    introduction: 'Association for Yoga and Meditation 瑞詩凱詩最古老瑜珈學校AYM 三百小時認證',
+    avatar: 'images/seeder/hua.jpg'
   },
   {
     name: 'BELLA',
     major: '皮拉提斯',
-    studio_id: 1
+    studio_id: 1,
+    introduction: '印度進階瑜珈哲學研習 with Dr. Bhanu',
+    avatar: 'images/seeder/bella.jpg'
   },
   {
     name: 'TINA',
     major: '哈達瑜珈',
-    studio_id: 1
+    studio_id: 1,
+    introduction: '印度瑜珈歷史聖地靈修研習 Sattva Retreat & Meditation, India',
+    avatar: 'images/seeder/tina.jpg'
   },
   {
     name: 'KIM',
     major: '自我覺察與流動',
-    studio_id: 1
+    studio_id: 1,
+    introduction: '美國YogaFit®瑜珈療法Yoga TherapyI第一級認證、美國YogaFit®修復瑜珈Restorative Yoga第一級認證',
+    avatar: 'images/seeder/kim.jpg'
   },
   {
     name: 'WALI',
     major: '正位修復、椅子修復',
-    studio_id: 1
+    studio_id: 1,
+    introduction: '美國In-Trinity Matrix 引全能體課程 亞洲區總教練',
+    avatar: 'images/seeder/wali.jpg'
   },
 
 
@@ -439,37 +451,51 @@ const SEED_TEACHER = [
   {
     name: 'Cara',
     major: '寰宇瑜珈',
-    studio_id: 2
+    studio_id: 2,
+    introduction: '2013取得美國瑜珈聯盟Yoga Alliance RYT200合格、2013葆體瑜珈/哈達瑜珈師資研習合格',
+    avatar: 'images/seeder/cara.jpg'
   },
   {
     name: 'Hsieh',
     major: '瑜珈提斯',
-    studio_id: 2
+    studio_id: 2,
+    introduction: '美國有氧體適能協會AFAA 墊上核心認證、美國YogaFit Level 1-3合格認證 巴里島',
+    avatar: 'images/seeder/hsieh.jpg'
   },
   {
     name: 'Joe',
     major: '伸展瑜珈',
-    studio_id: 2
+    studio_id: 2,
+    introduction: '泰國Sivananda & Chakras Meditation Workshop Thailand希瓦難陀脈輪靜心研習',
+    avatar: 'images/seeder/joe.jpg'
   },
   {
     name: 'Trix',
     major: '筋膜瑜珈',
-    studio_id: 2
+    studio_id: 2,
+    introduction: '美國YogaFit®兒童瑜珈YogaFit for Kids認證、美國In-Trinity Matrix 引全能體課程 亞洲區總教練',
+    avatar: 'images/seeder/trix.jpg'
   },
   {
     name: 'Derek',
     major: '基礎瑜珈、強化伸展',
-    studio_id: 2
+    studio_id: 2,
+    introduction: 'Association for Yoga and Meditation 瑞詩凱詩最古老瑜珈學校AYM 三百小時認證',
+    avatar: 'images/seeder/derek.jpg'
   },
   {
     name: 'Noe',
     major: '舒緩伸展',
-    studio_id: 2
+    studio_id: 2,
+    introduction: 'RYS500. E-RYT200. YACEP美國瑜珈聯盟五百小時、資深兩百小時、繼續教育提供者註冊導師',
+    avatar: 'images/seeder/noe.jpg'
   },
   {
     name: 'Ambee',
     major: '舒緩伸展',
-    studio_id: 2
+    studio_id: 2,
+    introduction: '中華民國瑜珈協會瑜珈師資、印度YAI200小時hatha yoga師資',
+    avatar: 'images/seeder/ambee.jpg'
   },
 
 
@@ -480,27 +506,37 @@ const SEED_TEACHER = [
   {
     name: 'Noe', // #14
     major: '舒緩伸展、基礎瑜珈',
-    studio_id: 3
+    studio_id: 3,
+    introduction: 'Balletone:Sole Synthesis MBA、Balletone :Standing Flow MBA',
+    avatar: 'images/seeder/noe.jpg'
   },
   {
     name: '花花', // #15
     major: '肩胸開展',
-    studio_id: 3
+    studio_id: 3,
+    introduction: 'Yoga Alliance國際認證200小時老師(RYT 200)',
+    avatar: 'images/seeder/hua.jpg'
   },
   {
     name: 'Lydia', // #16
     major: '空中瑜珈、舞綢',
-    studio_id: 3
+    studio_id: 3,
+    introduction: 'Iyengar yoga(Peter Scott)200小時、Foundation of yoga Thrap(JamesNewman)',
+    avatar: 'images/seeder/lydia.jpg'
   },
   {
     name: 'Sherry', // #17
     major: '空中瑜伽、舞綢、空中環',
-    studio_id: 3
+    studio_id: 3,
+    introduction: 'Ausara yoga 200小時',
+    avatar: 'images/seeder/sherry.jpg'
   },
   {
     name: 'Jina', // #18
     major: '原始瑜珈、寰宇瑜珈',
-    studio_id: 3
+    studio_id: 3,
+    introduction: '印度Sri S.Kamal瑜珈師資培訓, Sivanada yoga 30小時、Yoga Fit L1,L2及孕婦瑜珈研習',
+    avatar: 'images/seeder/jina.jpg'
   },
 
 
@@ -511,32 +547,44 @@ const SEED_TEACHER = [
   {
     name: '娃娃', // #19
     major: '花式空瑜、空中芭蕾',
-    studio_id: 4
+    studio_id: 4,
+    introduction: '200hrs Teacher Training with Stephen Thomas and Naichin Tang',
+    avatar: 'images/seeder/wawa.jpg'
   },
   {
     name: 'Jina', // #20
     major: '地板瑜珈、親子瑜珈',
-    studio_id: 4
+    studio_id: 4,
+    introduction: '印度Sri S.Kamal瑜珈師資培訓, Sivanada yoga 30小時、Yoga Fit L1,L2及孕婦瑜珈研習',
+    avatar: 'images/seeder/jina.jpg'
   },
   {
     name: 'Flora', // #21
     major: '和緩流動',
-    studio_id: 4
+    studio_id: 4,
+    introduction: '傳統整復職業工會192小時臨床經驗整復師合格認證、AFAA美國有氧體適能協會墊上核心訓練MAT 證書',
+    avatar: 'images/seeder/flora.jpg'
   },
   {
     name: 'Nana', // #22
     major: '瑜珈提斯',
-    studio_id: 4
+    studio_id: 4,
+    introduction: '英國IFA國際芳療師協會認證芳療師、美國 NAHA 國家整體芳療協會芳療師執照',
+    avatar: 'images/seeder/nana.jpg'
   },
   {
     name: 'Derek', // #23
     major: '哈達正位、阿斯坦加',
-    studio_id: 4
+    studio_id: 4,
+    introduction: '亞洲體研Pilates師資培訓班研習、樂活瑜珈醫學研習LevelⅠ/ LevelⅡ研習結業',
+    avatar: 'images/seeder/derek.jpg'
   },
   {
     name: '布布', // #24
     major: '倒立主題課、火箭瑜珈',
-    studio_id: 4
+    studio_id: 4,
+    introduction: '美國瑜珈聯盟（Yoga Alliance）認可瑜珈指導師 （RYT）200 小時訓練 Dec./2012',
+    avatar: 'images/seeder/bubu.jpg'
   },
 
 
@@ -547,37 +595,51 @@ const SEED_TEACHER = [
   {
     name: 'Mahi', // #25
     major: '入門阿斯坦加、陰瑜珈',
-    studio_id: 5
+    studio_id: 5,
+    introduction: '2016/11 200 Hours Hatha Vinyasa Movement Yoga Teacher Training Course (The Yoga Mandala Teacher Training School, Singapore) 新加坡200小時美國瑜伽聯盟師資訓練合格(RYT200)',
+    avatar: 'images/seeder/mahi.jpg'
   },
   {
     name: 'Iris', // #26
     major: '哈達瑜珈',
-    studio_id: 5
+    studio_id: 5,
+    introduction: '2016/3 200 Hours Level One Yoga Teacher Training Retreat (Himalayan Yoga Tradition- Teacher Training Program, India)印度喜馬拉雅瑜珈學院(RYS) 200小時師資訓練結業',
+    avatar: 'images/seeder/iris.jpg'
   },
   {
     name: '依依', // #27
     major: '核心皮拉提斯',
-    studio_id: 5
+    studio_id: 5,
+    introduction: '美國瑜珈聯盟200小時認證 RYS200 JUN./2008',
+    avatar: 'images/seeder/yiyi.jpg'
   },
   {
     name: 'Gogo', // #28
     major: '低空伸展療癒',
-    studio_id: 5
+    studio_id: 5,
+    introduction: '2013 中華民國瑜珈協會 瑜珈教師證照、2014 AFAA MAT 墊上核心證照',
+    avatar: 'images/seeder/gogo.jpg'
   },
   {
     name: '布丁', // #29
     major: '脊椎提斯',
-    studio_id: 5
+    studio_id: 5,
+    introduction: "2012-November: Iyengar Yoga workshop with karin O'bannon. 2013-February: Deep Sivananda Yoga Immersion.",
+    avatar: 'images/seeder/puding.jpg'
   },
   {
     name: 'Vanessa', // #30
     major: '芳療瑜珈',
-    studio_id: 5
+    studio_id: 5,
+    introduction: '美國瑜珈聯盟200小時認證、Johnny G Spinning 飛輪有氧 三星認證',
+    avatar: 'images/seeder/venessa.jpg'
   },
   {
     name: 'Shannon', // #31
     major: '陰陽瑜珈、伸展瑜珈',
-    studio_id: 5
+    studio_id: 5,
+    introduction: 'Sculpt+ 肌力體適能訓練證書 Jan/2017',
+    avatar: 'images/seeder/shannon.jpg'
   }
 ]
 
