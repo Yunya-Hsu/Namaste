@@ -61,45 +61,345 @@
 
 
 
+
+
+
+
+
+/* studio - price page */
+#price-table {
+  margin: 5vh auto;
+  border-collapse: collapse;
+  border: none;
+}
+
+#price-head > tr > th {
+  background-color: #655848;
+  box-shadow: 2px 2px 10px 0 #655848;
+  padding: 3vh 0;
+  
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 4px;
+}
+
+
+
+.category, .price, .point, .remark, .term, .buy {
+  border-bottom: 2px solid #DBD2C9;
+  padding: 10vh 0 4vh 0;
+  
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 5px;
+  font-weight: 300;
+}
+
+.category {
+  width: 15vw;
+}
+
+.price {
+  width: 16vw;
+  font-weight: 500;
+  font-size: 24px;
+  color: #8E9BAE;
+}
+
+.point {
+  width: 7vw;
+}
+
+.remark {
+  width: 24vw;
+}
+
+.term {
+  width: 12vw;
+  font-weight: 400;
+  font-size: 20px;
+  color: #8E9BAE;
+}
+
+.buy {
+  width: 14vw;
+}
+
+.buy > a {
+  text-decoration: none;
+  padding: 8px 8px 8px 16px;
+  background-color: #DBD2C9;
+  border-radius: 3px;
+  color: #ffffff;
+}
+
+.buy>a:hover {
+  background-color: #655848;
+}
+/* studio - price page */
+
+
+
+
+
+
+
+
+
+/* studio - courses page */
+#select-week {
+  display: block;
+  margin: 5vh auto 8vh auto;
+  text-align: center;
+}
+
+#select-week > input {
+  padding: 0 0 0 10px;
+  height: 45px;
+  width: 260px;
+  border: 1px solid #8E9BAE;
+
+  font-size: 18px;
+  font-weight: 200;
+  letter-spacing: 3px;
+}
+
+#select-week>button {
+  height: 40px;
+  width: 65px;
+  border: none;
+  background-color: #DBD2C9;
+  margin: 0 0 0 10px;
+
+  font-size: 16px;
+  font-weight: 200;
+  letter-spacing: 2px;
+  padding: 0 0 3px 2px;
+}
+
+#select-week>button:hover {
+  cursor: pointer;
+  background-color: #7f6b5e;
+  color:#ffffff;
+}
+
+
+
+
+
+
 #curriculum {
   /* border: 1px solid red; */
   margin: 40px 50px 70px 50px;
 }
 
-#morning-section,
-#evening-section {
-  background-color: #fff6ea;
-}
-
-#afternoon-section {
-  background-color: #fafff0;
+#title-section {
+  margin: 0 0 20px 0;
 }
 
 .period {
-  /* margin: auto auto; */
-  width: 170px;
+  min-width: 150px;
   text-align: center;
-  padding: 0 5px 0 5px;
-  border-right: rgb(194, 194, 194) 1px solid;
-  border-left: rgb(194, 194, 194) 1px solid;
+  font-size: 25px;
+  font-weight: 300;
 }
 
-.course-detail {
-  margin: 5px 0;
-  background-color: #655848;
+.time-slot {
+  font-size: 70px;
+  font-weight: 300;
+  letter-spacing: 12px;
+  color: #655848;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  padding: 0 0 0 60px;
 }
 
-.course-detail>* {
+.time-slot-section {
+  margin: 0 0 8vh 0;
+}
+
+/* card design */
+.design-1 {
+  margin: 20px 0;
+  background-color: #AD8B73;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #AD8B73;
+  color: #FFFFFF;
+  padding: 4px 0 6px 0;
+}
+
+.design-2 {
+  margin: 20px 0;
+  background-color: #FFFBE9;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #FFFBE9;
+  color: #665A48;
+  padding: 4px 0 6px 0;
+}
+
+.design-3 {
+  margin: 20px 0;
+  background-color: #E3CAA5;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #E3CAA5;
+  color: #665A48;
+  padding: 4px 0 6px 0;
+}
+
+.design-4 {
+  margin: 20px 0;
+  background-color: #B7C4CF;
+  border-radius: 5px;
+  box-shadow: 0px 3px 10px #B7C4CF;
+  color: #FFFBE9;
+  padding: 4px 0 6px 0;
+}
+/* card design */
+
+
+
+
+/* card inside */
+.course-title {
+  font-size: 16px;
+}
+
+.course-teacher {
+  font-size: 13px;
+}
+
+.course-time {
+  font-size: 16px;
+}
+
+.course-limitation {
+  font-size: 14px;
+
+}
+
+.book-div {
+  margin: 3px 0;
+}
+
+.register-course {
+  background-color: #EEE3CB;
+  color: #967E76;
+  border: none;
+  border-radius: 7px;
+
+  padding: 1px 8px 2px 8px;
+  margin: 0 0 0 6px; 
+}
+
+.register-course:hover {
+  cursor: pointer;
+  background-color: #461111;
   color: #ffffff;
 }
 
-.course-detail>button {
-  display: block;
-  min-height: 25px;
-  width: 80%;
-  color: #655848;
+.empty {
+  background-color: #d7d5d5;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  
+  padding: 1px 8px 2px 8px;
+  margin: 0 0 0 4px;
+}
+/* card inside */
+/* studio - courses page */
+
+
+
+
+
+
+
+
+
+
+/* studio - about page */
+.about-title {
+  height: 13vh;
+  width: 100%;
+  box-shadow: 0px 0px 15px 5px #DBD2C9;
+  background-color: #DBD2C9;
+  margin: 0 0 2vh 0;
 }
 
-.course-detail>button:hover {
-  cursor: pointer;
+.about-title > p {
+  color: #ffffff;
+  font-size: 36px;
+  text-align: center;
+  letter-spacing: 15px;
 }
+
+#address-content {
+  margin: 5vh 10vw;
+  width: 80vw;
+}
+
+#address-content>h2 {
+  margin: 2vh 0;
+  padding: 0;
+  font-size: 24px;
+  letter-spacing: 5px;
+  font-weight: 600;
+  color: #7f6b5e;
+}
+
+#address-content>p {
+  margin: 0 0 5vh 0;
+  padding: 0;
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-weight: 300;
+}
+
+#google-map {
+  border: 0;
+  margin: 8vh 10vw;
+  width: 100vw;
+  height: 45vh;
+}
+
+#teachers {
+  margin: 10vh 0;
+  flex-wrap: wrap;
+}
+
+.teacher-card {
+  width: 35vw;
+  margin: 3vh 5vw;
+}
+
+.teacher-avatar {
+  min-width: 150px;
+  min-height: 150px;
+  border-radius: 100px;
+  margin: 0 5vh 0 0;
+}
+
+.teacher-name {
+  font-size: 24px;
+  font-weight: 200;
+  letter-spacing: 4px;
+  margin: 1vh 0;
+}
+
+.teacher-title {
+  color: #99806f;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  margin: 8px 0 3px 0;
+}
+
+.teacher-intro {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+ /* studio - about page */

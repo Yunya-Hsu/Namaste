@@ -54,3 +54,133 @@
   background-color: #DDDDC8;
   color: #53565C;
 }
+
+/* Sign in & Sign up page */
+
+
+
+
+
+
+
+
+
+
+/* Profile page */
+.profile-table {
+  margin: 5vh auto 13vh auto;
+  border-collapse: collapse;
+  border: none;
+}
+
+
+.profile-table-head > tr > th {
+  font-size: 24px;
+  font-weight: 200;
+  letter-spacing: 7px;
+}
+
+.order-studio,
+.order-date,
+.order-total,
+.order-point,
+.order-status,
+.order-expire-date,
+.order-remaining-point,
+.profile-register-studio,
+.profile-register-course,
+.profile-register-teacher,
+.profile-register-date,
+.profile-register-start-time,
+.profile-register-point,
+.profile-register-livestream {
+  text-align: center;
+  border-bottom: 1px solid #8C736F;
+  padding: 7vh 0 2vh 0;
+
+  color: #000000;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 2px;
+} 
+
+.order-studio, .profile-register-studio {
+  width: 10vw;
+}
+
+.order-studio > a,
+.profile-register-studio > a {
+  text-decoration: none;
+  font-weight: 400;
+  color: #8C736F;
+}
+
+.order-studio>a:hover, 
+.profile-register-studio>a:hover {
+  color: #CCB9AA;
+}
+
+.order-date {
+  width: 15vw;
+}
+
+.order-total {
+  width: 10vw;
+  font-size: 20px;
+}
+
+.order-point {
+  width: 10vw;
+}
+
+.order-status {
+  width: 10vw;
+}
+
+.order-expire-date {
+  width: 15vw;
+}
+
+.order-remaining-point {
+  width: 10vw;
+  font-weight: 400;
+  font-size: 23px;
+  color: #9D5A16;
+}
+
+.profile-register-course, .profile-register-teacher {
+  width: 13vw;
+  letter-spacing: 5px;
+  font-size: 20px;
+}
+
+.profile-register-date {
+  width: 14vw;
+}
+
+.profile-register-start-time, .profile-register-point, .profile-register-livestream {
+  width: 8vw;
+}
+
+.profile-register-livestream > a {
+  display: inline-block;
+  width: 80px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  background-color: #8C736F;
+  border-radius: 10px;
+
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.profile-register-livestream>a:hover {
+  cursor: pointer;
+  background-color: #DDDDC8;
+  color: #53565C;
+}
+
+
+
+/* Profile page */

@@ -1,43 +1,43 @@
 {{> nav_studio}}
 
+
 {{#if priceRules}}
-  <table>
-    <thead>
-      <tr>
-        <th>種類</th>
-        <th>價格</th>
-        <th>點數</th>
-        <th>備註</th>
-        <th>使用期限</th>
-        <th>購買</th>
-      </tr>
-    </thead>
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>收費標準</p>
+</div>
 
-    {{#each priceRules}}
-    <tbody>
-      <tr>
-        <th>{{this.category}}</th>
-        <td>{{this.price}}</td>
-        <td>{{this.point}}</td>
-        <td>{{this.remark}}</td>
-        <td>{{this.term}}</td>
-        <td>
-          <a href="/{{../studio.subdomain}}/checkout?priceRuleId={{this.id}}">購買</a>
-        </td>
-      </tr>
-    </tbody>
-    {{/each}}
-    
-  </table>
+<table id="price-table">
+  <thead id="price-head">
+    <tr>
+      <th>種類</th>
+      <th>價格</th>
+      <th>點數</th>
+      <th>備註</th>
+      <th>使用期限（天）</th>
+      <th>購買</th>
+    </tr>
+  </thead>
 
-
-
-
-
-
-
-
+  {{#each priceRules}}
+  <tbody>
+    <tr>
+      <td class="category">{{this.category}}</td>
+      <td class="price">$ {{this.price}}</td>
+      <td class="point">{{this.point}} 點</td>
+      <td class="remark">{{this.remark}}</td>
+      <td class="term">{{this.term}}</td>
+      <td class="buy">
+        <a href="/{{../studio.subdomain}}/checkout?priceRuleId={{this.id}}">結帳</a>
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
 
 {{else}}
-  <span id="no-price">暫無價格</span>
+
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>暫無價格</p>
+</div>
+
 {{/if}}

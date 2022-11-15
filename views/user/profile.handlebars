@@ -1,13 +1,16 @@
 {{> nav_general}}
 
-個人資訊頁
 
-<h1>歷史訂單</h1>
-<table>
-  <thead>
+{{#if orderList}}
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>歷史訂單</p>
+</div>
+
+<table class="profile-table">
+  <thead class="profile-table-head">
     <tr>
       <th>教室</th>
-      <th>購買日期</th>
+      <th> 購買日期</th>
       <th>總金額</th>
       <th>總點數</th>
       <th>訂單狀態</th>
@@ -20,35 +23,47 @@
   {{#each orderList}}
   <tbody>
     <tr>
-      <th>{{this.studio_name}}</th>
-      <td>{{this.date}}</td>
-      <td>{{this.total}}</td>
-      <td>{{this.point}}</td>
-      <td>{{this.status}}</td>
-      <td>{{this.expire_date}}</td>
-      <td>{{this.remaining_point}}</td>
+      <td class="order-studio">
+        <a href="/{{this.subdomain}}/price">
+          {{this.studio_name}}
+        </a>
+      </td>
+      <td class="order-date">{{this.date}}</td>
+      <td class="order-total">$ {{this.total}}</td>
+      <td class="order-point">{{this.point}}</td>
+      <td class="order-status">{{this.status}}</td>
+      <td class="order-expire-date">{{this.expire_date}}</td>
+      <td class="order-remaining-point">{{this.remaining_point}}</td>
     </tr>
   </tbody>
   {{/each}}
 </table>
+{{else}}
+
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>無歷史訂單</p>
+</div>
+{{/if}}
 
 
 
 
 
+{{#if registrationList}}
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>預約紀錄</p>
+</div>
 
-
-<h1>預約課程</h1>
-<table>
-  <thead>
+<table class="profile-table">
+  <thead class="profile-table-head">
     <tr>
       <th>教室</th>
       <th>課程名稱</th>
       <th>授課老師</th>
       <th>日期</th>
       <th>時間</th>
-      <th>所需點數</th>
-      <th>瀏覽線上課程</th>
+      <th>點數</th>
+      <th>線上課程</th>
     </tr>
   </thead>
 
@@ -56,13 +71,17 @@
   {{#each registrationList}}
   <tbody>
     <tr>
-      <th>{{this.studio_name}}</th>
-      <td>{{this.course_title}}</td>
-      <td>{{this.teacher_name}}</td>
-      <td>{{this.date}}</td>
-      <td>{{this.start_time}}</td>
-      <td>{{this.point}}</td>
-      <td>
+      <td class="profile-register-studio">
+        <a href="/{{this.studio_subdomain}}">
+          {{this.studio_name}}
+        </a>
+      </td>
+      <td class="profile-register-course">{{this.course_title}}</td>
+      <td class="profile-register-teacher">{{this.teacher_name}}</td>
+      <td class="profile-register-date">{{this.date}}</td>
+      <td class="profile-register-start-time">{{this.start_time}}</td>
+      <td class="profile-register-point">{{this.point}}</td>
+      <td class="profile-register-livestream">
         {{#compare this.is_online 1}}
         <a href="/{{../this.studio_subdomain}}/live?courseDetailId={{../this.course_detail_id}}">直播</a>
         {{else}}
@@ -73,3 +92,9 @@
   </tbody>
   {{/each}}
 </table>
+
+{{else}}
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>無預約紀錄</p>
+</div>
+{{/if}}
