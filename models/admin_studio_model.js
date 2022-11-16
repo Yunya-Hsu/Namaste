@@ -30,30 +30,10 @@ const getLivestreamStudents = async courseDetailId => {
   }
 }
 
-const validateCRUDStudioPrice = async (studioSubdomain, userId) => {
-  try {
-    const [[result]] = await db.execute(
-      'SELECT id, name, logo FROM studios WHERE subdomain = (?) AND manager = (?)',
-      [studioSubdomain, userId]
-    )
-    return result
-  } catch (error) {
-    throw new Error(error)
-  }
-}
 
-const getPriceRules = async studioId => {
-  try {
-    const [[result]] = await db.execute(
-      'SELECT * FROM price_rules WHERE studio_id = (?)',
-      [studioId]
-    )
-    return result
-  } catch (error) {
-    throw new Error(error)
-  }
-}
 
+
+// price_rules related
 const createPriceRule = async (studioId, category, price, point, remark, term, publishAt, createdAt, updatedAt) => {
   try {
     const [result] = await db.execute(
@@ -65,6 +45,46 @@ const createPriceRule = async (studioId, category, price, point, remark, term, p
     throw new Error(error)
   }
 }
+
+const getDedicatedPriceRule = async (studioId, priceRuleId) => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT * FROM price_rules WHERE studio_id = (?) AND id = (?)',
+      [studioId, priceRuleId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const updatePriceRule = async (id, category, price, point, remark, term, publish_at, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE price_rules SET category = (?), price = (?), point = (?), remark = (?), term = (?), publish_at = (?), updated_at = (?) WHERE id = (?)',
+      [category, price, point, remark, term, publish_at, updated_at, id]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+
+const getPriceRules = async studioId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT * FROM price_rules WHERE studio_id = (?)',
+      [studioId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// price_rules related
+
+
+
 
 const getStudioTeachers = async studioId => {
   try {
@@ -102,6 +122,12 @@ const validateStudioTeacher = async (teacherId, studioId) => {
   }
 }
 
+
+
+
+
+
+
 const validateLivestreamAccount = async userEmail => {
   try {
     const [[result]] = await db.execute(
@@ -113,6 +139,13 @@ const validateLivestreamAccount = async userEmail => {
     throw new Error(error)
   }
 }
+
+
+
+
+
+
+
 
 const createCourse = async (title, description, teacher_id, studio_id, user_id, point, currentTime) => {
   try {
@@ -150,12 +183,21 @@ const createCourseDetail = async (courseId, date, startTime, duration, isOnline,
   }
 }
 
+
+
+
+
+
 module.exports = {
   getCourseDetail,
+
   getLivestreamStudents,
-  validateCRUDStudioPrice,
-  getPriceRules,
+
   createPriceRule,
+  getDedicatedPriceRule,
+  updatePriceRule,
+  getPriceRules,
+
   getStudioTeachers,
   getStudioCourses,
   validateStudioTeacher,

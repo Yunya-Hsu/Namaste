@@ -1,0 +1,41 @@
+{{> nav_admin_studio}}
+
+<a href="/{{studio.subdomain}}/admin/price/create">建立價格</a>
+
+{{#if priceRuleList}}
+<table id="price-table">
+  <thead id="price-head">
+    <tr>
+      <th>種類</th>
+      <th>價格</th>
+      <th>點數</th>
+      <th>備註</th>
+      <th>使用期限（天）</th>
+      <th>上架日</th>
+      <th>修改</th>
+    </tr>
+  </thead>
+
+  {{#each priceRuleList}}
+  <tbody>
+    <tr>
+      <td class="category">{{this.category}}</td>
+      <td class="price">$ {{this.price}}</td>
+      <td class="point">{{this.point}} 點</td>
+      <td class="remark">{{this.remark}}</td>
+      <td class="term">{{this.term}}</td>
+      <td class="publish_at">{{this.publish_at}}</td>
+      <td class="buy">
+        <a href="/{{../studio.subdomain}}/admin/price/{{this.id}}">修改</a>
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
+
+
+{{else}}
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>暫無價格</p>
+</div>
+{{/if}}

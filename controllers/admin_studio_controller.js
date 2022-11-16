@@ -18,18 +18,21 @@ const renderHomePage = async (req, res) => {
   res.send(`<h1>This is ${studioSubdomain} home page, 後台</h1>`)
 }
 
-const renderPricePage = async (req, res) => {
+
+
+
+
+const renderCreatePricePage = async (req, res) => {
   const studio = req.user.studio
   const input = req.flash('createPriceRoleInput')[0]
 
-  res.render('admin_studio/price', {
+  res.render('admin_studio/createPrice', {
     studio,
     input
   })
 }
 
 const createPriceRule = async (req, res) => {
-  // eslint-disable-next-line camelcase
   const { category, price, point, remark, term, publish_at } = req.body
   const studio = req.user.studio
 
@@ -37,14 +40,14 @@ const createPriceRule = async (req, res) => {
   if (!requirementOfPriceRule.every(e => req.body[e] !== '')) {
     req.flash('createPriceRoleInput', req.body)
     req.flash('errorMessage', 'missing information')
-    return res.redirect(`/${studio.subdomain}/admin/price`)
+    return res.redirect(`/${studio.subdomain}/admin/price/create`)
   }
 
   // check if price, point, term are numbers
   if (isNaN(+price) || isNaN(+point) || isNaN(+term)) {
     req.flash('createPriceRoleInput', req.body)
     req.flash('errorMessage', '價格、點數、使用期限必須為「數字」')
-    return res.redirect(`/${studio.subdomain}/admin/price`)
+    return res.redirect(`/${studio.subdomain}/admin/price/create`)
   }
 
   // insert data
@@ -54,6 +57,65 @@ const createPriceRule = async (req, res) => {
   req.flash('successMessage', 'Price rule is created')
   res.redirect(`/${studio.subdomain}/admin/price`)
 }
+
+const renderEditPricePage = async (req, res) => {
+  const studio = req.user.studio
+  const priceRuleId = req.params.priceRuleId
+  const input = await StudioAdmin.getDedicatedPriceRule(studio.id, priceRuleId)
+
+  if (!input) {
+    req.flash('errorMessage', '價格編號有誤')
+    return res.redirect(`/${studio.subdomain}/admin/price`)
+  }
+
+  input.publish_at = moment(input.publish_at).format('YYYY-MM-DD[T]HH:mm:ss')
+  res.render('admin_studio/editPrice', {
+    studio,
+    input
+  })
+}
+
+const updatePriceRule = async (req, res) => {
+  const studio = req.user.studio
+  const priceRuleId = req.params.priceRuleId
+  const { category, price, point, remark, term, publish_at } = req.body
+
+  // 檢查前端資料，若不足則擋下
+  if (!requirementOfPriceRule.every(e => req.body[e] !== '')) {
+    req.flash('errorMessage', 'missing information')
+    return res.redirect(`/${studio.subdomain}/admin/price/${priceRuleId}`)
+  }
+
+  // check if price, point, term are numbers
+  if (isNaN(+price) || isNaN(+point) || isNaN(+term)) {
+    req.flash('errorMessage', '價格、點數、使用期限必須為「數字」')
+    return res.redirect(`/${studio.subdomain}/admin/price/${priceRuleId}`)
+  }
+
+  // update data
+  const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  await StudioAdmin.updatePriceRule(priceRuleId, category, price, point, remark, term, publishAt, currentTime)
+  req.flash('successMessage', `「${category}」已更新`)
+  res.redirect(`/${studio.subdomain}/admin/price`)
+}
+
+
+const renderAllPriceRule = async (req, res) => {
+  const studio = req.user.studio
+  const priceRuleList = await StudioAdmin.getPriceRules(studio.id)
+
+  res.render('admin_studio/priceRule', {
+    studio,
+    priceRuleList
+  })
+}
+
+
+
+
+
+
 
 const renderCoursePage = async (req, res) => {
   const studio = req.user.studio
@@ -215,12 +277,19 @@ const renderLivePage = async (req, res) => {
 
 module.exports = {
   renderHomePage,
-  renderPricePage,
+
+  renderCreatePricePage,
   createPriceRule,
+  renderEditPricePage,
+  updatePriceRule,
+  renderAllPriceRule,
+
   renderCoursePage,
   createCourse,
   renderCourseDetailPage,
   createCourseDetail,
+
   renderTeacherPage,
+
   renderLivePage
 }

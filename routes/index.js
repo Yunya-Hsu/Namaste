@@ -32,17 +32,44 @@ router.get('/:studioSubdomain/admin/live',
   wrapAsync(AdminStudio.renderLivePage)
 )
 
-router.get('/:studioSubdomain/admin/price',
+
+
+// 建立價格頁面
+router.get('/:studioSubdomain/admin/price/create',
   auth.authenticated,
   auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES),
-  wrapAsync(AdminStudio.renderPricePage)
+  wrapAsync(AdminStudio.renderCreatePricePage)
 )
 
-router.post('/:studioSubdomain/admin/price',
+// 送出價格
+router.post('/:studioSubdomain/admin/price/create',
   auth.authenticated,
   auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES),
   wrapAsync(AdminStudio.createPriceRule)
 )
+
+// 編輯價格頁面
+router.get('/:studioSubdomain/admin/price/:priceRuleId',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_PRICE_RULES),
+  wrapAsync(AdminStudio.renderEditPricePage)
+)
+
+// 送出價格更新
+router.put('/:studioSubdomain/admin/price/:priceRuleId',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_PRICE_RULES),
+  wrapAsync(AdminStudio.updatePriceRule)
+)
+
+router.get('/:studioSubdomain/admin/price',
+  auth.authenticated,
+  auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES),
+  wrapAsync(AdminStudio.renderAllPriceRule)
+)
+
+
+
 
 router.get('/:studioSubdomain/admin/course',
   auth.authenticated,
