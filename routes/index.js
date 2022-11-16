@@ -5,6 +5,8 @@ const router = express.Router()
 const adminRoot = require('./modules/admin_root')
 const user = require('./modules/user')
 
+const { PERMISSION } = require('../models/auth_model')
+
 // controllers
 const AdminStudio = require('../controllers/admin_studio_controller')
 const Studio = require('../controllers/studio_controller')
@@ -13,64 +15,68 @@ const Studio = require('../controllers/studio_controller')
 const auth = require('../middleware/auth')
 const { wrapAsync } = require('../util/util')
 
+
+
+
+
+
 // routers
 router.use('/admin', adminRoot)
 router.use('/user', user)
 
 
 
-
+// studio owner & assistant
 router.get('/:studioSubdomain/admin/live',
   auth.authenticated,
   wrapAsync(AdminStudio.renderLivePage)
 )
 
-
 router.get('/:studioSubdomain/admin/price',
   auth.authenticated,
-  auth.authDedicatedStudio,
+  auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES),
   wrapAsync(AdminStudio.renderPricePage)
 )
 
 router.post('/:studioSubdomain/admin/price',
   auth.authenticated,
-  auth.authDedicatedStudio,
+  auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES),
   wrapAsync(AdminStudio.createPriceRule)
 )
 
 router.get('/:studioSubdomain/admin/course',
   auth.authenticated,
-  auth.authDedicatedStudio,
+  auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
   wrapAsync(AdminStudio.renderCoursePage)
 )
 
 router.post('/:studioSubdomain/admin/course',
   auth.authenticated,
-  auth.authDedicatedStudio,
+  auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
   wrapAsync(AdminStudio.createCourse)
 )
 
 router.get('/:studioSubdomain/admin/courseDetail',
   auth.authenticated,
-  auth.authDedicatedStudio,
+  auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
   wrapAsync(AdminStudio.renderCourseDetailPage)
 )
 
 router.post('/:studioSubdomain/admin/courseDetail',
   auth.authenticated,
-  auth.authDedicatedStudio,
+  auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
   wrapAsync(AdminStudio.createCourseDetail)
 )
 
 router.get('/:studioSubdomain/admin',
   auth.authenticated,
-  auth.authDedicatedStudio,
+  auth.authorization(PERMISSION.UPDATE_DEDICATED_STUDIO),
   wrapAsync(AdminStudio.renderHomePage)
 )
 
 
 
-
+// users
 router.get('/:studioSubdomain/live',
   auth.authenticated,
   wrapAsync(Studio.renderLivePage)

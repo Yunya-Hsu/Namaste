@@ -1,4 +1,5 @@
-const Auth = require('../models/auth')
+const Auth = require('../models/auth_model')
+const Studio = require('../models/studio_model')
 
 const authenticated = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -10,36 +11,38 @@ const authenticated = (req, res, next) => {
 }
 
 
-const authRootAdmin = async (req, res, next) => {
-  const roleId = req.user.role_id
-  const result = await Auth.validateCrudStudios(roleId)
 
-  if (!result) {
-    req.flash('errorMessage', 'Permission denied')
-    return res.redirect('/')
+const authorization = permissionId => {
+  return async function (req, res, next) {
+    try {
+      const { studioSubdomain } = (req.params.studioSubdomain === undefined) ? { studioSubdomain: 'yogaWithLucie' } : req.params // FIXME: root 建立在 studio #1 裡面
+      const studio = await Studio.getStudioBySubdomain(studioSubdomain)
+      const roleList = await Auth.getUserRoles(req.user.id)
+
+      const verifyResult = roleList.some(element => {
+        return element.studio_id === studio.id && element.permission_id === permissionId
+      })
+
+      if (!verifyResult) {
+        req.flash('errorMessage', 'Permission denied')
+        return res.redirect('/')
+      }
+
+      studio.logo = process.env.SERVER_IP + studio.logo
+      req.user.studio = studio
+      next()
+    } catch (error) {
+      req.flash('errorMessage', 'Permission denied')
+      return res.redirect('/')
+    }
   }
-
-  req.user.studio = result
-  next()
 }
 
-const authDedicatedStudio = async (req, res, next) => {
-  const { studioSubdomain } = req.params
-  const userId = req.user.id
-  const result = await Auth.validateCRUDStudioPrice(studioSubdomain, userId) // FIXME:
 
-  if (!result) {
-    req.flash('errorMessage', 'Permission denied')
-    return res.redirect('/')
-  }
 
-  result.subdomain = studioSubdomain
-  req.user.studio = result
-  next()
-}
+
 
 module.exports = {
   authenticated,
-  authRootAdmin,
-  authDedicatedStudio
+  authorization
 }

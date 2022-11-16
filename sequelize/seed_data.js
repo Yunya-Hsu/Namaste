@@ -394,6 +394,7 @@ const SEED_STUDIO = [
 
 
 const SEED_USER_STUDIO_ROLE = [
+  // FIXME: root 建立在 studio #1 裡面
   {
     user_id: 1,
     studio_id: 1,
