@@ -9,6 +9,7 @@ const Studio = require('../models/studio_model')
 const requirementOfPriceRule = ['category', 'price', 'point', 'term', 'publish_at']
 const requirementOfCourse = ['title', 'teacher_id', 'user', 'point', 'publish_at']
 const requirementOfCourseDetail = ['date', 'start_time', 'duration', 'limitation', 'is_online', 'online_limitation', 'publish_at']
+const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_partner_key', 'tappay_id', 'tappay_app_id']
 
 const renderHomePage = async (req, res) => {
   const { studioSubdomain } = req.params
@@ -467,6 +468,50 @@ const renderAllTeachers = async (req, res) => {
 
 
 
+const renderEditAboutPage = async (req, res) => {
+  const studio = req.user.studio
+  const input = await Studio.getStudioForAbout(studio.subdomain)
+
+  if (!input) {
+    req.flash('errorMessage', '系統錯誤，請洽管理員')
+    return res.redirect(`/${studio.subdomain}/admin`)
+  }
+
+  res.render('admin_studio/editAbout', {
+    studio,
+    input
+  })
+}
+
+const updateAbout = async (req, res) => {
+  const studio = req.user.studio
+
+  // 檢查前端資料，若不足則擋下
+  if (!requirementOfUpdateStudio.every(e => req.body[e] !== '')) {
+    req.flash('errorMessage', 'missing information')
+    return res.redirect(`/${studio.subdomain}/admin/about`)
+  }
+
+  // 整理資料
+  const originStudioInfo = await Studio.getStudioForAbout(studio.subdomain)
+  const { name, introduction_title, introduction_detail, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id } = req.body
+
+  const logo = req.files.logo ? req.files.logo[0].path : originStudioInfo.logo
+  const introduction_photo = req.files.introduction_photo ? req.files.introduction_photo[0].path : originStudioInfo.introduction_photo
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+
+  await StudioAdmin.updateStudio(studio.id, name, logo, introduction_title, introduction_detail, introduction_photo, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, currentTime)
+  req.flash('successMessage', '資訊已更新')
+  return res.redirect(`/${studio.subdomain}/admin/about`)
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -532,6 +577,9 @@ module.exports = {
   renderEditTeacherPage,
   updateTeacher,
   renderAllTeachers,
+
+  renderEditAboutPage,
+  updateAbout,
 
   renderLivePage
 }

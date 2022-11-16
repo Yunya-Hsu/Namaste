@@ -305,6 +305,22 @@ const updateTeacherWithoutAvatar = async (teacherId, name, major, introduction, 
 
 
 
+
+// about related
+const updateStudio = async (studioId, name, logo, introduction_title, introduction_detail, introduction_photo, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE studios SET name = (?), logo = (?), introduction_title = (?), introduction_detail = (?), introduction_photo = (?), address = (?), address_description = (?), phone = (?), tappay_app_key = (?), tappay_partner_key = (?), tappay_id = (?), tappay_app_id = (?), updated_at = (?) WHERE id = (?);',
+      [name, logo, introduction_title, introduction_detail, introduction_photo, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, updated_at, studioId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// about related
+
+
+
 module.exports = {
   getCourseDetail,
 
@@ -332,5 +348,7 @@ module.exports = {
   createTeacher,
   getDedicatedTeacher,
   updateTeacherWithAvatar,
-  updateTeacherWithoutAvatar
+  updateTeacherWithoutAvatar,
+
+  updateStudio
 }

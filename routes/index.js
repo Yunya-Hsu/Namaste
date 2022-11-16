@@ -202,6 +202,28 @@ router.get('/:studioSubdomain/admin/teacher',
 
 
 
+
+router.get('/:studioSubdomain/admin/about',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_DEDICATED_STUDIO),
+  wrapAsync(AdminStudio.renderEditAboutPage)
+)
+
+router.put('/:studioSubdomain/admin/about',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_DEDICATED_STUDIO),
+  upload.fields([
+    { name: 'logo', maxCount: 1 },
+    { name: 'introduction_photo', maxCount: 1 }
+  ]),
+  wrapAsync(AdminStudio.updateAbout)
+)
+
+
+
+
+
+
 router.get('/:studioSubdomain/admin',
   auth.authenticated,
   auth.authorization(PERMISSION.UPDATE_DEDICATED_STUDIO),
