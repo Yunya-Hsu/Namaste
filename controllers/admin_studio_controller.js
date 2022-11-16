@@ -3,6 +3,7 @@ const moment = require('moment-timezone')
 
 // models
 const StudioAdmin = require('../models/admin_studio_model')
+const Studio = require('../models/studio_model')
 
 // basic parameters
 const requirementOfPriceRule = ['category', 'price', 'point', 'term', 'publish_at']
@@ -369,7 +370,6 @@ const updateCourseDetail = async (req, res) => {
 const renderAllCourseDetails = async (req, res) => {
   const studio = req.user.studio
   const courseDetailList = await StudioAdmin.getStudioCourseDetail(studio.id)
-  // console.log('courseDetailList: ', courseDetailList);
 
   res.render('admin_studio/courseDetail', {
     studio,
@@ -382,11 +382,94 @@ const renderAllCourseDetails = async (req, res) => {
 
 
 
-const renderTeacherPage = async (req, res) => {
-  const { studioSubdomain } = req.params
+const renderCreateTeacherPage = async (req, res) => {
+  const studio = req.user.studio
+  const input = req.flash('createTeacherInput')[0]
 
-  res.send(`<h1>This is ${studioSubdomain} teacher page, 後台</h1>`)
+  res.render('admin_studio/createTeacher', {
+    studio,
+    input
+  })
 }
+
+const createTeacher = async (req, res) => {
+  const studio = req.user.studio
+  const { name, major, introduction } = req.body
+
+  // 檢查前端資料，若不足則擋下
+  if (!name || !major) {
+    req.flash('createTeacherInput', req.body)
+    req.flash('errorMessage', 'missing information')
+    return res.redirect(`/${studio.subdomain}/admin/teacher/create`)
+  }
+
+  const avatar = req.files.avatar ? req.files.avatar[0].path : null
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  await StudioAdmin.createTeacher(name, avatar, major, introduction, studio.id, currentTime)
+  req.flash('successMessage', `${name} 老師建立成功`)
+  return res.redirect(`/${studio.subdomain}/admin/teacher/create`)
+}
+
+const renderEditTeacherPage = async (req, res) => {
+  const studio = req.user.studio
+  const teacherId = req.params.teacherId
+  const input = await StudioAdmin.getDedicatedTeacher(studio.id, teacherId)
+
+  if (!input) {
+    req.flash('errorMessage', '老師編號有誤')
+    return res.redirect(`/${studio.subdomain}/admin/teacher`)
+  }
+
+  res.render('admin_studio/editTeacher', {
+    studio,
+    input
+  })
+}
+
+const updateTeacher = async (req, res) => {
+  const studio = req.user.studio
+  const teacherId = req.params.teacherId
+  const { name, major, introduction } = req.body
+
+  // 檢查前端資料，若不足則擋下
+  if (!name || !major) {
+    req.flash('errorMessage', 'missing information')
+    return res.redirect(`/${studio.subdomain}/admin/teacher/${teacherId}`)
+  }
+
+  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  if (req.files.avatar) { // 如果頭像有更新
+    const avatar = req.files.avatar[0].path
+    await StudioAdmin.updateTeacherWithAvatar(teacherId, name, avatar, major, introduction, currentTime)
+  } else { // 如果頭像沒有更新
+    await StudioAdmin.updateTeacherWithoutAvatar(teacherId, name, major, introduction, currentTime)
+  }
+
+  req.flash('successMessage', `${name} 老師更新成功`)
+  return res.redirect(`/${studio.subdomain}/admin/teacher`)
+}
+
+const renderAllTeachers = async (req, res) => {
+  const studio = req.user.studio
+  const teacherList = await Studio.getTeachers(studio.id)
+  for (const teacher of teacherList) {
+    teacher.avatar = process.env.SERVER_IP + teacher.avatar
+  }
+
+  res.render('admin_studio/teacher', {
+    studio,
+    teacherList
+  })
+}
+
+
+
+
+
+
+
+
+
 
 const renderLivePage = async (req, res) => {
   const { studioSubdomain } = req.params
@@ -444,7 +527,11 @@ module.exports = {
   updateCourseDetail,
   renderAllCourseDetails,
 
-  renderTeacherPage,
+  renderCreateTeacherPage,
+  createTeacher,
+  renderEditTeacherPage,
+  updateTeacher,
+  renderAllTeachers,
 
   renderLivePage
 }

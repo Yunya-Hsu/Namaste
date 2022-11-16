@@ -14,6 +14,7 @@ const Studio = require('../controllers/studio_controller')
 // middleware & utils
 const auth = require('../middleware/auth')
 const { wrapAsync } = require('../util/util')
+const upload = require('../middleware/multer')
 
 
 
@@ -146,10 +147,54 @@ router.put('/:studioSubdomain/admin/courseDetail/:courseDetailId',
 // course_detail 一覽
 router.get('/:studioSubdomain/admin/courseDetail',
   auth.authenticated,
-  auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
+  auth.authorization(PERMISSION.UPDATE_STUDIO_COURSE),
   wrapAsync(AdminStudio.renderAllCourseDetails)
 )
 
+
+
+
+
+// 建立 teacher 頁面
+router.get('/:studioSubdomain/admin/teacher/create',
+  auth.authenticated,
+  auth.authorization(PERMISSION.CREATE_STUDIO_TEACHER),
+  wrapAsync(AdminStudio.renderCreateTeacherPage)
+)
+
+// 建立 teacher
+router.post('/:studioSubdomain/admin/teacher/create',
+  auth.authenticated,
+  auth.authorization(PERMISSION.CREATE_STUDIO_TEACHER),
+  upload.fields([
+    { name: 'avatar', maxCount: 1 }
+  ]),
+  wrapAsync(AdminStudio.createTeacher)
+)
+
+// 編輯 teacher 頁面
+router.get('/:studioSubdomain/admin/teacher/:teacherId',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_TEACHER),
+  wrapAsync(AdminStudio.renderEditTeacherPage)
+)
+
+// 送出 teacher 更新
+router.put('/:studioSubdomain/admin/teacher/:teacherId',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_TEACHER),
+  upload.fields([
+    { name: 'avatar', maxCount: 1 }
+  ]),
+  wrapAsync(AdminStudio.updateTeacher)
+)
+
+// teacher 一覽
+router.get('/:studioSubdomain/admin/teacher',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_TEACHER),
+  wrapAsync(AdminStudio.renderAllTeachers)
+)
 
 
 

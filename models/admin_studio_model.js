@@ -252,6 +252,59 @@ const getStudioCourseDetail = async studioId => {
 
 
 
+
+
+// teacher related
+const createTeacher = async (name, avatar, major, introduction, studio_id, currentTime) => {
+  try {
+    const [result] = await db.execute(
+      'INSERT INTO teachers (name, avatar, major, introduction, studio_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [name, avatar, major, introduction, studio_id, currentTime, currentTime]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getDedicatedTeacher = async (studioId, teacherId) => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT * FROM teachers WHERE studio_id = (?) AND id = (?);',
+      [studioId, teacherId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const updateTeacherWithAvatar = async (teacherId, name, avatar, major, introduction, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE teachers SET name = (?), avatar = (?), major = (?), introduction = (?), updated_at = (?) WHERE id = (?);',
+      [name, avatar, major, introduction, updated_at, teacherId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const updateTeacherWithoutAvatar = async (teacherId, name, major, introduction, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE teachers SET name = (?), major = (?), introduction = (?), updated_at = (?) WHERE id = (?);',
+      [name, major, introduction, updated_at, teacherId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// teacher related
+
+
+
+
 module.exports = {
   getCourseDetail,
 
@@ -274,5 +327,10 @@ module.exports = {
   createCourseDetail,
   getDedicatedCourseDetail,
   updateCourseDetail,
-  getStudioCourseDetail
+  getStudioCourseDetail,
+
+  createTeacher,
+  getDedicatedTeacher,
+  updateTeacherWithAvatar,
+  updateTeacherWithoutAvatar
 }
