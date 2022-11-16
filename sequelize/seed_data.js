@@ -25,242 +25,228 @@ const SEED_ROLES = [
 const PASSWORD = 'test1234'
 const SEED_USERS_SUPER_ADMIN = [
   {
-    role_id: 1,
     name: 'Root',
     email: 'root@test.com'
   }
 ]
 const SEED_USERS_STUDIO_OWNER = [
   {
-    role_id: 2,
     name: 'Lucie',
     email: 'lucie@test.com'
   },
   {
-    role_id: 2,
     name: 'Paula',
     email: 'paula@test.com'
   },
   {
-    role_id: 2,
     name: 'Marie',
     email: 'marie@test.com'
   },
   {
-    role_id: 2,
     name: 'April',
     email: 'april@test.com'
   },
   {
-    role_id: 2,
     name: 'Eva',
     email: 'eva@test.com'
   }
 ]
 const SEED_USERS_STUDIO_ASSISTANT = [
   {
-    role_id: 3,
     name: 'Rita',
     email: 'rita@test.com'
   },
   {
-    role_id: 3,
     name: 'Jackie',
     email: 'jackie@test.com'
   },
   {
-    role_id: 3,
     name: 'Ken',
     email: 'ken@test.com'
   },
   {
-    role_id: 3,
     name: 'Bobby',
     email: 'bobby@test.com'
   },
   {
-    role_id: 3,
     name: 'Stephen',
     email: 'stephen@test.com'
   }
 ]
 const SEED_USERS_TEACHER = [
   {
-    role_id: 4,
     name: 'Dora',
     email: 'dora@test.com'
   },
   {
-    role_id: 4,
     name: '花花',
     email: 'huahua@test.com'
   },
   {
-    role_id: 4,
     name: 'Bella',
     email: 'bella@test.com'
   },
   {
-    role_id: 4,
     name: 'Tina',
     email: 'tina@test.com'
   },
   {
-    role_id: 4,
     name: 'Kim',
     email: 'kim@test.com'
   },
   {
-    role_id: 4,
     name: 'WALI',
     email: 'wali@test.com'
   },
   {
-    role_id: 4,
     name: 'Cora',
     email: 'cora@test.com'
   },
   {
-    role_id: 4,
     name: 'Hsieh',
     email: 'hsied@test.com'
   },
   {
-    role_id: 4,
     name: 'Joe',
     email: 'joe@test.com'
   },
   {
-    role_id: 4,
     name: 'Trix',
     email: 'trix@test.com'
   },
   {
-    role_id: 4,
     name: 'Derek',
     email: 'derek@test.com'
   },
   {
-    role_id: 4,
     name: 'Noe',
     email: 'noe@test.com'
   },
   {
-    role_id: 4,
     name: 'Ambee',
     email: 'ambee@test.com'
   },
   {
-    role_id: 4,
     name: 'Lydia',
     email: 'lydia@test.com'
   },
   {
-    role_id: 4,
     name: 'Sherry',
     email: 'sherry@test.com'
   },
   {
-    role_id: 4,
     name: 'Jina',
     email: 'jina@test.com'
   },
   {
-    role_id: 4,
     name: '娃娃',
     email: 'wawa@test.com'
   },
   {
-    role_id: 4,
     name: 'Flora',
     email: 'flora@test.com'
   },
   {
-    role_id: 4,
     name: 'Nana',
     email: 'nana@test.com'
   },
   {
-    role_id: 4,
     name: '布布',
     email: 'bubu@test.com'
   },
   {
-    role_id: 4,
     name: 'Mahi',
     email: 'mahi@test.com'
   },
   {
-    role_id: 4,
     name: 'Iris',
     email: 'iris@test.com'
   },
   {
-    role_id: 4,
     name: '依依',
     email: 'yiyi@test.com'
   },
   {
-    role_id: 4,
     name: 'Gogo',
     email: 'gogo@test.com'
   },
   {
-    role_id: 4,
     name: '布丁',
     email: 'puding@test.com'
   },
   {
-    role_id: 4,
     name: 'Vanessa',
     email: 'vanessa@test.com'
   },
   {
-    role_id: 4,
     name: 'Shannon',
     email: 'shannon@test.com'
   }
 ]
 const SEED_USERS_STUDENT = [
   {
-    role_id: 5,
+    name: 'Azole',
+    email: 'azole@test.com'
+  },
+  {
     name: '子佑',
     email: 'tzuyu@test.com'
   },
   {
-    role_id: 5,
     name: '良逸',
     email: 'david@test.com'
   },
   {
-    role_id: 5,
     name: '硯竹',
     email: 'yenchu@test.com'
   },
   {
-    role_id: 5,
     name: '仰兌',
     email: 'timmy@test.com'
   },
   {
-    role_id: 5,
     name: '冠豪',
     email: 'kuan-hao@test.com'
   },
   {
-    role_id: 5,
     name: '宣揚',
     email: 'cks@test.com'
   },
   {
-    role_id: 5,
     name: '品珊',
     email: 'ps@test.com'
   },
   {
-    role_id: 5,
-    name: 'shane',
+    name: 'Shane',
     email: 'shane@test.com'
+  },
+  {
+    name: 'Ivan',
+    email: 'ivan@test.com'
+  },
+  {
+    name: 'Kelly',
+    email: 'Kelly@test.com'
+  },
+  {
+    name: 'Wen',
+    email: 'wen@test.com'
+  },
+  {
+    name: 'Mila',
+    email: 'mila@test.com'
+  },
+  {
+    name: 'Ingrid',
+    email: 'ingrid@test.com'
+  },
+  {
+    name: 'Penny',
+    email: 'penny@test.com'
+  },
+  {
+    name: 'Lynn',
+    email: 'lynn@test.com'
   }
 ]
 
@@ -397,6 +383,250 @@ const SEED_STUDIO = [
     tappay_app_id: '125713'
   }
 ]
+
+
+
+
+
+
+
+
+
+
+const SEED_USER_STUDIO_ROLE = [
+  {
+    user_id: 1,
+    studio_id: 1,
+    role_id: 1
+  },
+  // studio owner
+  {
+    user_id: 2,
+    studio_id: 1,
+    role_id: 2
+  },
+  {
+    user_id: 3,
+    studio_id: 2,
+    role_id: 2
+  },
+  {
+    user_id: 4,
+    studio_id: 3,
+    role_id: 2
+  },
+  {
+    user_id: 5,
+    studio_id: 4,
+    role_id: 2
+  },
+  {
+    user_id: 6,
+    studio_id: 5,
+    role_id: 2
+  },
+
+  // studio assistants
+  {
+    user_id: 7,
+    studio_id: 1,
+    role_id: 3
+  },
+  {
+    user_id: 8,
+    studio_id: 2,
+    role_id: 3
+  },
+  {
+    user_id: 9,
+    studio_id: 3,
+    role_id: 3
+  },
+  {
+    user_id: 10,
+    studio_id: 4,
+    role_id: 3
+  },
+  {
+    user_id: 11,
+    studio_id: 5,
+    role_id: 3
+  },
+
+  // studio teachers _ studio #1
+  {
+    user_id: 12,
+    studio_id: 1,
+    role_id: 4
+  },
+  {
+    user_id: 13,
+    studio_id: 1,
+    role_id: 4
+  },
+  {
+    user_id: 14,
+    studio_id: 1,
+    role_id: 4
+  },
+  {
+    user_id: 15,
+    studio_id: 1,
+    role_id: 4
+  },
+  {
+    user_id: 16,
+    studio_id: 1,
+    role_id: 4
+  },
+  {
+    user_id: 17,
+    studio_id: 1,
+    role_id: 4
+  },
+
+  // studio teachers _ studio #2
+  {
+    user_id: 18,
+    studio_id: 2,
+    role_id: 4
+  },
+  {
+    user_id: 19,
+    studio_id: 2,
+    role_id: 4
+  },
+  {
+    user_id: 20,
+    studio_id: 2,
+    role_id: 4
+  },
+  {
+    user_id: 21,
+    studio_id: 2,
+    role_id: 4
+  },
+  {
+    user_id: 22,
+    studio_id: 2,
+    role_id: 4
+  },
+  {
+    user_id: 23,
+    studio_id: 2,
+    role_id: 4
+  },
+  {
+    user_id: 24,
+    studio_id: 2,
+    role_id: 4
+  },
+
+  // studio teachers _ studio #3
+  {
+    user_id: 23,
+    studio_id: 3,
+    role_id: 4
+  },
+  {
+    user_id: 13,
+    studio_id: 3,
+    role_id: 4
+  },
+  {
+    user_id: 25,
+    studio_id: 3,
+    role_id: 4
+  },
+  {
+    user_id: 26,
+    studio_id: 3,
+    role_id: 4
+  },
+  {
+    user_id: 27,
+    studio_id: 3,
+    role_id: 4
+  },
+
+  // studio teachers _ studio #4
+  {
+    user_id: 28,
+    studio_id: 4,
+    role_id: 4
+  },
+  {
+    user_id: 27,
+    studio_id: 4,
+    role_id: 4
+  },
+  {
+    user_id: 29,
+    studio_id: 4,
+    role_id: 4
+  },
+  {
+    user_id: 30,
+    studio_id: 4,
+    role_id: 4
+  },
+  {
+    user_id: 22,
+    studio_id: 4,
+    role_id: 4
+  },
+  {
+    user_id: 31,
+    studio_id: 4,
+    role_id: 4
+  },
+
+  // studio teachers _ studio #5
+  {
+    user_id: 32,
+    studio_id: 5,
+    role_id: 4
+  },
+  {
+    user_id: 33,
+    studio_id: 5,
+    role_id: 4
+  },
+  {
+    user_id: 34,
+    studio_id: 5,
+    role_id: 4
+  },
+  {
+    user_id: 35,
+    studio_id: 5,
+    role_id: 4
+  },
+  {
+    user_id: 36,
+    studio_id: 5,
+    role_id: 4
+  },
+  {
+    user_id: 37,
+    studio_id: 5,
+    role_id: 4
+  },
+  {
+    user_id: 38,
+    studio_id: 5,
+    role_id: 4
+  }
+]
+
+
+
+
+
+
+
+
+
 
 const SEED_TEACHER = [
   // studio 1, total 6 teachers
@@ -2461,6 +2691,9 @@ module.exports = {
   SEED_ROLE_PERMISSION,
 
   SEED_STUDIO,
+
+  SEED_USER_STUDIO_ROLE,
+
   SEED_TEACHER,
   SEED_COURSE,
   SEED_COURSE_DETAIL,
