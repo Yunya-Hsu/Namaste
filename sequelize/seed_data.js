@@ -2418,7 +2418,7 @@ const SEED_PRICE_RULES = [
     category: '新手體驗',
     price: 500,
     point: 1,
-    remark: '當堂體驗課程',
+    remark: '單堂體驗課程',
     term: '15',
     publish_at: currentTime,
     created_at: currentTime,

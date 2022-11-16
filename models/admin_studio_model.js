@@ -69,7 +69,6 @@ const updatePriceRule = async (id, category, price, point, remark, term, publish
   }
 }
 
-
 const getPriceRules = async studioId => {
   try {
     const [result] = await db.execute(
@@ -86,22 +85,15 @@ const getPriceRules = async studioId => {
 
 
 
+
+
+
+
+// course related
 const getStudioTeachers = async studioId => {
   try {
     const [result] = await db.execute(
       'SELECT id, name, major FROM teachers WHERE studio_id = (?);',
-      [studioId]
-    )
-    return result
-  } catch (error) {
-    throw new Error(error)
-  }
-}
-
-const getStudioCourses = async studioId => {
-  try {
-    const [result] = await db.execute(
-      'SELECT courses.id AS id, courses.title AS title, teachers.name AS teacher FROM courses LEFT JOIN teachers ON courses.teacher_id = teachers.id WHERE courses.studio_id = (?);',
       [studioId]
     )
     return result
@@ -122,12 +114,6 @@ const validateStudioTeacher = async (teacherId, studioId) => {
   }
 }
 
-
-
-
-
-
-
 const validateLivestreamAccount = async userEmail => {
   try {
     const [[result]] = await db.execute(
@@ -139,13 +125,6 @@ const validateLivestreamAccount = async userEmail => {
     throw new Error(error)
   }
 }
-
-
-
-
-
-
-
 
 const createCourse = async (title, description, teacher_id, studio_id, user_id, point, currentTime) => {
   try {
@@ -159,6 +138,60 @@ const createCourse = async (title, description, teacher_id, studio_id, user_id, 
   }
 }
 
+const getDedicatedCourse = async (studioId, courseId) => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT courses.*, users.email FROM courses LEFT JOIN users ON courses.user_id = users.id WHERE courses.studio_id = (?) AND courses.id = (?)',
+      [studioId, courseId]
+    )
+
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const updateCourse = async (courseId, title, description, teacher_id, user_id, point, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE courses SET title = (?), description = (?), teacher_id = (?), user_id = (?), point = (?), updated_at = (?) WHERE id = (?)',
+      [title, description, teacher_id, user_id, point, updated_at, courseId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getStudioCourses = async studioId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT courses.*, teachers.name AS teacher, users.email FROM courses LEFT JOIN teachers ON courses.teacher_id = teachers.id LEFT JOIN users ON courses.user_id = users.id WHERE courses.studio_id = (?);',
+      [studioId]
+    )
+
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// course related
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// FIXME: 這是啥咧????
 const getCourseById = async (courseId, studioId) => {
   try {
     const [[result]] = await db.execute(
@@ -170,6 +203,11 @@ const getCourseById = async (courseId, studioId) => {
     throw new Error(error)
   }
 }
+
+
+
+
+
 
 const createCourseDetail = async (courseId, date, startTime, duration, isOnline, limitation, onlineLimitation, publishAt, currentTime) => {
   try {
@@ -199,10 +237,14 @@ module.exports = {
   getPriceRules,
 
   getStudioTeachers,
-  getStudioCourses,
   validateStudioTeacher,
   validateLivestreamAccount,
   createCourse,
+  getDedicatedCourse,
+  updateCourse,
+  getStudioCourses,
+
+
   getCourseById,
   createCourseDetail
 }

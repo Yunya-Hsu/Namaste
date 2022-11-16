@@ -41,7 +41,7 @@ router.get('/:studioSubdomain/admin/price/create',
   wrapAsync(AdminStudio.renderCreatePricePage)
 )
 
-// 送出價格
+// 建立價格
 router.post('/:studioSubdomain/admin/price/create',
   auth.authenticated,
   auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES),
@@ -62,26 +62,54 @@ router.put('/:studioSubdomain/admin/price/:priceRuleId',
   wrapAsync(AdminStudio.updatePriceRule)
 )
 
+// 價格一覽
 router.get('/:studioSubdomain/admin/price',
   auth.authenticated,
-  auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES),
+  auth.authorization(PERMISSION.UPDATE_STUDIO_COURSE),
   wrapAsync(AdminStudio.renderAllPriceRule)
 )
 
 
 
 
-router.get('/:studioSubdomain/admin/course',
+
+// 建立 course 頁面
+router.get('/:studioSubdomain/admin/course/create',
   auth.authenticated,
   auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
-  wrapAsync(AdminStudio.renderCoursePage)
+  wrapAsync(AdminStudio.renderCreateCoursePage)
 )
 
-router.post('/:studioSubdomain/admin/course',
+// 建立 course
+router.post('/:studioSubdomain/admin/course/create',
   auth.authenticated,
   auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
   wrapAsync(AdminStudio.createCourse)
 )
+
+// 編輯 course 頁面
+router.get('/:studioSubdomain/admin/course/:courseId',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_COURSE),
+  wrapAsync(AdminStudio.renderEditCoursePage)
+)
+
+// 送出 course 更新
+router.put('/:studioSubdomain/admin/course/:courseId',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_COURSE),
+  wrapAsync(AdminStudio.updateCourse)
+)
+
+// course 一覽
+router.get('/:studioSubdomain/admin/course',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_COURSE),
+  wrapAsync(AdminStudio.renderAllCourses)
+)
+
+
+
 
 router.get('/:studioSubdomain/admin/courseDetail',
   auth.authenticated,

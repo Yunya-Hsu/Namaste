@@ -1,66 +1,39 @@
 {{> nav_admin_studio}}
 
+<a href="/{{studio.subdomain}}/admin/course/create">建立課程</a>
+
+{{#if courseList}}
+<table id="price-table">
+  <thead id="price-head">
+    <tr>
+      <th>課程名稱</th>
+      <th>描述</th>
+      <th>授課老師</th>
+      <th>直播人員 email 帳號</th>
+      <th>點數</th>
+      <th>修改</th>
+    </tr>
+  </thead>
+
+  {{#each courseList}}
+  <tbody>
+    <tr>
+      <td class="category">{{this.title}}</td>
+      <td class="price">{{this.description}}</td>
+      <td class="point">{{this.teacher}}</td>
+      <td class="remark">{{this.email}}</td>
+      <td class="term">{{this.point}}</td>
+      <td class="buy">
+        <a href="/{{../studio.subdomain}}/admin/course/{{this.id}}">修改</a>
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
 
 
-<div class="d-flex align-items-stretch justify-content-center super-admin-div">
-  <section id="super-admin-title-left">
-    <span>課程上架</span>
-    <hr id="hr">
-  </section>
-
-  <section id="super-admin-create-studio-section">
-    <form action="/{{ studio.subdomain }}/admin/course" method="POST" enctype="application/json"
-      id="super-admin-create-studio-form">
-
-      <div>
-        <label for="title">課程名稱*</label>
-        <input type="text" id="title" name="title" {{#if input.title}} value={{input.title}} {{/if}} required>
-      </div>
-
-      <div>
-        <label for="description">描述</label>
-        <input type="text" id="description" name="description" {{#if input.description}} value={{input.description}} {{/if}}>
-      </div>
-
-      <div>
-        <label for="teacher_id">授課老師*</label>
-          {{!-- <option value="0">test</option> --}}
-          <select name="teacher_id" id="teacher_id">
-          {{#each studio.teacherList}}
-            <option value="{{this.id}}">{{this.name}}（專業：{{this.major}}）</option>
-          {{/each}}
-          </select>
-        </select>
-      </div>
-
-      <div>
-        <label for="livestream_email">直播人員 email 帳號 *</label>
-        <input type="text" id="livestream_email" name="livestream_email" {{#if input.user_id}} value={{input.user_id}} {{/if}} required>
-      </div>
-
-      <div>
-        <label for="point">點數*</label>
-        <input type="number" id="point" name="point" {{#if input.point}} value={{input.point}} {{/if}} required>
-      </div>
-
-      {{!-- <div>
-        <label for="publish_at">上架日 *（台灣時間）</label>
-        <input type="datetime-local" id="publish_at" name="publish_at" {{#if input.publish_at}} value={{input.publish_at}} {{/if}} required>
-      </div> --}}
-
-      <button type="submit">建立</button>
-    </form>
-  </section>
+{{else}}
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>暫無課程</p>
 </div>
-
-<script>
-  window.addEventListener('load', () => {
-    const now = new Date()
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
-
-    now.setMilliseconds(null)
-    now.setSeconds(null)
-
-    document.getElementById('publish_at').value = now.toISOString().slice(0, -1)
-  })
-</script>
+{{/if}}
