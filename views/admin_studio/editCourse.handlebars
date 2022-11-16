@@ -25,11 +25,9 @@
 
       <div>
         <label for="teacher_id">授課老師*</label>
-        {{!-- <option value="0">test</option> --}}
         <select name="teacher_id" id="teacher_id">
-          <option value="0" hidden></option>
           {{#each studio.teacherList}}
-          <option value="{{this.id}}">{{this.name}}（專業：{{this.major}}）</option>
+          <option value="{{this.id}}" {{#compare this.id ../input.teacher_id}} selected {{/compare}}>{{this.name}}（專業：{{this.major}}）</option>
           {{/each}}
         </select>
       </div>

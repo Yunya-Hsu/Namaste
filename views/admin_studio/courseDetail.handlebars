@@ -1,91 +1,51 @@
 {{> nav_admin_studio}}
 
+<a href="/{{studio.subdomain}}/admin/courseDetail/create">上架課程</a>
+
+{{#if courseDetailList}}
+<table id="price-table">
+  <thead id="price-head">
+    <tr>
+      <th>課程名稱</th>
+      <th>上課日期</th>
+      <th>上課時間</th>
+      <th>時長(分鐘)</th>
+      <th>人數上限</th>
+      <th>是否開放線上</th>
+      <th>線上課程人數上限</th>
+      <th>上架日</th>
+      <th>修改</th>
+    </tr>
+  </thead>
+
+  {{#each courseDetailList}}
+  <tbody>
+    <tr>
+      <td class="title">{{this.title}}</td>
+      <td class="date">{{this.date}}</td>
+      <td class="start_time">{{this.start_time}}</td>
+      <td class="duration">{{this.duration}}</td>
+      <td class="limitation">{{this.limitation}}</td>
+      <td class="is_online">
+        {{#compare this.is_online 1}}
+        <span>是</span>
+        {{else}}
+        <span>否</span>
+        {{/compare}}
+      </td>
+      <td class="online_limitation">{{this.online_limitation}}</td>
+      <td class="publist_at">{{this.publish_at}}</td>
+      <td class="buy">
+        <a href="/{{../studio.subdomain}}/admin/courseDetail/{{this.id}}">修改</a>
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
 
 
-<div class="d-flex align-items-stretch justify-content-center super-admin-div">
-  <section id="super-admin-title-left">
-    <span>每月課程上架</span>
-    <hr id="hr">
-  </section>
-
-  <section id="super-admin-create-studio-section">
-    <form action="/{{ studio.subdomain }}/admin/courseDetail" method="POST" enctype="application/json"
-      id="super-admin-create-studio-form">
-
-      <div>
-        <label for="course_id">課程名稱*</label>
-        <select name="course_id" id="course_id" required>
-          {{#each studio.courseList}}
-          <option value={{this.id}} {{#compare this.id ../input.course_id}} selected {{/compare}}>
-            {{this.title}} - {{this.teacher}}
-          </option>
-          {{/each}}
-        </select>
-      </div>
-
-      <div>
-        <label for="date">上課日期*</label>
-        <input type="date" id="date" name="date" {{#if input.date}} value={{input.date}} {{/if}} required>
-      </div>
-
-      <div>
-        <label for="start_time">上課時間*</label>
-        <input type="time" id="start_time" name="start_time" {{#if input.start_time}} value={{input.start_time}} {{else}} value="10:00" {{/if}} required>
-      </div>
-
-      <div>
-        <label for="duration">時長*（分鐘）</label>
-        <input type="number" id="duration" name="duration" {{#if input.duration}} value={{input.duration}} {{else}} value=60 {{/if}} required>
-      </div>
-
-      <div>
-        <label for="limitation">人數上限*</label>
-        <input type="number" id="limitation" name="limitation" {{#if input.limitation}} value={{input.limitation}} {{/if}} required>
-      </div>
-
-      <div>
-        <label for="is_online">開放線上*</label>
-        <select name="is_online" id="is_online" required>
-          <option value="0" {{#compare 0 input.is_online}} selected {{/compare}}>不開放</option>
-          <option value="1" {{#compare 1 input.is_online}} selected {{/compare}}>開放</option>
-        </select>
-      </div>
-
-      <div>
-        <label for="online_limitation">線上課程人數上限</label>
-        <input type="number" id="online_limitation" name="online_limitation" {{#if input.limitation}} value={{input.limitation}} {{else}} value="0" {{/if}} required>
-      </div>
-
-      <div>
-        <label for="publish_at">上架日 *（台灣時間）</label>
-        <input type="datetime-local" id="publish_at" name="publish_at" {{#if input.publish_at}}
-          value={{input.publish_at}} {{/if}} required>
-      </div>
-
-      <button type="submit">建立</button>
-    </form>
-  </section>
+{{else}}
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>暫無上架課程</p>
 </div>
-
-<script>
-  window.addEventListener('load', () => {
-    const now = new Date()
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
-
-    now.setMilliseconds(null)
-    now.setSeconds(null)
-
-    {{!-- document.getElementById('date').value = now.toDateString().slice(0, -1) --}}
-    document.getElementById('publish_at').value = now.toISOString().slice(0, -1)
-  })
-
-  const isOnline = document.querySelector('#is_online')
-  const onlineLimitation = document.querySelector('#online_limitation')
-  isOnline.addEventListener('change', () => {
-    if (isOnline.value === '1') {
-      return onlineLimitation.value = 5
-    } else {
-      return onlineLimitation.value = 0
-    } 
-  })
-</script>
+{{/if}}

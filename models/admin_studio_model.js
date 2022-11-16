@@ -185,13 +185,8 @@ const getStudioCourses = async studioId => {
 
 
 
-
-
-
-
-
-
-// FIXME: 這是啥咧????
+// course_detail related
+// 檢查 course_id 是否隸屬該教室
 const getCourseById = async (courseId, studioId) => {
   try {
     const [[result]] = await db.execute(
@@ -204,11 +199,6 @@ const getCourseById = async (courseId, studioId) => {
   }
 }
 
-
-
-
-
-
 const createCourseDetail = async (courseId, date, startTime, duration, isOnline, limitation, onlineLimitation, publishAt, currentTime) => {
   try {
     const [result] = await db.execute(
@@ -220,6 +210,42 @@ const createCourseDetail = async (courseId, date, startTime, duration, isOnline,
     throw new Error(error)
   }
 }
+
+const getDedicatedCourseDetail = async (studioId, courseDetailId) => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT course_details.*, courses.studio_id, courses.title FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id WHERE courses.studio_id = (?) AND course_details.id = (?);',
+      [studioId, courseDetailId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const updateCourseDetail = async (courseDetailId, date, start_time, duration, is_online, limitation, online_limitation, publish_at, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE course_details SET date = (?), start_time = (?), duration = (?), is_online = (?), limitation = (?), online_limitation = (?), publish_at = (?), updated_at = (?) WHERE id = (?);',
+      [date, start_time, duration, is_online, limitation, online_limitation, publish_at, updated_at, courseDetailId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getStudioCourseDetail = async studioId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT course_details.*, courses.title FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id WHERE courses.studio_id = ? ORDER BY course_details.date DESC',
+      [studioId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// course_detail related
 
 
 
@@ -244,7 +270,9 @@ module.exports = {
   updateCourse,
   getStudioCourses,
 
-
   getCourseById,
-  createCourseDetail
+  createCourseDetail,
+  getDedicatedCourseDetail,
+  updateCourseDetail,
+  getStudioCourseDetail
 }

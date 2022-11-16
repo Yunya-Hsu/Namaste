@@ -111,23 +111,62 @@ router.get('/:studioSubdomain/admin/course',
 
 
 
-router.get('/:studioSubdomain/admin/courseDetail',
+
+
+
+
+// 建立 course_detail 頁面
+router.get('/:studioSubdomain/admin/courseDetail/create',
   auth.authenticated,
   auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
-  wrapAsync(AdminStudio.renderCourseDetailPage)
+  wrapAsync(AdminStudio.renderCreateCourseDetailPage)
 )
 
-router.post('/:studioSubdomain/admin/courseDetail',
+// 建立 course_detail
+router.post('/:studioSubdomain/admin/courseDetail/create',
   auth.authenticated,
   auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
   wrapAsync(AdminStudio.createCourseDetail)
 )
+
+// 編輯 course_detail 頁面
+router.get('/:studioSubdomain/admin/courseDetail/:courseDetailId',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_COURSE),
+  wrapAsync(AdminStudio.renderEditCourseDetailPage)
+)
+
+// 送出 course 更新
+router.put('/:studioSubdomain/admin/courseDetail/:courseDetailId',
+  auth.authenticated,
+  auth.authorization(PERMISSION.UPDATE_STUDIO_COURSE),
+  wrapAsync(AdminStudio.updateCourseDetail)
+)
+
+// course_detail 一覽
+router.get('/:studioSubdomain/admin/courseDetail',
+  auth.authenticated,
+  auth.authorization(PERMISSION.CREATE_STUDIO_COURSE),
+  wrapAsync(AdminStudio.renderAllCourseDetails)
+)
+
+
+
+
+
+
+
 
 router.get('/:studioSubdomain/admin',
   auth.authenticated,
   auth.authorization(PERMISSION.UPDATE_DEDICATED_STUDIO),
   wrapAsync(AdminStudio.renderHomePage)
 )
+
+
+
+
+
 
 
 
