@@ -6,12 +6,12 @@ const axios = require('axios')
 const StudioAdmin = require('../models/admin_studio_model')
 const Studio = require('../models/studio_model')
 
-const renderHomePage = async (req, res) => {
+const renderHomePage = async (req, res, next) => {
   // 確認是否有該教室
   const { studioSubdomain } = req.params
   const studio = await Studio.getStudioForHomePage(studioSubdomain)
   if (!studio) {
-    return res.redirect('/404.html') // FIXME:
+    return next()
   }
 
   // 整理資料
@@ -21,12 +21,12 @@ const renderHomePage = async (req, res) => {
   return res.render('studio/home', { studio })
 }
 
-const renderPricePage = async (req, res) => {
+const renderPricePage = async (req, res, next) => {
   // 確認是否有該教室
   const { studioSubdomain } = req.params
   const studio = await Studio.getStudioBySubdomain(studioSubdomain)
   if (!studio) {
-    return res.redirect('/404.html') // FIXME:
+    return next()
   }
   studio.logo = process.env.SERVER_IP + studio.logo
 
@@ -40,12 +40,12 @@ const renderPricePage = async (req, res) => {
   res.render('studio/price', { studio, priceRules })
 }
 
-const renderCoursePage = async (req, res) => {
+const renderCoursePage = async (req, res, next) => {
   // 確認是否有該教室
   const { studioSubdomain } = req.params
   const studio = await Studio.getStudioBySubdomain(studioSubdomain)
   if (!studio) {
-    return res.redirect('/404.html') // FIXME:
+    return next()
   }
   studio.logo = process.env.SERVER_IP + studio.logo
 
@@ -54,7 +54,7 @@ const renderCoursePage = async (req, res) => {
   const theYear = req.query.week ? req.query.week.split('-')[0] : moment().tz('Asia/Taipei').format('YYYY')
   const theWeek = req.query.week ? Number(req.query.week.split('-')[1].replace('W', '')) : moment().tz('Asia/Taipei').isoWeek()
   if (theWeek > 53) {
-    return res.redirect('/404.html') // FIXME:
+    return next()
   }
   const theMonday = moment().year(theYear).day('Monday').isoWeek(theWeek).format('YYYY-MM-DD')
   const theSunday = moment(theMonday, 'YYYY-MM-DD').add(6, 'days').format('YYYY-MM-DD')
@@ -102,12 +102,12 @@ const renderCoursePage = async (req, res) => {
   })
 }
 
-const renderAboutPage = async (req, res) => {
+const renderAboutPage = async (req, res, next) => {
   // 確認是否有該教室
   const { studioSubdomain } = req.params
   const studio = await Studio.getStudioForAbout(studioSubdomain)
   if (!studio) {
-    return res.redirect('/404.html') // FIXME:
+    return next()
   }
 
   const teacherList = await Studio.getTeachers(studio.id)
@@ -124,12 +124,12 @@ const renderAboutPage = async (req, res) => {
   })
 }
 
-const renderCheckoutPage = async (req, res) => {
+const renderCheckoutPage = async (req, res, next) => {
   // search studio from DB
   const { studioSubdomain } = req.params
   const studio = await Studio.getStudioForCheckout(studioSubdomain)
   if (!studio) {
-    return res.redirect('/404.html') // FIXME:
+    return next()
   }
   studio.logo = process.env.SERVER_IP + studio.logo
 
@@ -281,12 +281,12 @@ const registerCourse = async (req, res, next) => {
 
 
 
-const renderLivePage = async (req, res) => {
+const renderLivePage = async (req, res, next) => {
   // search studio from DB
   const { studioSubdomain } = req.params
   const studio = await Studio.getStudioForCheckout(studioSubdomain)
   if (!studio) {
-    return res.redirect('/404.html') // FIXME:
+    return next()
   }
   studio.logo = process.env.SERVER_IP + studio.logo
 
@@ -295,7 +295,7 @@ const renderLivePage = async (req, res) => {
   // 撈出課程資料（確認該堂課是不是該教室的）
   const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
   if (!courseDetail) {
-    return res.redirect('/404.html') // FIXME:
+    return next()
   }
 
 

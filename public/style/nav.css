@@ -9,13 +9,20 @@
   margin: 0 20px 0 0;
 }
 
-#nav-studio-name {
+#nav-logo:hover {
+  box-shadow: 0px 2px 2px 2px #e2e2e2;
+}
+
+#nav-studio-name > a{
   font-size: 34px;
   color: #7f6b5e;
   letter-spacing: 4px;
+  text-decoration: none;
 }
 
-
+#nav-studio-name>a:hover {
+  text-shadow: 2px 2px #e2e2e2;
+}
 
 .nav-li {
   list-style-type: none;

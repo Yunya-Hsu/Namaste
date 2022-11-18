@@ -52,13 +52,13 @@ app.use((req, res, next) => {
 app.use(router)
 
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, '/public/404.html'))
+  res.render('basic/404')
 })
 
 
 app.use((err, req, res, next) => {
   console.log(moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss'), err)
-  res.status(500).sendFile(path.join(__dirname, '/public/500.html'))
+  res.render('basic/500')
 })
 
 require('./controllers/socketIo.js')(io)

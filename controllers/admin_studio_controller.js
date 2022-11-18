@@ -516,14 +516,14 @@ const updateAbout = async (req, res) => {
 
 
 
-const renderLivePage = async (req, res) => {
+const renderLivePage = async (req, res, next) => {
   const { studioSubdomain } = req.params
   const courseDetailId = req.query.courseDetailId
 
   // 撈出課程資料（確認該堂課是不是該教室的）
   const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
   if (!courseDetail) {
-    return res.redirect('/404.html') // FIXME:
+    return next()
   }
 
   // 檢查登入者是不是該堂課的老師(有沒有直播的權限)

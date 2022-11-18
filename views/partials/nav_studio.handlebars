@@ -4,7 +4,9 @@
     <a href="/{{ studio.subdomain}}">
       <img src="{{ studio.logo }}" alt="logo" id="nav-logo">
     </a>
-    <div id="nav-studio-name">{{ studio.name }}</div>
+    <div id="nav-studio-name">
+      <a href="/{{ studio.subdomain}}">{{ studio.name }}</a>
+    </div>
   </div>
 
   <div id="nav-right" class="d-flex justify-content-around align-items-center">
