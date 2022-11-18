@@ -8,6 +8,7 @@ const user = require('./modules/user')
 const { PERMISSION } = require('../models/auth_model')
 
 // controllers
+const AdminRoot = require('../controllers/admin_root_controller')
 const AdminStudio = require('../controllers/admin_studio_controller')
 const Studio = require('../controllers/studio_controller')
 
@@ -263,8 +264,6 @@ router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
 
 
 
-router.get('/', (req, res) => {
-  res.render('home')
-})
+router.get('/', wrapAsync(AdminRoot.renderNamasteHomePage))
 
 module.exports = router

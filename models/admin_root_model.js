@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-
 const db = require('../config/mysql')
 
 const checkSubdomain = async subdomain => {
@@ -10,8 +9,6 @@ const checkSubdomain = async subdomain => {
     throw new Error(error)
   }
 }
-
-
 
 const createStudio = async (name, introduction_title, introduction_detail, subdomain, managerId, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, logo, introduction_photo, created_at, updated_at) => {
   const conn = await db.getConnection()
@@ -39,8 +36,20 @@ const createStudio = async (name, introduction_title, introduction_detail, subdo
   }
 }
 
+const getStudios = async () => {
+  try {
+    const [result] = await db.execute(
+      'SELECT id, name, logo, subdomain, introduction_detail, address FROM studios ORDER BY id DESC;'
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 
 module.exports = {
   checkSubdomain,
-  createStudio
+  createStudio,
+  getStudios
 }

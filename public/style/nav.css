@@ -1,13 +1,11 @@
 .nav-bar {
   margin: 0 auto;
-  padding: 20px 0 25px 0;
+  padding: 20px 10vw 20px 10vw;
   background-color: #ffffff;
 }
 
 #nav-logo {
-  min-width: 30px;
-  min-height: 30px;
-  max-width: 70px;
+  width: 70px;
   margin: 0 20px 0 0;
 }
 

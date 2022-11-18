@@ -55,7 +55,17 @@
 .align-items-stretch {
   align-items: stretch;
 }
+
+.flex-wrap {
+  flex-wrap: wrap
+}
 /* flex related */
+
+
+
+
+
+
 
 
 

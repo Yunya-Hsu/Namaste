@@ -54,7 +54,16 @@ const createStudio = async (req, res, next) => {
   return res.redirect('/admin/studio')
 }
 
+const renderNamasteHomePage = async (req, res, next) => {
+  const studioList = await Admin.getStudios()
+  for (const studio of studioList) {
+    studio.logo = process.env.SERVER_IP + studio.logo
+  }
+  res.render('home', { studioList })
+}
+
 module.exports = {
   renderCreateStudioPage,
-  createStudio
+  createStudio,
+  renderNamasteHomePage
 }

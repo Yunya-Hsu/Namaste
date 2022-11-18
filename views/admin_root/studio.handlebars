@@ -8,14 +8,6 @@
 
   <section id="super-admin-create-studio-section">
     <form action="/admin/studio" method="POST" enctype="multipart/form-data" id="super-admin-create-studio-form">
-      {{#if errorMessage}}
-        {{errorMessage.errorMessage}}
-      {{/if}}
-
-      {{#if successMessage}}
-        {{successMessage.successMessage}}
-      {{/if}}
-
       <div>
         <label for="name">教室名稱 *</label>
         <input type="text" id="name" name="name" {{#if input.name}} value={{input.name}} {{/if}} required>
