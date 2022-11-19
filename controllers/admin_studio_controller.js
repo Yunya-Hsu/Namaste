@@ -517,6 +517,7 @@ const updateAbout = async (req, res) => {
 
 
 const renderLivePage = async (req, res, next) => {
+  const studio = req.user.studio
   const { studioSubdomain } = req.params
   const courseDetailId = req.query.courseDetailId
 
@@ -542,6 +543,7 @@ const renderLivePage = async (req, res, next) => {
   }
 
   res.render('admin_studio/livestream', {
+    studio,
     studentIdList,
     studentNameList,
     courseDetailId

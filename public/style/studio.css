@@ -1,0 +1,138 @@
+/* checkout */
+#checkout-section {
+  width: 42vw;
+}
+
+.checkout-order-detail {
+  background-color: #ffffff;
+  border-radius: 15px;
+
+  box-shadow: 0px 3px 2px 2px #E1E1DF;
+  padding: 3vh 2vw;
+  margin: 0 0 5vh 0;
+}
+
+#order-title {
+  font-size: 28px;
+  letter-spacing: 8px;
+  margin-bottom: 4vh;
+  font-weight: 300;
+}
+
+.checkout-order-detail > p {
+  margin: 1vh 0;
+  letter-spacing: 3px;
+  font-weight: 200;
+  color: #8C736F;
+}
+
+.checkout-order-detail > p > span {
+  color: #000000;
+  font-weight: 300;
+}
+
+
+.credit-card-input {
+  font-weight: 300;
+  margin: 1vh 0;
+}
+
+
+
+#credit-card-title {
+  margin: 6vh 0 0 0;
+  font-size: 22px;
+  font-weight: 300;
+  color: #8C736F;
+}
+
+
+.tpfield,
+.credit-card-owner {
+  height: 40px;
+  width: 300px;
+  margin: 5px 0;
+  padding: 5px 10px;
+
+  border: none;
+  border-radius: 8px;
+  background-color: #ffffff;
+
+  color: #53565C;
+  letter-spacing: 2px;
+}
+
+.credit-card-owner {
+  font-size: 16px;
+}
+
+#tappay-submit-btn {
+  width: 100%;
+  height: 6vh;
+  margin: 5vh 0 0 0;
+  border: none;
+  background-color: #7f6b5e;
+
+  color: #ffffff;
+  font-size: 22px;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+#tappay-submit-btn:hover {
+  cursor: pointer;
+  background-color: #C3A491;
+  color: #5e4f45;
+}
+/* checkout */
+
+
+
+
+
+/* live stream */
+.livestream-div {
+  margin: 60px auto 150px auto;
+}
+
+#myVideo,
+#remoteVideo {
+  transform: scaleX(-1);
+  border: 5px solid #E1E1DF;
+  border-radius: 70px;
+  background-color: #fbfbf9;
+  height: 60vh;
+  width: 40vw;
+  object-fit: scale-down;
+}
+
+#callBtn,
+#connLivestream {
+  display: block;
+  margin: 20px 0;
+  padding: 10px 15px 40px 20px;
+
+  height: 45px;
+
+  border: none;
+  border-radius: 10px;
+  background-color: #8C736F;
+
+  border: none;
+  border-radius: 10px;
+  background-color: #8C736F;
+
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 5px;
+
+  cursor: pointer;
+}
+
+#callBtn:hover,
+#connLivestream:hover {
+  background-color: #DDDDC8;
+  color: #53565C;
+}
+/* live stream */

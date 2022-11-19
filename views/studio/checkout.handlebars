@@ -1,23 +1,8 @@
-{{!-- FIXME: --}}
-<style>
-  .tpfield {
-    height: 40px;
-    width: 300px;
-    border: 1px solid gray;
-    margin: 5px 0;
-    padding: 5px;
-  }
-</style>
-{{!-- FIXME: --}}
-
-
-
 {{> nav_studio}}
 
+<link rel="stylesheet" href="/style/studio.css"></link>
 
-
-
-<div class="d-flex align-items-stretch justify-content-center">
+<div class="d-flex align-items-stretch justify-content-center super-admin-div">
   <section id="super-admin-title-left">
     <span>
       信用卡付款
@@ -26,13 +11,16 @@
   </section>
 
 
-  <section>
-    <p>種類：<span>{{priceRule.category}}</span></p>
-    <p>價格：<span>NTD $ {{priceRule.price}}</span></p>
-    <p>點數：<span>{{priceRule.point}}</span></p>
-    <p>備註：<span>{{#if priceRule.remark}} {{priceRule.remark}} {{else}} 無 {{/if}}</span></p>
-    <p>使用期限：<span>{{priceRule.term}}</span></p>
-    <p>到期日（若今日購買）：<span>{{priceRule.expireDate}}</span></p>
+  <section id="checkout-section">
+    <div class="checkout-order-detail">
+      <p id="order-title">/ 購買明細</p>
+      <p>種類：<span>{{priceRule.category}}</span></p>
+      <p>價格：<span>NTD $ {{priceRule.price}}</span></p>
+      <p>點數：<span>{{priceRule.point}}</span></p>
+      <p>備註：<span>{{#if priceRule.remark}} {{priceRule.remark}} {{else}} 無 {{/if}}</span></p>
+      <p>使用期限：<span>{{priceRule.term}}</span></p>
+      <p>到期日（若今日購買）：<span>{{priceRule.expireDate}}</span></p>
+    </div>
 
     <div class="d-flex justify-content-between align-items-center credit-card-input">
       <span>信用卡卡號</span>
@@ -52,14 +40,21 @@
     </div>
     <div id="validate-card-ccv"></div>
 
-    <div>
-      <p>持卡人資訊</p>
+
+
+    <p id="credit-card-title">持卡人資訊</p>
+
+    <div class="d-flex justify-content-between align-items-center credit-card-input">
       <label for="phone">聯絡電話</label>
-      <input type="text" id="phone" name="phone">
+      <input type="text" id="phone" name="phone" class="credit-card-owner">
+    </div>
+    <div class="d-flex justify-content-between align-items-center credit-card-input">
       <label for="name">姓名</label>
-      <input type="text" id="name" name="name">
+      <input type="text" id="name" name="name" class="credit-card-owner">
+    </div>
+    <div class="d-flex justify-content-between align-items-center credit-card-input">
       <label for="email">電子信箱</label>
-      <input type="text" id="email" name="email">
+      <input type="text" id="email" name="email" class="credit-card-owner">
     </div>
     <button type="button" id="tappay-submit-btn" style="display: none;">確認付款</button>
   </section>
