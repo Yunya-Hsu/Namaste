@@ -26,8 +26,6 @@
 
 
 #super-admin-create-studio-section {
-  /* border: 1px solid pink; */
-
   margin: 0 0 0 70px;
 }
 
@@ -46,7 +44,8 @@
   color: #53565C;
 }
 
-#super-admin-create-studio-form>div>input, #super-admin-create-studio-form>div>textarea {
+#super-admin-create-studio-form>div>input, #super-admin-create-studio-form>div>textarea,
+#super-admin-create-studio-form>div>select {
   border: none;
   border-radius: 8px;
   
@@ -56,13 +55,15 @@
   color: #53565C;
   
   min-height: 35px;
-  /* width: 100%; */
   padding-left: 7px;
   padding-top: 1px;
 
   flex-grow: 1;
 }
 
+#super-admin-create-studio-form>div>select {
+  font-size: 15px;
+}
 
 #super-admin-create-studio-form>button {
   display: block;

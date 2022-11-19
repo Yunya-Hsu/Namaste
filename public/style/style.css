@@ -5,8 +5,6 @@
   padding: 0;
 }
 
-
-
 /* flex related */
 .d-flex {
   display: flex;
@@ -200,7 +198,6 @@
 
 
 #curriculum {
-  /* border: 1px solid red; */
   margin: 40px 50px 70px 50px;
 }
 

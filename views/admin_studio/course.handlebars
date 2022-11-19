@@ -1,10 +1,12 @@
 {{> nav_admin_studio}}
 
-<a href="/{{studio.subdomain}}/admin/course/create">建立課程</a>
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<a href="/{{studio.subdomain}}/admin/course/create" class="studio-owner-create-btn">建立課程</a>
 
 {{#if courseList}}
-<table id="price-table">
-  <thead id="price-head">
+<table class="admin-studio-table">
+  <thead class="admin-studio-table-head">
     <tr>
       <th>課程名稱</th>
       <th>描述</th>
@@ -18,12 +20,12 @@
   {{#each courseList}}
   <tbody>
     <tr>
-      <td class="category">{{this.title}}</td>
-      <td class="price">{{this.description}}</td>
-      <td class="point">{{this.teacher}}</td>
-      <td class="remark">{{this.email}}</td>
-      <td class="term">{{this.point}}</td>
-      <td class="buy">
+      <td>{{this.title}}</td>
+      <td>{{this.description}}</td>
+      <td>{{this.teacher}}</td>
+      <td>{{this.email}}</td>
+      <td>{{this.point}}</td>
+      <td class="admin-studio-edit-btn">
         <a href="/{{../studio.subdomain}}/admin/course/{{this.id}}">修改</a>
       </td>
     </tr>

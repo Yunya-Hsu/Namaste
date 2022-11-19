@@ -14,7 +14,7 @@
 }
 
 #nav-studio-name > a{
-  font-size: 34px;
+  font-size: 30px;
   color: #7f6b5e;
   letter-spacing: 4px;
   text-decoration: none;
@@ -30,7 +30,7 @@
 }
 
 .nav-link{
-  font-size: 18px;
+  font-size: 17px;
   cursor: pointer;
   margin: 0 15px;
   color: #7f6b5e;

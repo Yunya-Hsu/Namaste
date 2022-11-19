@@ -1,10 +1,12 @@
 {{> nav_admin_studio}}
 
-<a href="/{{studio.subdomain}}/admin/price/create">建立價格</a>
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<a href="/{{studio.subdomain}}/admin/price/create" class="studio-owner-create-btn">建立價格</a>
 
 {{#if priceRuleList}}
-<table id="price-table">
-  <thead id="price-head">
+<table class="admin-studio-table">
+  <thead class="admin-studio-table-head">
     <tr>
       <th>種類</th>
       <th>價格</th>
@@ -19,13 +21,13 @@
   {{#each priceRuleList}}
   <tbody>
     <tr>
-      <td class="category">{{this.category}}</td>
-      <td class="price">$ {{this.price}}</td>
-      <td class="point">{{this.point}} 點</td>
-      <td class="remark">{{this.remark}}</td>
-      <td class="term">{{this.term}}</td>
-      <td class="publish_at">{{this.publish_at}}</td>
-      <td class="buy">
+      <td>{{this.category}}</td>
+      <td>$ {{this.price}}</td>
+      <td>{{this.point}} 點</td>
+      <td>{{this.remark}}</td>
+      <td>{{this.term}}</td>
+      <td>{{this.publish_at}}</td>
+      <td class="admin-studio-edit-btn">
         <a href="/{{../studio.subdomain}}/admin/price/{{this.id}}">修改</a>
       </td>
     </tr>

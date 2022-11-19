@@ -1,10 +1,12 @@
 {{> nav_admin_studio}}
 
-<a href="/{{studio.subdomain}}/admin/courseDetail/create">上架課程</a>
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<a href="/{{studio.subdomain}}/admin/courseDetail/create" class="studio-owner-create-btn">上架課程</a>
 
 {{#if courseDetailList}}
-<table id="price-table">
-  <thead id="price-head">
+<table class="admin-studio-table">
+  <thead class="admin-studio-table-head">
     <tr>
       <th>課程名稱</th>
       <th>上課日期</th>
@@ -21,21 +23,21 @@
   {{#each courseDetailList}}
   <tbody>
     <tr>
-      <td class="title">{{this.title}}</td>
-      <td class="date">{{this.date}}</td>
-      <td class="start_time">{{this.start_time}}</td>
-      <td class="duration">{{this.duration}}</td>
-      <td class="limitation">{{this.limitation}}</td>
-      <td class="is_online">
+      <td>{{this.title}}</td>
+      <td>{{this.date}}</td>
+      <td>{{this.start_time}}</td>
+      <td>{{this.duration}}</td>
+      <td >{{this.limitation}}</td>
+      <td>
         {{#compare this.is_online 1}}
         <span>是</span>
         {{else}}
         <span>否</span>
         {{/compare}}
       </td>
-      <td class="online_limitation">{{this.online_limitation}}</td>
-      <td class="publist_at">{{this.publish_at}}</td>
-      <td class="buy">
+      <td>{{this.online_limitation}}</td>
+      <td>{{this.publish_at}}</td>
+      <td class="admin-studio-edit-btn">
         <a href="/{{../studio.subdomain}}/admin/courseDetail/{{this.id}}">修改</a>
       </td>
     </tr>

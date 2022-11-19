@@ -1,10 +1,12 @@
 {{> nav_admin_studio}}
 
-<a href="/{{studio.subdomain}}/admin/teacher/create">建立授課老師資料</a>
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<a href="/{{studio.subdomain}}/admin/teacher/create" class="studio-owner-create-btn">建立老師資料</a>
 
 {{#if teacherList}}
-<table id="price-table">
-  <thead id="price-head">
+<table class="admin-studio-table">
+  <thead class="admin-studio-table-head">
     <tr>
       <th>頭像</th>
       <th>老師</th>
@@ -17,11 +19,13 @@
   {{#each teacherList}}
   <tbody>
     <tr>
-      <td class="avatar">{{this.avatar}}</td>
-      <td class="name">{{this.name}}</td>
-      <td class="major">{{this.major}}</td>
-      <td class="introduction">{{this.introduction}}</td>
-      <td class="buy">
+      <td>
+        <div class="teacher-avatar admin-studio-teacher-avatar" style="background: url({{ this.avatar }}); background-position: center; background-repeat: no-repeat; background-size: cover;">
+      </td>
+      <td>{{this.name}}</td>
+      <td>{{this.major}}</td>
+      <td>{{this.introduction}}</td>
+      <td class="admin-studio-edit-btn">
         <a href="/{{../studio.subdomain}}/admin/teacher/{{this.id}}">修改</a>
       </td>
     </tr>
