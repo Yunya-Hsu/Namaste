@@ -1,23 +1,28 @@
 .nav-bar {
   margin: 0 auto;
-  padding: 20px 0 25px 0;
+  padding: 20px 10vw 20px 10vw;
   background-color: #ffffff;
 }
 
 #nav-logo {
-  min-width: 30px;
-  min-height: 30px;
-  max-width: 70px;
+  width: 70px;
   margin: 0 20px 0 0;
 }
 
-#nav-studio-name {
-  font-size: 34px;
-  color: #7f6b5e;
-  letter-spacing: 4px;
+#nav-logo:hover {
+  box-shadow: 0px 2px 2px 2px #e2e2e2;
 }
 
+#nav-studio-name > a{
+  font-size: 30px;
+  color: #7f6b5e;
+  letter-spacing: 4px;
+  text-decoration: none;
+}
 
+#nav-studio-name>a:hover {
+  text-shadow: 2px 2px #e2e2e2;
+}
 
 .nav-li {
   list-style-type: none;
@@ -25,7 +30,7 @@
 }
 
 .nav-link{
-  font-size: 18px;
+  font-size: 17px;
   cursor: pointer;
   margin: 0 15px;
   color: #7f6b5e;

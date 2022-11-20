@@ -6,6 +6,7 @@ const path = require('path')
 const cors = require('cors')
 const { engine } = require('express-handlebars')
 const handlebarsHelpers = require('./util/handlebars-helpers')
+const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
@@ -31,6 +32,7 @@ app.use(cors())
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(methodOverride('_method'))
 app.use(session({
   secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
@@ -50,13 +52,13 @@ app.use((req, res, next) => {
 app.use(router)
 
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, '/public/404.html'))
+  res.render('basic/404')
 })
 
 
 app.use((err, req, res, next) => {
   console.log(moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss'), err)
-  res.status(500).sendFile(path.join(__dirname, '/public/500.html'))
+  res.render('basic/500')
 })
 
 require('./controllers/socketIo.js')(io)

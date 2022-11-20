@@ -3,10 +3,11 @@ const moment = require('moment-timezone')
 
 // models
 const Admin = require('../models/admin_root_model')
+const User = require('../models/user_model')
 
 // basic parameters
 const studio = require('../models/namaste_parameters')
-const requirementOfCreateStudio = ['name', 'subdomain', 'manager', 'address', 'tappay_app_key', 'tappay_partner_key', 'tappay_id']
+const requirementOfCreateStudio = ['name', 'subdomain', 'manager', 'address', 'tappay_app_key', 'tappay_partner_key', 'tappay_id', 'tappay_app_id']
 
 
 
@@ -33,30 +34,36 @@ const createStudio = async (req, res, next) => {
 
   // FIXME: validate subdomain formate
 
-  // check if manager account is validate
-  const managerRoleId = await Admin.findRoleIdByEmail(req.body.manager)
-  if (managerRoleId === null) {
+  // 取得 manager 的 id
+  const manager = await User.findUserByEmail(req.body.manager)
+  if (!manager) {
     req.flash('createStudioInput', req.body)
     req.flash('errorMessage', `${req.body.manager} does not exist`)
     return res.redirect('/admin/studio')
-  } else if (managerRoleId !== 2) { // TODO: check if it's ok
-    req.flash('createStudioInput', req.body)
-    req.flash('errorMessage', 'this user is not boss')
-    return res.redirect('/admin/studio')
   }
 
-  // insert into db
-  const { name, introduction_title, introduction_detail, subdomain, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id } = req.body
+  // 整理資料
+  const { name, introduction_title, introduction_detail, subdomain, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id } = req.body
   const logo = req.files.logo[0].path
   const introduction_photo = req.files.introduction_photo ? req.files.introduction_photo[0].path : null
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
 
-  await Admin.createStudio(name, introduction_title, introduction_detail, subdomain, managerRoleId, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, logo, introduction_photo, currentTime, currentTime)
-  req.flash('successMessage', `Studio "${name}" is created.`)
+  // insert into db
+  await Admin.createStudio(name, introduction_title, introduction_detail, subdomain, manager.id, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, logo, introduction_photo, currentTime, currentTime)
+  req.flash('successMessage', `Studio ${name} is created.`)
   return res.redirect('/admin/studio')
+}
+
+const renderNamasteHomePage = async (req, res, next) => {
+  const studioList = await Admin.getStudios()
+  for (const studio of studioList) {
+    studio.logo = process.env.SERVER_IP + studio.logo
+  }
+  res.render('home', { studioList })
 }
 
 module.exports = {
   renderCreateStudioPage,
-  createStudio
+  createStudio,
+  renderNamasteHomePage
 }

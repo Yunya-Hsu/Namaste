@@ -1,0 +1,52 @@
+{{> nav_admin_studio}}
+
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<div class="d-flex align-items-stretch justify-content-center super-admin-div">
+  <section id="super-admin-title-left">
+    <span>價格維護</span>
+    <hr id="hr">
+  </section>
+
+  <section id="super-admin-create-studio-section">
+    <form action="/{{ studio.subdomain }}/admin/price/{{input.id}}?_method=PUT" method="POST" enctype="application/json" id="super-admin-create-studio-form">
+
+      <div>
+        <label for="category">類別*</label>
+        <input type="text" id="category" name="category" placeholder="單堂體驗" {{#if input.category}}
+          value={{input.category}} {{/if}}>
+      </div>
+
+      <div>
+        <label for="price">價格*</label>
+        <input type="number" id="price" name="price" {{#if input.price}} value={{input.price}} {{/if}}>
+      </div>
+
+      <div>
+        <label for="point">點數*</label>
+        <input type="number" id="point" name="point" {{#if input.point}} value={{input.point}} {{/if}}>
+      </div>
+
+      <div>
+        <label for="remark">備註</label>
+        <input type="text" id="remark" name="remark" placeholder="每人限購 1 次" {{#if input.remark}} value={{input.remark}}
+          {{/if}}>
+      </div>
+
+      <div>
+        <label for="term">使用期限（天）*</label>
+        <input type="number" id="term" name="term" {{#if input.term}} value={{input.term}} {{/if}}>
+      </div>
+
+      <div>
+        <label for="publish_at">上架日 *（台灣時間）</label>
+        <input type="datetime-local" id="publish_at" name="publish_at" {{#if input.publish_at}}
+          value={{input.publish_at}} {{/if}}>
+      </div>
+
+      {{!-- TODO: 做一個新增價格的連結 --}}
+      
+      <button type="submit">更新</button>
+    </form>
+  </section>
+</div>

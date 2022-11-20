@@ -30,30 +30,10 @@ const getLivestreamStudents = async courseDetailId => {
   }
 }
 
-const validateCRUDStudioPrice = async (studioSubdomain, userId) => {
-  try {
-    const [[result]] = await db.execute(
-      'SELECT id, name, logo FROM studios WHERE subdomain = (?) AND manager = (?)',
-      [studioSubdomain, userId]
-    )
-    return result
-  } catch (error) {
-    throw new Error(error)
-  }
-}
 
-const getPriceRules = async studioId => {
-  try {
-    const [[result]] = await db.execute(
-      'SELECT * FROM price_rules WHERE studio_id = (?)',
-      [studioId]
-    )
-    return result
-  } catch (error) {
-    throw new Error(error)
-  }
-}
 
+
+// price_rules related
 const createPriceRule = async (studioId, category, price, point, remark, term, publishAt, createdAt, updatedAt) => {
   try {
     const [result] = await db.execute(
@@ -66,11 +46,11 @@ const createPriceRule = async (studioId, category, price, point, remark, term, p
   }
 }
 
-const getStudioTeachers = async studioId => {
+const getDedicatedPriceRule = async (studioId, priceRuleId) => {
   try {
-    const [result] = await db.execute(
-      'SELECT id, name, major FROM teachers WHERE studio_id = (?);',
-      [studioId]
+    const [[result]] = await db.execute(
+      'SELECT * FROM price_rules WHERE studio_id = (?) AND id = (?)',
+      [studioId, priceRuleId]
     )
     return result
   } catch (error) {
@@ -78,10 +58,42 @@ const getStudioTeachers = async studioId => {
   }
 }
 
-const getStudioCourses = async studioId => {
+const updatePriceRule = async (id, category, price, point, remark, term, publish_at, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE price_rules SET category = (?), price = (?), point = (?), remark = (?), term = (?), publish_at = (?), updated_at = (?) WHERE id = (?)',
+      [category, price, point, remark, term, publish_at, updated_at, id]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getPriceRules = async studioId => {
   try {
     const [result] = await db.execute(
-      'SELECT courses.id AS id, courses.title AS title, teachers.name AS teacher FROM courses LEFT JOIN teachers ON courses.teacher_id = teachers.id WHERE courses.studio_id = (?);',
+      'SELECT * FROM price_rules WHERE studio_id = (?)',
+      [studioId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// price_rules related
+
+
+
+
+
+
+
+
+// course related
+const getStudioTeachers = async studioId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT id, name, major FROM teachers WHERE studio_id = (?);',
       [studioId]
     )
     return result
@@ -126,6 +138,55 @@ const createCourse = async (title, description, teacher_id, studio_id, user_id, 
   }
 }
 
+const getDedicatedCourse = async (studioId, courseId) => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT courses.*, users.email FROM courses LEFT JOIN users ON courses.user_id = users.id WHERE courses.studio_id = (?) AND courses.id = (?)',
+      [studioId, courseId]
+    )
+
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const updateCourse = async (courseId, title, description, teacher_id, user_id, point, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE courses SET title = (?), description = (?), teacher_id = (?), user_id = (?), point = (?), updated_at = (?) WHERE id = (?)',
+      [title, description, teacher_id, user_id, point, updated_at, courseId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getStudioCourses = async studioId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT courses.*, teachers.name AS teacher, users.email FROM courses LEFT JOIN teachers ON courses.teacher_id = teachers.id LEFT JOIN users ON courses.user_id = users.id WHERE courses.studio_id = (?);',
+      [studioId]
+    )
+
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// course related
+
+
+
+
+
+
+
+
+
+
+// course_detail related
+// 檢查 course_id 是否隸屬該教室
 const getCourseById = async (courseId, studioId) => {
   try {
     const [[result]] = await db.execute(
@@ -150,17 +211,144 @@ const createCourseDetail = async (courseId, date, startTime, duration, isOnline,
   }
 }
 
+const getDedicatedCourseDetail = async (studioId, courseDetailId) => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT course_details.*, courses.studio_id, courses.title FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id WHERE courses.studio_id = (?) AND course_details.id = (?);',
+      [studioId, courseDetailId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const updateCourseDetail = async (courseDetailId, date, start_time, duration, is_online, limitation, online_limitation, publish_at, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE course_details SET date = (?), start_time = (?), duration = (?), is_online = (?), limitation = (?), online_limitation = (?), publish_at = (?), updated_at = (?) WHERE id = (?);',
+      [date, start_time, duration, is_online, limitation, online_limitation, publish_at, updated_at, courseDetailId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getStudioCourseDetail = async studioId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT course_details.*, courses.title FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id WHERE courses.studio_id = ? ORDER BY course_details.date DESC',
+      [studioId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// course_detail related
+
+
+
+
+
+
+
+
+// teacher related
+const createTeacher = async (name, avatar, major, introduction, studio_id, currentTime) => {
+  try {
+    const [result] = await db.execute(
+      'INSERT INTO teachers (name, avatar, major, introduction, studio_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [name, avatar, major, introduction, studio_id, currentTime, currentTime]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getDedicatedTeacher = async (studioId, teacherId) => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT * FROM teachers WHERE studio_id = (?) AND id = (?);',
+      [studioId, teacherId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const updateTeacherWithAvatar = async (teacherId, name, avatar, major, introduction, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE teachers SET name = (?), avatar = (?), major = (?), introduction = (?), updated_at = (?) WHERE id = (?);',
+      [name, avatar, major, introduction, updated_at, teacherId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const updateTeacherWithoutAvatar = async (teacherId, name, major, introduction, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE teachers SET name = (?), major = (?), introduction = (?), updated_at = (?) WHERE id = (?);',
+      [name, major, introduction, updated_at, teacherId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// teacher related
+
+
+
+
+
+// about related
+const updateStudio = async (studioId, name, logo, introduction_title, introduction_detail, introduction_photo, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, updated_at) => {
+  try {
+    await db.execute(
+      'UPDATE studios SET name = (?), logo = (?), introduction_title = (?), introduction_detail = (?), introduction_photo = (?), address = (?), address_description = (?), phone = (?), tappay_app_key = (?), tappay_partner_key = (?), tappay_id = (?), tappay_app_id = (?), updated_at = (?) WHERE id = (?);',
+      [name, logo, introduction_title, introduction_detail, introduction_photo, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, updated_at, studioId]
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+// about related
+
+
+
 module.exports = {
   getCourseDetail,
+
   getLivestreamStudents,
-  validateCRUDStudioPrice,
-  getPriceRules,
+
   createPriceRule,
+  getDedicatedPriceRule,
+  updatePriceRule,
+  getPriceRules,
+
   getStudioTeachers,
-  getStudioCourses,
   validateStudioTeacher,
   validateLivestreamAccount,
   createCourse,
+  getDedicatedCourse,
+  updateCourse,
+  getStudioCourses,
+
   getCourseById,
-  createCourseDetail
+  createCourseDetail,
+  getDedicatedCourseDetail,
+  updateCourseDetail,
+  getStudioCourseDetail,
+
+  createTeacher,
+  getDedicatedTeacher,
+  updateTeacherWithAvatar,
+  updateTeacherWithoutAvatar,
+
+  updateStudio
 }

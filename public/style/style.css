@@ -5,8 +5,6 @@
   padding: 0;
 }
 
-
-
 /* flex related */
 .d-flex {
   display: flex;
@@ -55,7 +53,17 @@
 .align-items-stretch {
   align-items: stretch;
 }
+
+.flex-wrap {
+  flex-wrap: wrap
+}
 /* flex related */
+
+
+
+
+
+
 
 
 
@@ -190,7 +198,6 @@
 
 
 #curriculum {
-  /* border: 1px solid red; */
   margin: 40px 50px 70px 50px;
 }
 
@@ -403,3 +410,27 @@
 }
 
  /* studio - about page */
+
+
+
+
+
+
+
+
+
+ /* footer */
+#footer {
+  width: 100vw;
+  height: 10vh;
+  background-color: #655848;
+  margin-top: 8vh;
+
+  text-align: center;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 4px;
+}
+
+ /* footer */

@@ -5,14 +5,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
+  {{!-- adjust icon base on studio --}}
+  {{#if studio.logo}}
+  <link rel="icon" href="{{studio.logo}}">
+  {{else}}
+  <link rel="icon" href="/namaste/namaste_logo.png">
+  {{/if}}
+
   {{!-- adjust title base on studio name --}}
-  <title>
-    {{#if studio.name}}
-      {{studio.name}}
-    {{else}}
-      Namaste
-    {{/if}}
-  </title>
+  {{#if studio.name}}
+  <title>{{studio.name}} | Namaste</title>
+  {{else}}
+  <title>Namaste</title>
+  {{/if}}
 
   {{!-- google font --}}
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,12 +28,14 @@
   {{!-- css style --}}
   <link rel="stylesheet" href="/style/style.css"></link>
   <link rel="stylesheet" href="/style/nav.css"></link>
-  <link rel="stylesheet" href="/style/super_admin.css"></link>
+  <link rel="stylesheet" href="/style/admin_root.css"></link>
   <link rel="stylesheet" href="/style/user.css"></link>
-  <link rel="stylesheet" href="/style/livestream.css">
-  </link>
 
+  {{!-- sweet alert --}}
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  {{!-- font awesome --}}
+  <script src="https://kit.fontawesome.com/ae618af5c4.js" crossorigin="anonymous"></script>
 </head>
 
 
@@ -40,6 +47,7 @@
 
   {{{ body }}}
   {{> messages}}
+  {{> footer}}
 </body>
 
 </html>

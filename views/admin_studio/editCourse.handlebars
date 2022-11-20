@@ -1,0 +1,49 @@
+{{> nav_admin_studio}}
+
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<div class="d-flex align-items-stretch justify-content-center super-admin-div">
+  <section id="super-admin-title-left">
+    <span>修改課程</span>
+    <hr id="hr">
+  </section>
+
+  <section id="super-admin-create-studio-section">
+    <form action="/{{ studio.subdomain }}/admin/course/{{input.id}}?_method=PUT" method="POST" enctype="application/json"
+      id="super-admin-create-studio-form">
+
+      <div>
+        <label for="title">課程名稱*</label>
+        <input type="text" id="title" name="title" {{#if input.title}} value={{input.title}} {{/if}} required>
+      </div>
+
+      <div>
+        <label for="description">描述</label>
+        <input type="text" id="description" name="description" {{#if input.description}} value={{input.description}}
+          {{/if}}>
+      </div>
+
+      <div>
+        <label for="teacher_id">授課老師*</label>
+        <select name="teacher_id" id="teacher_id">
+          {{#each studio.teacherList}}
+          <option value="{{this.id}}" {{#compare this.id ../input.teacher_id}} selected {{/compare}}>{{this.name}}（專業：{{this.major}}）</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div>
+        <label for="livestream_email">直播人員 email 帳號 *</label>
+        <input type="text" id="livestream_email" name="livestream_email" {{#if input.email}} value={{input.email}}
+          {{/if}} required>
+      </div>
+
+      <div>
+        <label for="point">點數*</label>
+        <input type="number" id="point" name="point" {{#if input.point}} value={{input.point}} {{/if}} required>
+      </div>
+
+      <button type="submit">更新</button>
+    </form>
+  </section>
+</div>
