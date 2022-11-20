@@ -67,6 +67,10 @@
 
 
 /* Profile page */
+#profile-page-div{
+  min-height: 70vh;
+}
+
 .profile-table {
   margin: 5vh auto 13vh auto;
   border-collapse: collapse;
