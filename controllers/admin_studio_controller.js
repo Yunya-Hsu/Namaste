@@ -12,12 +12,10 @@ const requirementOfCourseDetail = ['date', 'start_time', 'duration', 'limitation
 const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_partner_key', 'tappay_id', 'tappay_app_id']
 
 const renderHomePage = async (req, res) => {
-  const { studioSubdomain } = req.params
-  if (!studioSubdomain) {
-    return res.redirect('/')
-  }
+  const studio = req.user.studio
 
-  res.send(`<h1>This is ${studioSubdomain} home page, 後台</h1>`)
+  // FIXME: add dashboard page for studio admin
+  res.redirect(`/${studio.subdomain}/admin/price`)
 }
 
 

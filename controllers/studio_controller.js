@@ -97,6 +97,8 @@ const renderCoursePage = async (req, res, next) => {
   }
 
   res.render('studio/course', {
+    theYear,
+    theWeek,
     studio,
     organizedCourseDetailList
   })

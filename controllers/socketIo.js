@@ -1,6 +1,6 @@
 module.exports = io => {
   io.on('connection', socket => {
-    console.log(`socket 用戶連接 ${socket.id}`)
+    // console.log(`socket 用戶連接 ${socket.id}`)
 
     socket.on('joinRoom', message => {
       socket.join(message.courseDetailId)
@@ -12,8 +12,8 @@ module.exports = io => {
       socket.broadcast.to(message.courseDetailId).emit(message.courseDetailId, message)
     })
 
-    socket.on('disconnect', () => {
-      console.log(`socket 用戶離開 ${socket.id}`)
-    })
+    // socket.on('disconnect', () => {
+    //   console.log(`socket 用戶離開 ${socket.id}`)
+    // })
   })
 }

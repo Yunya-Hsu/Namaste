@@ -1,0 +1,41 @@
+name: "Namaste project CI/CD"
+
+
+
+on: 
+  pull_request:
+    branches: [develop]
+    types: [closed]
+
+
+
+jobs: 
+  continuous-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout Github Action"
+        uses: actions/checkout@v3
+
+      - name: "Install node.js"
+        uses: actions/setup-node@v3
+
+
+
+  deploy-on-AWS-EC2: 
+    runs-on: ubuntu-latest
+    needs: "continuous-integration"
+    steps:
+      - name: "executing remote ssh commands using ssh key"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST}}
+          username: ${{ secrets.EC2_USER}}
+          key: ${{ secrets.EC2_SSH_KEY}}
+          script: |
+            cd ~/Namaste
+            git switch develop
+            git pull origin develop
+            npm install
+            pm2 restart "namaste"
+

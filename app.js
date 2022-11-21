@@ -19,6 +19,7 @@ const io = require('socket.io')(server, {
   }
 })
 const port = process.env.SERVER_PORT || 3000
+const cookieExpireTime = 1000 * 60 * 60 * 24 // 單位毫秒
 const router = require('./routes/index')
 
 app.use(express.static('public'))
@@ -37,7 +38,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
   resave: false,
-  cookie: { maxAge: 10 * 60 * 1000 } // FIXME: 單位毫秒，magic number 請移出
+  cookie: { maxAge: cookieExpireTime }
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -56,8 +57,8 @@ app.use((req, res) => {
 })
 
 
-app.use((err, req, res, next) => {
-  console.log(moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss'), err)
+app.use((err, req, res) => {
+  console.error(moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss'), err)
   res.render('basic/500')
 })
 

@@ -237,7 +237,7 @@ const updateCourseDetail = async (courseDetailId, date, start_time, duration, is
 const getStudioCourseDetail = async studioId => {
   try {
     const [result] = await db.execute(
-      'SELECT course_details.*, courses.title FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id WHERE courses.studio_id = ? ORDER BY course_details.date DESC',
+      'SELECT course_details.*, courses.title FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id WHERE courses.studio_id = ? ORDER BY course_details.date DESC, course_details.start_time DESC',
       [studioId]
     )
     return result
