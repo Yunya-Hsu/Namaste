@@ -24,7 +24,7 @@ jobs:
 
   deploy-on-AWS-EC2: 
     runs-on: ubuntu-latest
-    needsL: "continuous-integration"
+    needs: "continuous-integration"
     steps:
       - name: "executing remote ssh commands using ssh key"
         uses: appleboy/ssh-action@master
