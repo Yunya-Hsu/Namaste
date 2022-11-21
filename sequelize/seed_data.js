@@ -226,7 +226,7 @@ const SEED_USERS_STUDENT = [
   },
   {
     name: 'Kelly',
-    email: 'Kelly@test.com'
+    email: 'kelly@test.com'
   },
   {
     name: 'Wen',
@@ -241,12 +241,16 @@ const SEED_USERS_STUDENT = [
     email: 'ingrid@test.com'
   },
   {
-    name: 'Penny',
-    email: 'penny@test.com'
+    name: 'Jianjian',
+    email: 'jianjian@test.com'
   },
   {
-    name: 'Lynn',
-    email: 'lynn@test.com'
+    name: 'Ding',
+    email: 'ding@test.com'
+  },
+  {
+    name: 'shirney',
+    email: 'shirney@test.com'
   }
 ]
 

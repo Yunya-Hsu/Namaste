@@ -31,7 +31,7 @@ router.use('/user', user)
 // studio owner & assistant
 router.get('/:studioSubdomain/admin/live',
   auth.authenticated,
-  auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES), // FIXME: 
+  auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES), // FIXME:
   wrapAsync(AdminStudio.renderLivePage)
 )
 
