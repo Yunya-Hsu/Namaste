@@ -1,101 +1,127 @@
 {{> nav_general}}
 
 <div id="profile-page-div">
-  {{#if orderList}}
-  <div class="about-title d-flex justify-content-center align-items-center">
-    <p>歷史訂單</p>
-  </div>
 
-  <table class="profile-table">
-    <thead class="profile-table-head">
-      <tr>
-        <th>教室</th>
-        <th> 購買日期</th>
-        <th>總金額</th>
-        <th>總點數</th>
-        <th>訂單狀態</th>
-        <th>到期日</th>
-        <th>剩餘點數</th>
-      </tr>
-    </thead>
-
-
-    {{#each orderList}}
-    <tbody>
-      <tr>
-        <td class="order-studio">
-          <a href="/{{this.subdomain}}/price">
-            {{this.studio_name}}
-          </a>
-        </td>
-        <td class="order-date">{{this.date}}</td>
-        <td class="order-total">$ {{this.total}}</td>
-        <td class="order-point">{{this.point}}</td>
-        <td class="order-status">{{this.status}}</td>
-        <td class="order-expire-date">{{this.expire_date}}</td>
-        <td class="order-remaining-point">{{this.remaining_point}}</td>
-      </tr>
-    </tbody>
-    {{/each}}
-  </table>
-  {{else}}
-
-  <div class="about-title d-flex justify-content-center align-items-center">
-    <p>無歷史訂單</p>
-  </div>
-  {{/if}}
+  <section>
+    <div class="about-title d-flex justify-content-center align-items-center">
+      <p>使用者資訊</p>
+    </div>
+  
+    <div class="d-flex justify-content-center">
+      <div class="profile-div">
+        <div id="name" class="profile-column">Name</div>
+        <div id="email" class="profile-column">E-mail</div>
+        {{!-- <div id="password" class="profile-column">修改密碼</div> --}}
+      </div>
+  
+      <div class="profile-div">
+        <div id="user-name" class="profile-column">{{loginUser.name}}</div>
+        <div id="user-email" class="profile-column">{{loginUser.email}}</div>
+        {{!-- <div id="user-password" class="profile-column">修改密碼的link</div> --}}
+      </div>
+    </div>
+  </section>
 
 
 
+  <section>
+    {{#if orderList}}
+    <div class="about-title d-flex justify-content-center align-items-center">
+      <p>歷史訂單</p>
+    </div>
+
+    <table class="profile-table">
+      <thead class="profile-table-head">
+        <tr>
+          <th>教室</th>
+          <th> 購買日期</th>
+          <th>總金額</th>
+          <th>總點數</th>
+          <th>訂單狀態</th>
+          <th>到期日</th>
+          <th>剩餘點數</th>
+        </tr>
+      </thead>
 
 
-  {{#if registrationList}}
-  <div class="about-title d-flex justify-content-center align-items-center">
-    <p>預約紀錄</p>
-  </div>
+      {{#each orderList}}
+      <tbody>
+        <tr>
+          <td class="order-studio">
+            <a href="/{{this.subdomain}}/price">
+              {{this.studio_name}}
+            </a>
+          </td>
+          <td class="order-date">{{this.date}}</td>
+          <td class="order-total">$ {{this.total}}</td>
+          <td class="order-point">{{this.point}}</td>
+          <td class="order-status">{{this.status}}</td>
+          <td class="order-expire-date">{{this.expire_date}}</td>
+          <td class="order-remaining-point">{{this.remaining_point}}</td>
+        </tr>
+      </tbody>
+      {{/each}}
+    </table>
 
-  <table class="profile-table">
-    <thead class="profile-table-head">
-      <tr>
-        <th>教室</th>
-        <th>課程名稱</th>
-        <th>授課老師</th>
-        <th>日期</th>
-        <th>時間</th>
-        <th>點數</th>
-        <th>線上課程</th>
-      </tr>
-    </thead>
+    {{else}}
+    <div class="about-title d-flex justify-content-center align-items-center">
+      <p>無歷史訂單</p>
+    </div>
+    {{/if}}
+  </section>
 
 
-    {{#each registrationList}}
-    <tbody>
-      <tr>
-        <td class="profile-register-studio">
-          <a href="/{{this.studio_subdomain}}">
-            {{this.studio_name}}
-          </a>
-        </td>
-        <td class="profile-register-course">{{this.course_title}}</td>
-        <td class="profile-register-teacher">{{this.teacher_name}}</td>
-        <td class="profile-register-date">{{this.date}}</td>
-        <td class="profile-register-start-time">{{this.start_time}}</td>
-        <td class="profile-register-point">{{this.point}}</td>
-        <td class="profile-register-livestream">
-          {{#compare this.is_online 1}}
-          <a href="/{{../this.studio_subdomain}}/live?courseDetailId={{../this.course_detail_id}}">直播</a>
-          {{else}}
-          N/A
-          {{/compare}}
-        </td>
-      </tr>
-    </tbody>
-    {{/each}}
-  </table>
 
-  {{else}}
-  <div class="about-title d-flex justify-content-center align-items-center">
-    <p>無預約紀錄</p>
-  </div>
-  {{/if}}
+  <section>
+    {{#if registrationList}}
+    <div class="about-title d-flex justify-content-center align-items-center">
+      <p>預約紀錄</p>
+    </div>
+
+    <table class="profile-table">
+      <thead class="profile-table-head">
+        <tr>
+          <th>教室</th>
+          <th>課程名稱</th>
+          <th>授課老師</th>
+          <th>日期</th>
+          <th>時間</th>
+          <th>點數</th>
+          <th>線上課程</th>
+        </tr>
+      </thead>
+
+
+      {{#each registrationList}}
+      <tbody>
+        <tr>
+          <td class="profile-register-studio">
+            <a href="/{{this.studio_subdomain}}">
+              {{this.studio_name}}
+            </a>
+          </td>
+          <td class="profile-register-course">{{this.course_title}}</td>
+          <td class="profile-register-teacher">{{this.teacher_name}}</td>
+          <td class="profile-register-date">{{this.date}}</td>
+          <td class="profile-register-start-time">{{this.start_time}}</td>
+          <td class="profile-register-point">{{this.point}}</td>
+          <td class="profile-register-livestream">
+            {{#compare this.is_online 1}}
+            <a href="/{{../this.studio_subdomain}}/live?courseDetailId={{../this.course_detail_id}}">直播</a>
+            {{else}}
+            N/A
+            {{/compare}}
+          </td>
+        </tr>
+      </tbody>
+      {{/each}}
+    </table>
+
+    {{else}}
+    <div class="about-title d-flex justify-content-center align-items-center">
+      <p>無預約紀錄</p>
+    </div>
+    {{/if}}
+  </section>
+
 </div>

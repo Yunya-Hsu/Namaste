@@ -67,3 +67,42 @@
   background-color: #7f6b5e;
   color: #ffffff;
 }
+
+
+.balloon {
+  position: relative;
+  $balloon-color: rgba(17, 17, 17, 0.9);
+
+  &:before,
+  &:after {
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    position: absolute;
+    z-index: 10;
+    transition: all 0.18s ease-out 0.18s;
+    opacity: 0;
+  }
+
+  &:after {
+    background-color: $balloon-color;
+    border-radius: 4px;
+    color: white;
+    content: attr(balloon-data);
+    margin-bottom: 12px;
+    padding: 10px;
+  }
+
+  &:before {
+    content: "";
+    margin-bottom: 4px;
+    border-top: solid 8px $balloon-color;
+    border-left: solid 8px transparent;
+    border-right: solid 8px transparent;
+  }
+
+  &:hover:before,
+  &:hover:after {
+    opacity: 1;
+  }
+}
