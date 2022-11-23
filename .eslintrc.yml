@@ -6,6 +6,10 @@ extends:
   - standard
 parserOptions:
   ecmaVersion: 2018
+plugins:
+  - jest
+env:
+  jest/globals: true
 rules:
   arrow-parens:
     - warn

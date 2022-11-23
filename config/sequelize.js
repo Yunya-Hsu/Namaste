@@ -9,6 +9,13 @@ module.exports = {
     "database": process.env.DB_DEV_DATABASENAME,
     "dialect": "mysql"
   },
+  "test": {
+    "host": process.env.DB_TEST_HOST,
+    "username": process.env.DB_TEST_USER,
+    "password": process.env.DB_TEST_PASSWORD,
+    "database": process.env.DB_TEST_DATABASENAME,
+    "dialect": "mysql"
+  },
   "production": {
     "host": process.env.DB_PROD_HOST,
     "username": process.env.DB_PROD_USER,

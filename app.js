@@ -64,6 +64,10 @@ app.use((err, req, res) => {
 
 require('./controllers/socketIo.js')(io)
 
-server.listen(port, () => {
-  console.log(`server is listen on ${port}`)
-})
+
+
+module.exports = {
+  app,
+  port,
+  server
+}
