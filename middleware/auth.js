@@ -28,7 +28,7 @@ const authorization = permissionId => {
         return res.redirect('/')
       }
 
-      studio.logo = process.env.SERVER_IP + studio.logo
+      studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
       req.user.studio = studio
       next()
     } catch (error) {
