@@ -280,6 +280,19 @@ const registerCourse = async (req, res, next) => {
   return res.redirect('back')
 }
 
+const deregisterCourse = async (req, res, next) => {
+  // 取得該筆預約紀錄
+  const { registrationId } = req.body
+  const registerDetail = await Studio.getRegisterDetail(registrationId)
+  if (!registerDetail) {
+    req.flash('errorMessage', '課程編號有誤')
+    return res.redirect('back')
+  }
+
+  // 確認要對把點數返還哪幾張 order
+
+  res.send(`收到取消預約 ${registrationId}`)
+}
 
 
 
@@ -327,5 +340,6 @@ module.exports = {
   renderLivePage,
   renderCheckoutPage,
   checkout,
-  registerCourse
+  registerCourse,
+  deregisterCourse
 }

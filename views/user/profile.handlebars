@@ -88,6 +88,7 @@
           <th>時間</th>
           <th>點數</th>
           <th>線上課程</th>
+          <th>取消預約</th>
         </tr>
       </thead>
 
@@ -111,6 +112,12 @@
             {{else}}
             N/A
             {{/compare}}
+          </td>
+          <td class="profile-register-deregister">
+            <form action="/deregister?_method=DELETE" method="POST" class="d-flex align-items-center">
+              <input type="number" id="registrationId" name="registrationId" value="{{this.id}}" style="display: none">
+              <button type="submit" class="deregister-btn">取消</button>
+            </form>
           </td>
         </tr>
       </tbody>

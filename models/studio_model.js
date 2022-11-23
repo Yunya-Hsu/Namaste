@@ -200,6 +200,18 @@ const registerCourse = async (courseDetail, isBookOnlineCourse, requiredOrderLis
   }
 }
 
+const getRegisterDetail = async registrationId => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT * FROM registrations WHERE id = (?);',
+      [registrationId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 
 module.exports = {
   getStudioBySubdomain,
@@ -216,5 +228,6 @@ module.exports = {
   getRegistration,
   getDedicatedCourseDetail,
   getUserOrder,
-  registerCourse
+  registerCourse,
+  getRegisterDetail
 }

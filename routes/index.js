@@ -259,6 +259,10 @@ router.get('/:studioSubdomain/registration',
   auth.authenticated,
   wrapAsync(Studio.registerCourse)
 )
+router.delete('/deregister',
+  auth.authenticated,
+  wrapAsync(Studio.deregisterCourse)
+)
 router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
 
 
