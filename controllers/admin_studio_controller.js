@@ -5,6 +5,12 @@ const moment = require('moment-timezone')
 const StudioAdmin = require('../models/admin_studio_model')
 const Studio = require('../models/studio_model')
 
+// utils
+const fs = require('fs')
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
+const { uploadFileToS3 } = require('../util/s3')
+
 // basic parameters
 const requirementOfPriceRule = ['category', 'price', 'point', 'term', 'publish_at']
 const requirementOfCourse = ['title', 'teacher_id', 'user', 'point', 'publish_at']
@@ -402,7 +408,13 @@ const createTeacher = async (req, res) => {
     return res.redirect(`/${studio.subdomain}/admin/teacher/create`)
   }
 
-  const avatar = req.files.avatar ? req.files.avatar[0].path : null
+  let avatar = null
+  if (req.files.avatar) {
+    avatar = await uploadFileToS3(req.files.avatar[0].path)
+    avatar = avatar.key
+    await unlinkFile(req.files.avatar[0].path)
+  }
+
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
   await StudioAdmin.createTeacher(name, avatar, major, introduction, studio.id, currentTime)
   req.flash('successMessage', `${name} 老師建立成功`)
@@ -439,7 +451,9 @@ const updateTeacher = async (req, res) => {
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
   if (req.files.avatar) { // 如果頭像有更新
     const avatar = req.files.avatar[0].path
-    await StudioAdmin.updateTeacherWithAvatar(teacherId, name, avatar, major, introduction, currentTime)
+    const avatarInS3 = await uploadFileToS3(avatar)
+    await unlinkFile(avatar) // 把檔案從 images 資料夾刪除
+    await StudioAdmin.updateTeacherWithAvatar(teacherId, name, avatarInS3.key, major, introduction, currentTime)
   } else { // 如果頭像沒有更新
     await StudioAdmin.updateTeacherWithoutAvatar(teacherId, name, major, introduction, currentTime)
   }
@@ -452,7 +466,7 @@ const renderAllTeachers = async (req, res) => {
   const studio = req.user.studio
   const teacherList = await Studio.getTeachers(studio.id)
   for (const teacher of teacherList) {
-    teacher.avatar = process.env.SERVER_IP + teacher.avatar
+    teacher.avatar = process.env.AWS_CDN_DOMAIN + teacher.avatar
   }
 
   res.render('admin_studio/teacher', {
@@ -494,8 +508,18 @@ const updateAbout = async (req, res) => {
   const originStudioInfo = await Studio.getStudioForAbout(studio.subdomain)
   const { name, introduction_title, introduction_detail, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id } = req.body
 
-  const logo = req.files.logo ? req.files.logo[0].path : originStudioInfo.logo
-  const introduction_photo = req.files.introduction_photo ? req.files.introduction_photo[0].path : originStudioInfo.introduction_photo
+  let logo = req.files.logo ? req.files.logo[0].path : originStudioInfo.logo
+  let introduction_photo = req.files.introduction_photo ? req.files.introduction_photo[0].path : originStudioInfo.introduction_photo
+  if (req.files.logo) { // 如果 logo 有更新
+    logo = await uploadFileToS3(req.files.logo[0].path)
+    logo = logo.key
+    await unlinkFile(req.files.logo[0].path)
+  }
+  if (req.files.introduction_photo) { // 如果 logo 有更新
+    introduction_photo = await uploadFileToS3(req.files.introduction_photo[0].path)
+    introduction_photo = introduction_photo.key
+    await unlinkFile(req.files.introduction_photo[0].path)
+  }
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
 
   await StudioAdmin.updateStudio(studio.id, name, logo, introduction_title, introduction_detail, introduction_photo, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, currentTime)

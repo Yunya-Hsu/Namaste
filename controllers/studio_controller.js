@@ -15,8 +15,8 @@ const renderHomePage = async (req, res, next) => {
   }
 
   // 整理資料
-  studio.logo = process.env.SERVER_IP + studio.logo
-  studio.introduction_photo = process.env.SERVER_IP + studio.introduction_photo
+  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
+  studio.introduction_photo = process.env.AWS_CDN_DOMAIN + studio.introduction_photo
 
   return res.render('studio/home', { studio })
 }
@@ -28,7 +28,7 @@ const renderPricePage = async (req, res, next) => {
   if (!studio) {
     return next()
   }
-  studio.logo = process.env.SERVER_IP + studio.logo
+  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
 
   // 取出該教室的價格
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
@@ -47,7 +47,7 @@ const renderCoursePage = async (req, res, next) => {
   if (!studio) {
     return next()
   }
-  studio.logo = process.env.SERVER_IP + studio.logo
+  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
 
 
   // 算出所需的區間
@@ -98,7 +98,7 @@ const renderCoursePage = async (req, res, next) => {
 
   res.render('studio/course', {
     theYear,
-    theWeek,
+    theWeek: theWeek.toString().length < 2 ? theWeek.toString().padStart(2, '0') : theWeek,
     studio,
     organizedCourseDetailList
   })
@@ -113,10 +113,10 @@ const renderAboutPage = async (req, res, next) => {
   }
 
   const teacherList = await Studio.getTeachers(studio.id)
-  studio.logo = process.env.SERVER_IP + studio.logo
+  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
   for (const teacher of teacherList) {
     if (teacher.avatar) {
-      teacher.avatar = process.env.SERVER_IP + teacher.avatar
+      teacher.avatar = process.env.AWS_CDN_DOMAIN + teacher.avatar
     }
   }
 
@@ -133,7 +133,7 @@ const renderCheckoutPage = async (req, res, next) => {
   if (!studio) {
     return next()
   }
-  studio.logo = process.env.SERVER_IP + studio.logo
+  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
 
   // get the price rule
   const priceRuleId = req.query.priceRuleId
@@ -290,7 +290,7 @@ const renderLivePage = async (req, res, next) => {
   if (!studio) {
     return next()
   }
-  studio.logo = process.env.SERVER_IP + studio.logo
+  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
 
   const courseDetailId = req.query.courseDetailId
   const userId = req.user.id
