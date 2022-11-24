@@ -175,20 +175,23 @@ const registerCourse = async (courseDetail, isBookOnlineCourse, requiredOrderLis
       )
     }
 
-    // 到 order 扣除
-    for (let i = 0; i < requiredOrderList.length; i++) {
-      await conn.execute(
-        'UPDATE orders SET remaining_point = remaining_point - (?) WHERE id = (?)',
-        [Number(deductionList[i]), Number(requiredOrderList[i])]
-      )
-    }
-
-
     // 到 registration 新增一筆紀錄
     const [registration] = await conn.execute(
       'INSERT INTO registrations (course_detail_id, user_id, studio_name, course_title, teacher_name, date, start_time, duration, point, is_online, created_at, updated_at, studio_subdomain) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
       [courseDetail.id, userId, courseDetail.studio_name, courseDetail.title, courseDetail.teacher_name, courseDetail.date, courseDetail.start_time, courseDetail.duration, courseDetail.point, isBookOnlineCourse, currentTime, currentTime, courseDetail.studio_subdomain]
     )
+
+    // 到 order 扣除、到 registration_order 新增扣除紀錄
+    for (let i = 0; i < requiredOrderList.length; i++) {
+      await conn.execute(
+        'UPDATE orders SET remaining_point = remaining_point - (?), updated_at = (?) WHERE id = (?)',
+        [Number(deductionList[i]), currentTime, Number(requiredOrderList[i])]
+      )
+      await conn.execute(
+        'INSERT INTO registration_order (registration_id, order_id, consume_point, created_at, updated_at) VALUES (?, ?, ?, ?, ?);',
+        [registration.insertId, Number(requiredOrderList[i]), Number(deductionList[i]), currentTime, currentTime]
+      )
+    }
 
     await conn.commit()
     return registration.insertId
@@ -212,6 +215,64 @@ const getRegisterDetail = async registrationId => {
   }
 }
 
+const getRegisterAndOrderRelationship = async registrationId => {
+  try {
+    const [result] = await db.execute(
+      'SELECT * FROM registration_order WHERE registration_id = (?);',
+      [registrationId]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const deregisterCourse = async (registrationId, registerDetail, registerAndOrderList, currentTime) => {
+  const conn = await db.getConnection()
+  try {
+    await conn.beginTransaction()
+
+    // 到 course_detail 更新剩餘空位
+    if (registerDetail.is_online === 0) {
+      await conn.execute(
+        'UPDATE course_details SET limitation = limitation + 1 WHERE id = (?);',
+        [registerDetail.course_detail_id]
+      )
+    }
+    if (registerDetail.is_online === 1) {
+      await conn.execute(
+        'UPDATE course_details SET online_limitation = online_limitation + 1 WHERE id = (?);',
+        [registerDetail.course_detail_id]
+      )
+    }
+
+    // 到 order 把點數加回、到 registration_order 刪除紀錄
+    for (let i = 0; i < registerAndOrderList.length; i++) {
+      await conn.execute(
+        'UPDATE orders SET remaining_point = remaining_point + (?), updated_at = (?) WHERE id = (?)',
+        [Number(registerAndOrderList[i].consume_point), currentTime, Number(registerAndOrderList[i].order_id)]
+      )
+      await conn.execute(
+        'DELETE FROM registration_order WHERE id = (?);',
+        [Number(registerAndOrderList[i].id)]
+      )
+    }
+
+    // 到 registration 刪除該紀錄
+    await conn.execute(
+      'DELETE FROM registrations WHERE id = (?);',
+      [registrationId]
+    )
+
+    await conn.commit()
+  } catch (error) {
+    await conn.rollback()
+    throw new Error(error)
+  } finally {
+    await conn.release()
+  }
+}
+
 
 module.exports = {
   getStudioBySubdomain,
@@ -229,5 +290,7 @@ module.exports = {
   getDedicatedCourseDetail,
   getUserOrder,
   registerCourse,
-  getRegisterDetail
+  getRegisterDetail,
+  getRegisterAndOrderRelationship,
+  deregisterCourse
 }

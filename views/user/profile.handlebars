@@ -55,7 +55,13 @@
           <td class="order-date">{{this.date}}</td>
           <td class="order-total">$ {{this.total}}</td>
           <td class="order-point">{{this.point}}</td>
-          <td class="order-status">{{this.status}}</td>
+          <td class="order-status">
+            {{#compare this.status 1}}
+              付款完成
+            {{else}}
+              未付款
+            {{/compare}}
+          </td>
           <td class="order-expire-date">{{this.expire_date}}</td>
           <td class="order-remaining-point">{{this.remaining_point}}</td>
         </tr>
@@ -97,7 +103,7 @@
       <tbody>
         <tr>
           <td class="profile-register-studio">
-            <a href="/{{this.studio_subdomain}}">
+            <a href="/{{this.studio_subdomain}}/course">
               {{this.studio_name}}
             </a>
           </td>
