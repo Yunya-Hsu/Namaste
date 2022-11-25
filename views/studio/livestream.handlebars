@@ -17,10 +17,8 @@
 
 
   <section>
-    <button id="connLivestream">加入課程</button>
+    <button id="conn-btn">加入課程</button>
     <br>
-    <br>
-    <p id="after-conn"></p>
     <video autoplay id="remoteVideo" playsinline></video>
   </section>
 </div>
@@ -28,7 +26,9 @@
 
 <!-- socket io 套件 -->
 <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
-  integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+  integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" 
+  crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- 自己寫的腳本 -->
 <script>
@@ -39,15 +39,25 @@
 
 
   const studentNumber = document.querySelector('#student-number')
-  const connBtn = document.querySelector('#connLivestream')
+  const connBtn = document.querySelector('#conn-btn')
   const remoteVideo = document.querySelector('#remoteVideo')
-  const afterConn = document.querySelector('#after-conn')
 
   let pc
   let sdp
 
-  connBtn.addEventListener('click', () => {
-    afterConn.innerText = `已加入 ${courseDetailId} 課程的直播`
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-right',
+    iconColor: 'white',
+    customClass: {
+      popup: 'colored-toast'
+    },
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true
+  })
+
+  connBtn.addEventListener('click', async () => {
     initPeer()
     joinRoom()
 
@@ -68,6 +78,11 @@
     onIceCandidates()
     // onIceconnectionStateChange()
     onAddStream()
+
+    await Toast.fire({
+      icon: 'success',
+      title: '已加入直播課程'
+    })
   })
 
 

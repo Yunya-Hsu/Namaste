@@ -92,31 +92,33 @@
 
 /* live stream */
 .livestream-div {
-  margin: 60px auto 150px auto;
+  margin: 3vh auto 20vh auto;
 }
 
 #myVideo,
 #remoteVideo {
   transform: scaleX(-1);
-  border: 5px solid #E1E1DF;
-  border-radius: 70px;
-  background-color: #fbfbf9;
   height: 60vh;
   width: 40vw;
   object-fit: scale-down;
+  margin: 0 1vw;
+  border: 3px solid #E1E1DF;
+  border-radius: 70px;
+  background-color: #fbfbf9;
 }
 
 #callBtn,
-#connLivestream {
-  display: block;
-  margin: 20px 0;
+#conn-btn,
+#turn-off-camera-btn,
+#turn-on-camera-btn,
+#turn-off-voice-btn,
+#turn-on-voice-btn {
+  display: inline-block;
+  margin: 20px 1vw;
   padding: 10px 15px 40px 20px;
 
   height: 45px;
-
-  border: none;
-  border-radius: 10px;
-  background-color: #8C736F;
+  min-width: 70px;
 
   border: none;
   border-radius: 10px;
@@ -130,9 +132,43 @@
   cursor: pointer;
 }
 
+#turn-on-camera-btn,
+#turn-on-voice-btn {
+  background-color: #f87864;
+  color: #ffffff;
+}
+
 #callBtn:hover,
-#connLivestream:hover {
+#conn-btn:hover {
   background-color: #DDDDC8;
   color: #53565C;
+}
+
+#one-on-one-course-name {
+  /* display: block; */
+  margin: 1vh auto 0 auto;
+  text-align: center;
+
+  font-size: 60px;
+  letter-spacing: 10px;
+  font-weight: 300;
+  color: #CCB9AA;
+}
+
+.colored-toast.swal2-icon-success {
+  background-color: #CCB9AA;
+  color: #ffffff;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
 }
 /* live stream */

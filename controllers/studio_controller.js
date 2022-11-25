@@ -348,6 +348,39 @@ const renderLivePage = async (req, res, next) => {
   })
 }
 
+const renderOneOnOnePage = async (req, res, next) => {
+  // search studio from DB
+  const { studioSubdomain } = req.params
+  const studio = await Studio.getStudioForCheckout(studioSubdomain)
+  if (!studio) {
+    return next()
+  }
+  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
+
+  const courseDetailId = req.query.courseDetailId
+  const userId = req.user.id
+  // 撈出課程資料（確認該堂課是不是該教室的）
+  const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
+  if (!courseDetail) {
+    return next()
+  }
+
+
+  // 檢查登入者有沒有註冊此課程
+  const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, studioSubdomain)
+  if (!verifyRegistration) {
+    req.flash('errorMessage', 'Permission denied: 未註冊此課程')
+    return res.redirect('/')
+  }
+
+  res.render('studio/oneOnOne', {
+    studio,
+    courseDetailId,
+    userId,
+    courseName: verifyRegistration.course_title
+  })
+}
+
 
 
 
@@ -356,9 +389,10 @@ module.exports = {
   renderPricePage,
   renderCoursePage,
   renderAboutPage,
-  renderLivePage,
   renderCheckoutPage,
   checkout,
   registerCourse,
-  deregisterCourse
+  deregisterCourse,
+  renderLivePage,
+  renderOneOnOnePage
 }
