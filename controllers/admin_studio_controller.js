@@ -272,10 +272,10 @@ const createCourseDetail = async (req, res) => {
   if (!requirementOfCourseDetail.every(e => req.body[e] !== '')) {
     req.flash('createCourseDetailInput', req.body)
     req.flash('errorMessage', 'missing information')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
+    return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
   }
 
-  const { course_id, date, start_time, duration, limitation, is_online, online_limitation, publish_at } = req.body
+  const { course_id, date, start_time, duration, limitation, is_online, online_limitation, is_oneOnOne, publish_at } = req.body
 
   // 檢查 course_id 是否隸屬該教室
   const courseFromDb = await StudioAdmin.getCourseById(course_id, studio.id)
@@ -289,25 +289,32 @@ const createCourseDetail = async (req, res) => {
   if (isNaN(+duration) || +duration <= 0 || isNaN(+limitation) || isNaN(+is_online) || isNaN(+online_limitation)) {
     req.flash('createCourseDetailInput', req.body)
     req.flash('errorMessage', '請檢查「時長」、「人數上限」、「開放線上」欄位')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
+    return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
   }
 
-  // 檢查 is_online 和 online_limitation 狀態是否相符
+  // 檢查 is_online, online_limitation, is_oneOnOne 狀態是否相符
   if (+is_online === 0 && +online_limitation > 0) {
     req.flash('createCourseDetailInput', req.body)
     req.flash('errorMessage', '不開放線上課程時，「線上課程人數上限」須為 0')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
+    return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
   }
   if (+is_online === 1 && +online_limitation <= 0) {
     req.flash('createCourseDetailInput', req.body)
     req.flash('errorMessage', '開放線上課程時，「線上課程人數上限」至少需 1 人')
     return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
   }
+  if (+is_oneOnOne === 1) {
+    if (+online_limitation !== 1 || +limitation !== 0) {
+      req.flash('createCourseDetailInput', req.body)
+      req.flash('errorMessage', '建立「一對一」課程時，實體人數須為 0、線上人數須為 1')
+      return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
+    }
+  }
 
   // 寫入 db
   const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.createCourseDetail(course_id, date, start_time, duration, is_online, limitation, online_limitation, publishAt, currentTime)
+  await StudioAdmin.createCourseDetail(course_id, date, start_time, duration, is_online, limitation, online_limitation, is_oneOnOne, publishAt, currentTime)
   req.flash('successMessage', '課程上架成功！')
   return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
 }
@@ -339,7 +346,7 @@ const updateCourseDetail = async (req, res) => {
     return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
   }
 
-  const { course_id, date, start_time, duration, limitation, is_online, online_limitation, publish_at } = req.body
+  const { course_id, date, start_time, duration, limitation, is_online, online_limitation, is_oneOnOne, publish_at } = req.body
 
   // 檢查 course_id 是否隸屬該教室
   const courseFromDb = await StudioAdmin.getCourseById(course_id, studio.id)
@@ -354,7 +361,7 @@ const updateCourseDetail = async (req, res) => {
     return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
   }
 
-  // 檢查 is_online 和 online_limitation 狀態是否相符
+  // 檢查 is_online, online_limitation, is_oneOnOne 狀態是否相符
   if (+is_online === 0 && +online_limitation > 0) {
     req.flash('errorMessage', '不開放線上課程時，「線上課程人數上限」須為 0')
     return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
@@ -363,11 +370,18 @@ const updateCourseDetail = async (req, res) => {
     req.flash('errorMessage', '開放線上課程時，「線上課程人數上限」至少需 1 人')
     return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
   }
+  if (+is_oneOnOne === 1) {
+    if (+online_limitation !== 1 || +limitation !== 0) {
+      req.flash('createCourseDetailInput', req.body)
+      req.flash('errorMessage', '建立「一對一」課程時，實體人數須為 0、線上人數須為 1')
+      return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
+    }
+  }
 
   // 寫入 db
   const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.updateCourseDetail(courseDetailId, date, start_time, duration, is_online, limitation, online_limitation, publishAt, currentTime)
+  await StudioAdmin.updateCourseDetail(courseDetailId, date, start_time, duration, is_online, limitation, online_limitation, is_oneOnOne, publishAt, currentTime)
   req.flash('successMessage', '課程更新成功！')
   return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
 }

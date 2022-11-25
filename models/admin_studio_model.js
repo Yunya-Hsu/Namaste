@@ -199,11 +199,11 @@ const getCourseById = async (courseId, studioId) => {
   }
 }
 
-const createCourseDetail = async (courseId, date, startTime, duration, isOnline, limitation, onlineLimitation, publishAt, currentTime) => {
+const createCourseDetail = async (courseId, date, startTime, duration, isOnline, limitation, onlineLimitation, isOneOnOne, publishAt, currentTime) => {
   try {
     const [result] = await db.execute(
-      'INSERT INTO course_details (course_id, date, start_time, duration, is_online, limitation, online_limitation, publish_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-      [courseId, date, startTime, duration, isOnline, limitation, onlineLimitation, publishAt, currentTime, currentTime]
+      'INSERT INTO course_details (course_id, date, start_time, duration, is_online, limitation, online_limitation, is_oneOnOne, publish_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+      [courseId, date, startTime, duration, isOnline, limitation, onlineLimitation, isOneOnOne, publishAt, currentTime, currentTime]
     )
     return result
   } catch (error) {
@@ -223,11 +223,11 @@ const getDedicatedCourseDetail = async (studioId, courseDetailId) => {
   }
 }
 
-const updateCourseDetail = async (courseDetailId, date, start_time, duration, is_online, limitation, online_limitation, publish_at, updated_at) => {
+const updateCourseDetail = async (courseDetailId, date, start_time, duration, is_online, limitation, online_limitation, isOneOnOne, publish_at, updated_at) => {
   try {
     await db.execute(
-      'UPDATE course_details SET date = (?), start_time = (?), duration = (?), is_online = (?), limitation = (?), online_limitation = (?), publish_at = (?), updated_at = (?) WHERE id = (?);',
-      [date, start_time, duration, is_online, limitation, online_limitation, publish_at, updated_at, courseDetailId]
+      'UPDATE course_details SET date = (?), start_time = (?), duration = (?), is_online = (?), limitation = (?), online_limitation = (?), is_oneOnOne = (?), publish_at = (?), updated_at = (?) WHERE id = (?);',
+      [date, start_time, duration, is_online, limitation, online_limitation, isOneOnOne, publish_at, updated_at, courseDetailId]
     )
   } catch (error) {
     throw new Error(error)

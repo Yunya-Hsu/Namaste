@@ -111,7 +111,7 @@ const updateOrderStatus = async (orderId, tappayTradeId) => {
 const getCourseDetails = async (studioId, startDate, EndDate, currentTime) => {
   try {
     const [result] = await db.execute(
-      'SELECT course_details.id AS id, courses.title, courses.point, course_details.date, course_details.start_time, course_details.duration, course_details.is_online, course_details.limitation, course_details.online_limitation, teachers.name FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id LEFT JOIN teachers ON teachers.id = courses.teacher_id WHERE courses.studio_id = (?) AND course_details.date BETWEEN (?) AND (?) AND course_details.publish_at < (?) ORDER BY course_details.start_time;',
+      'SELECT course_details.id AS id, courses.title, courses.point, course_details.date, course_details.start_time, course_details.duration, course_details.is_online, course_details.limitation, course_details.online_limitation, course_details.is_oneOnOne, teachers.name FROM course_details LEFT JOIN courses ON courses.id = course_details.course_id LEFT JOIN teachers ON teachers.id = courses.teacher_id WHERE courses.studio_id = (?) AND course_details.date BETWEEN (?) AND (?) AND course_details.publish_at < (?) ORDER BY course_details.start_time;',
       [studioId, startDate, EndDate, currentTime]
     )
     return result
@@ -156,7 +156,7 @@ const getUserOrder = async (userId, studioId, currentTime) => {
   }
 }
 
-const registerCourse = async (courseDetail, isBookOnlineCourse, requiredOrderList, deductionList, userId, currentTime) => {
+const registerCourse = async (courseDetail, isBookOnlineCourse, isBookOneOnOne, requiredOrderList, deductionList, userId, currentTime) => {
   const conn = await db.getConnection()
   try {
     await conn.beginTransaction()
@@ -177,8 +177,8 @@ const registerCourse = async (courseDetail, isBookOnlineCourse, requiredOrderLis
 
     // 到 registration 新增一筆紀錄
     const [registration] = await conn.execute(
-      'INSERT INTO registrations (course_detail_id, user_id, studio_name, course_title, teacher_name, date, start_time, duration, point, is_online, created_at, updated_at, studio_subdomain) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-      [courseDetail.id, userId, courseDetail.studio_name, courseDetail.title, courseDetail.teacher_name, courseDetail.date, courseDetail.start_time, courseDetail.duration, courseDetail.point, isBookOnlineCourse, currentTime, currentTime, courseDetail.studio_subdomain]
+      'INSERT INTO registrations (course_detail_id, user_id, studio_name, course_title, teacher_name, date, start_time, duration, point, is_online, is_oneOnOne, created_at, updated_at, studio_subdomain) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+      [courseDetail.id, userId, courseDetail.studio_name, courseDetail.title, courseDetail.teacher_name, courseDetail.date, courseDetail.start_time, courseDetail.duration, courseDetail.point, isBookOnlineCourse, isBookOneOnOne, currentTime, currentTime, courseDetail.studio_subdomain]
     )
 
     // 到 order 扣除、到 registration_order 新增扣除紀錄

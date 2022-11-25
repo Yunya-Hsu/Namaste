@@ -81,6 +81,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -96,6 +97,11 @@
             <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
               <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
               <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+              {{#compare ../this.is_oneOnOne 0}}
+              <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+              {{else}}
+              <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+              {{/compare}}
               <button type="submit" class="register-course">預約</button>
             </form>
             {{else}}
@@ -124,6 +130,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -139,6 +146,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -167,6 +179,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -182,6 +195,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -210,6 +228,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -225,6 +244,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -253,6 +277,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -268,6 +293,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -296,6 +326,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -311,6 +342,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -339,6 +375,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -354,6 +391,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -393,6 +435,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -408,6 +451,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -436,6 +484,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -451,6 +500,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -479,6 +533,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -494,6 +549,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -522,6 +582,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -537,6 +598,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -565,6 +631,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -580,6 +647,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -608,6 +680,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -623,6 +696,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -651,6 +729,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -666,6 +745,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -708,6 +792,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -723,6 +808,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -751,6 +841,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -766,6 +857,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -794,6 +890,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -809,6 +906,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -837,6 +939,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -852,6 +955,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -880,6 +988,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -895,6 +1004,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -923,6 +1037,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -938,6 +1053,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -966,6 +1086,7 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=0 style="display: none">
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}
@@ -981,6 +1102,11 @@
           <form action="/{{../../studio.subdomain}}/registration" method="GET" class="d-flex align-items-center">
             <input type="number" id="courseDetailId" name="courseDetailId" value="{{../this.id}}" style="display: none">
             <input type="number" id="isOnline" name="isOnline" value=1 style="display: none">
+            {{#compare ../this.is_oneOnOne 0}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=0 style="display: none">
+            {{else}}
+            <input type="number" id="isOneOnOne" name="isOneOnOne" value=1 style="display: none">
+            {{/compare}}
             <button type="submit" class="register-course">預約</button>
           </form>
           {{else}}

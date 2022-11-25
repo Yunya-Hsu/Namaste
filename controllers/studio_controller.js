@@ -217,7 +217,8 @@ const registerCourse = async (req, res, next) => {
   // 取得 course detail id
   const courseDetailId = +req.query.courseDetailId
   const isBookOnlineCourse = +req.query.isOnline
-  if (isNaN(courseDetailId) || isNaN(isBookOnlineCourse)) {
+  const isBookOneOnOne = +req.query.isOneOnOne
+  if (isNaN(courseDetailId) || isNaN(isBookOnlineCourse) || isNaN(isBookOneOnOne)) {
     req.flash('errorMessage', '課程有誤')
     return res.redirect('back')
   }
@@ -278,7 +279,7 @@ const registerCourse = async (req, res, next) => {
   }
 
   // 扣除點數
-  const registrationInsertId = await Studio.registerCourse(courseDetail, isBookOnlineCourse, requiredOrderList, deductionList, req.user.id, currentTime.format('YYYY-MM-DD HH:mm:ss'))
+  const registrationInsertId = await Studio.registerCourse(courseDetail, isBookOnlineCourse, isBookOneOnOne, requiredOrderList, deductionList, req.user.id, currentTime.format('YYYY-MM-DD HH:mm:ss'))
   if (!registrationInsertId) {
     req.flash('errorMessage', '預約失敗')
     return res.redirect('back')

@@ -113,11 +113,12 @@
           <td class="profile-register-start-time">{{this.start_time}}</td>
           <td class="profile-register-point">{{this.point}}</td>
           <td class="profile-register-livestream">
-            {{#compare this.is_online 1}}
+            {{#oneOnOne this.is_online this.is_oneOnOne}}
+            <a href="/{{../this.studio_subdomain}}/oneOnOne?courseDetailId={{../this.course_detail_id}}">直播</a>
+            {{/oneOnOne}}
+            {{#live this.is_online this.is_oneOnOne}}
             <a href="/{{../this.studio_subdomain}}/live?courseDetailId={{../this.course_detail_id}}">直播</a>
-            {{else}}
-            N/A
-            {{/compare}}
+            {{/live}}
           </td>
           <td class="profile-register-deregister">
             <form action="/deregister?_method=DELETE" method="POST" class="d-flex align-items-center">
