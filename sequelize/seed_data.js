@@ -2842,6 +2842,16 @@ const SEED_ORDER = [
     remaining_point: 10
   },
   {
+    user_id: 46,
+    studio_id: 2,
+    total: 4380,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 22,
+    expire_date: 90,
+    remaining_point: 22
+  },
+  {
     user_id: 43,
     studio_id: 5,
     total: 2550,
