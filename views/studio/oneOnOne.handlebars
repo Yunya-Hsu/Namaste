@@ -1,0 +1,241 @@
+{{> nav_studio}}
+
+<p id="one-on-one-course-name">{{courseName}}</p>
+
+<div class="d-flex justify-content-center">
+  <button id="conn-btn">加入課程</button>
+
+  <div id="camera-voice-btn-div" class="d-flex">
+    <button id="turn-off-camera-btn" data-contrary="turn-on-camera-btn" style="display: none;">
+      <i class="fas fa-video"></i>
+    </button>
+    <button id="turn-on-camera-btn" data-contrary="turn-off-camera-btn" style="display: none;">
+      <i class="fas fa-video-slash"></i>
+    </button>
+    <button id="turn-off-voice-btn" data-contrary="turn-on-voice-btn" style="display: none;">
+      <i class="fas fa-microphone"></i>
+    </button>
+    <button id="turn-on-voice-btn" data-contrary="turn-off-voice-btn" style="display: none;">
+      <i class="fas fa-microphone-slash"></i>
+    </button>
+  </div>
+</div>
+
+
+<div class="d-flex justify-content-center align-items-center livestream-div">
+  <video autoplay id="myVideo" muted playsinline></video>
+  <video autoplay id="remoteVideo" playsinline></video>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- socket io 套件 -->
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+
+<!-- 自己寫的腳本 -->
+<script>
+  const socket = io()
+
+  const courseDetailId = Number("{{courseDetailId}}")
+  const role = 'student'
+
+  const connBtn = document.querySelector('#conn-btn')
+
+  const cameraVoiceDiv = document.querySelector('#camera-voice-btn-div')
+  const offCamera = document.querySelector('#turn-off-camera-btn')
+  const onCamera = document.querySelector('#turn-on-camera-btn')
+  const offVoice = document.querySelector('#turn-off-voice-btn')
+  const onVoice = document.querySelector('#turn-off-voice-btn')
+  
+  const myVideo = document.querySelector('#myVideo')
+  const remoteVideo = document.querySelector('#remoteVideo')
+
+  let pc
+  let localStream
+  let sdp
+
+
+  connBtn.addEventListener('click', async () => {
+    await getLocalMedia()
+    initPeer()
+    joinRoom()
+
+    // 以下監聽，還沒真的開始做事情
+    onIceCandidates()
+    onIceconnectionStateChange()
+    onAddStream()
+
+    createSDP('Offer')
+
+    offCamera.removeAttribute('style')
+    offVoice.removeAttribute('style')
+    connBtn.style.display = 'none'
+  })
+
+  cameraVoiceDiv.addEventListener('click', async (event) => {
+    if (event.target.nodeName === 'BUTTON') {
+      turnOnTurnOff(event.target)
+    } 
+    if (event.target.nodeName === 'I') {
+      turnOnTurnOff(event.target.parentElement)
+    }
+  })
+
+  function turnOnTurnOff (target) {
+    const idOfBtn = target.id
+
+    if (idOfBtn.includes('camera')) {
+      localStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
+    }
+    if (idOfBtn.includes('voice')) {
+      localStream.getAudioTracks().forEach(track => track.enabled = !track.enabled)
+    }
+    const contrary = document.getElementById(target.dataset.contrary)
+    target.style.display = 'none'
+    contrary.removeAttribute('style')
+  }
+
+
+
+  // 初始化影像/聲音
+  async function getLocalMedia() {
+    const mediaStreamConstrain = {
+      audio: true,
+      video: true
+    }
+
+    // 利用 getUserMedia API 取得音訊和影像
+    localStream = await navigator.mediaDevices.getUserMedia(mediaStreamConstrain)
+    // 把取得的影像丟給 myVideo 這個 video (html)
+    myVideo.srcObject = localStream
+    console.log(localStream)
+  }
+
+  // 建立 P2P 連接（電腦大多位於 NAT 之後，因此使用 STUN 技術，向 STUN server 取得候選 ip）
+  function initPeer() {
+    const configuration = {
+      iceServers: [{
+        urls: 'stun:stun.l.google.com:19302' // Google's public STUN server
+      }]
+    }
+    pc = new RTCPeerConnection(configuration) // 建立一個 peer connection instance
+    pc.addStream(localStream) // 增加本地流
+  }
+
+  // 加入房間
+  function joinRoom() {
+    // 使用 socket io 向 server 發送訊號
+    socket.emit('joinRoom', {
+      courseDetailId,
+      account: role
+    });
+  }
+
+
+
+
+
+  async function createSDP(type) {
+    // pc.createOffer 或 pc.createAnswer 需要的基本參數
+    const signalOption = {
+      offerToReceiveAudio: 1, // 是否傳送聲音流給對方
+      offerToReceiveVideo: 1, // 是否傳送影像流給對方
+    }
+
+    try {
+      if (!pc) {
+        return swal('Error', '尚未開啟視訊', 'error')
+      }
+
+      const createType = type === 'Offer' ? 'createOffer' : 'createAnswer' // 決定要建立 Offer 還是 Answer
+      const sdp = await pc[createType](signalOption) // 建立 SDP
+      await pc.setLocalDescription(sdp) // 建立好的 SDP 交給 pc instance 存在 local description。同時，pc 開始去 get candidates（接著將觸發 onIceCandidates
+      sendSignalingMessage(pc.localDescription, type) // 呼叫 function 把 sdp 傳給 Signaling Sever
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  
+  function sendSignalingMessage(desc, type) {
+    // console.log(`寄出 ${type}`)
+    socket.emit("peerConnectSignaling", {
+      courseDetailId,
+      desc
+    })
+  }
+
+
+
+
+
+
+
+  // 監聽 onicecandidate 狀態
+  function onIceCandidates() {
+    // 如果建立了 ICE candidate，就用 socket.io 送去給 Server
+    pc.onicecandidate = ({ candidate }) => {
+      if (!candidate) { return }
+
+      // console.log('onIceCandidate => ', candidate)
+      socket.emit('peerConnectSignaling', {
+        courseDetailId,
+        candidate
+      })
+      // console.log('送出 ice candidate!');
+    }
+  }
+
+  // 監聽 ICE 連接狀態變更與否，iceConnectionState 共 7 種，若變更則印出狀態
+  function onIceconnectionStateChange() {
+    pc.oniceconnectionstatechange = (evt) => {
+      console.log('ICE 伺服器狀態變更 => ', evt.target.iceConnectionState)
+    }
+  }
+
+  // 監聽是否有流傳入，如果有的話就顯示影像
+  function onAddStream() {
+    pc.onaddstream = (event) => {
+      remoteVideo.srcObject = event.stream
+      console.log(event.stream)
+      console.log('接收流並顯示於遠端視訊！', event)
+      // if (!remoteVideo.srcObject && event.stream) {
+      //   remoteVideo.srcObject = event.stream
+      //   console.log(event.stream)
+      //   console.log('接收流並顯示於遠端視訊！', event)
+      // }
+    }
+  }
+
+
+
+
+
+
+
+
+  // 監聽 peerConnectSignaling ，再判斷收到結果是 SDP 還是 ICE 候選位置
+  socket.on(courseDetailId, async (message) => {
+    // desc 指的是 SDP 的 Offer 與 Answer。currentRemoteDescription 代表的是最近一次連線成功的相關訊息
+    if (message.desc && !pc.currentRemoteDescription) { // 如果是 SDP
+      // console.log('desc => ', message.desc)
+
+      await pc.setRemoteDescription(new RTCSessionDescription(message.desc)) // 呼叫 setRemoteDescription 儲存收到的 SDP
+      createSDP('Answer')
+    } else if (message.candidate) { // 如果收到的是 ICE 候選位置
+      // console.log('candidate =>', message.candidate)
+      pc.addIceCandidate(new RTCIceCandidate(message.candidate)) // 儲存收到的 ice candidate
+    }
+  })
+
+</script>

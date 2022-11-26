@@ -12,20 +12,19 @@
 
   <section>
     <button id="callBtn">開始直播</button>
+    <br>
     <video autoplay id="myVideo" muted playsinline ></video>
-    <div id="isLive"></div>
     
-    <div id="student-list">
-
-    </div>
+    <div id="student-list"></div>
   </section>
 </div>
 
 
 <!-- socket io 套件 -->
-<script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
-  integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
-
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" 
+  integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+  crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- 自己寫的腳本 -->
 <script type="text/javascript">
@@ -38,12 +37,22 @@
 
   const callBtn = document.querySelector('#callBtn')
   const myVideo = document.querySelector('#myVideo')
-  const isLiveDiv = document.querySelector('#isLive')
 
   let pc = {}
   let localStream
   let sdp
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-right',
+    iconColor: 'white',
+    customClass: {
+      popup: 'colored-toast'
+    },
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true
+  })
 
   callBtn.addEventListener('click', async () => {
     try {
@@ -56,12 +65,13 @@
       joinRoom()
       await createSDP('Offer') // 建立 SDP offer 並存到 n 個 pc 裡面
 
-      isLiveDiv.innerHTML = `
-        <span>直播已開始</span>
-      `
-
       // 監聽 ice candidate
       onIceCandidates()
+
+      await Toast.fire({
+        icon: 'success',
+        title: '直播已開始'
+      })
     } catch (err) {
       console.log(err)
       alert(err)

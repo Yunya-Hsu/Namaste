@@ -57,6 +57,14 @@
       </div>
 
       <div>
+        <label for="is_oneOnOne">一對一課程*</label>
+        <select name="is_oneOnOne" id="is_oneOnOne" required>
+          <option value="0" {{#compare 0 input.is_oneOnOne}} selected {{/compare}}>否</option>
+          <option value="1" {{#compare 1 input.is_oneOnOne}} selected {{/compare}}>一對一 VIP 課程</option>
+        </select>
+      </div>
+
+      <div>
         <label for="publish_at">上架日 *（台灣時間）</label>
         <input type="datetime-local" id="publish_at" name="publish_at" {{#if input.publish_at}}
           value={{input.publish_at}} {{/if}} required>

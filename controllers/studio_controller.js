@@ -217,7 +217,8 @@ const registerCourse = async (req, res, next) => {
   // 取得 course detail id
   const courseDetailId = +req.query.courseDetailId
   const isBookOnlineCourse = +req.query.isOnline
-  if (isNaN(courseDetailId) || isNaN(isBookOnlineCourse)) {
+  const isBookOneOnOne = +req.query.isOneOnOne
+  if (isNaN(courseDetailId) || isNaN(isBookOnlineCourse) || isNaN(isBookOneOnOne)) {
     req.flash('errorMessage', '課程有誤')
     return res.redirect('back')
   }
@@ -240,9 +241,16 @@ const registerCourse = async (req, res, next) => {
     return res.redirect('back')
   }
 
+  // 確認目前時間是否還可以預約
+  const currentTime = moment().tz('Asia/Taipei')
+  const courseStartTime = moment(courseDetail.date + ' ' + courseDetail.start_time)
+  if (!currentTime.isBefore(courseStartTime)) {
+    req.flash('errorMessage', '課程時間已過，無法預約')
+    return res.redirect('back')
+  }
+
   // 撈出 user 訂單資訊，確認該 user 剩餘點數是否足夠、該對哪幾張訂單進行扣款
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  const userOrder = await Studio.getUserOrder(req.user.id, courseDetail.studio_id, currentTime)
+  const userOrder = await Studio.getUserOrder(req.user.id, courseDetail.studio_id, currentTime.format('YYYY-MM-DD HH:mm:ss'))
   if (userOrder.length <= 0) {
     req.flash('errorMessage', '請先購買點數')
     return res.redirect('back')
@@ -271,7 +279,7 @@ const registerCourse = async (req, res, next) => {
   }
 
   // 扣除點數
-  const registrationInsertId = await Studio.registerCourse(courseDetail, isBookOnlineCourse, requiredOrderList, deductionList, req.user.id, currentTime)
+  const registrationInsertId = await Studio.registerCourse(courseDetail, isBookOnlineCourse, isBookOneOnOne, requiredOrderList, deductionList, req.user.id, currentTime.format('YYYY-MM-DD HH:mm:ss'))
   if (!registrationInsertId) {
     req.flash('errorMessage', '預約失敗')
     return res.redirect('back')
@@ -280,6 +288,30 @@ const registerCourse = async (req, res, next) => {
   return res.redirect('back')
 }
 
+const deregisterCourse = async (req, res, next) => {
+  const { registrationId } = req.body
+  const registerDetail = await Studio.getRegisterDetail(registrationId) // 取得該筆預約紀錄
+  const registerAndOrderList = await Studio.getRegisterAndOrderRelationship(registrationId) // 確認要對把點數返還哪幾張 order
+
+  if (!registerDetail || !registerAndOrderList) {
+    req.flash('errorMessage', '課程編號有誤')
+    return res.redirect('back')
+  }
+
+  // 確認目前時間是否晚於取消時間（課程開始前 3 小時）
+  const currentTime = moment().tz('Asia/Taipei')
+  const lastMomentToCancel = moment(registerDetail.date + ' ' + registerDetail.start_time).subtract(3, 'hours')
+  if (!currentTime.isBefore(lastMomentToCancel)) {
+    req.flash('errorMessage', '已無法取消')
+    return res.redirect('back')
+  }
+
+
+  await Studio.deregisterCourse(registrationId, registerDetail, registerAndOrderList, currentTime.format('YYYY-MM-DD HH:mm:ss'))
+
+  req.flash('successMessage', '取消成功')
+  return res.redirect('back')
+}
 
 
 
@@ -316,6 +348,39 @@ const renderLivePage = async (req, res, next) => {
   })
 }
 
+const renderOneOnOnePage = async (req, res, next) => {
+  // search studio from DB
+  const { studioSubdomain } = req.params
+  const studio = await Studio.getStudioForCheckout(studioSubdomain)
+  if (!studio) {
+    return next()
+  }
+  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
+
+  const courseDetailId = req.query.courseDetailId
+  const userId = req.user.id
+  // 撈出課程資料（確認該堂課是不是該教室的）
+  const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
+  if (!courseDetail) {
+    return next()
+  }
+
+
+  // 檢查登入者有沒有註冊此課程
+  const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, studioSubdomain)
+  if (!verifyRegistration) {
+    req.flash('errorMessage', 'Permission denied: 未註冊此課程')
+    return res.redirect('/')
+  }
+
+  res.render('studio/oneOnOne', {
+    studio,
+    courseDetailId,
+    userId,
+    courseName: verifyRegistration.course_title
+  })
+}
+
 
 
 
@@ -324,8 +389,10 @@ module.exports = {
   renderPricePage,
   renderCoursePage,
   renderAboutPage,
-  renderLivePage,
   renderCheckoutPage,
   checkout,
-  registerCourse
+  registerCourse,
+  deregisterCourse,
+  renderLivePage,
+  renderOneOnOnePage
 }

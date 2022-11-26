@@ -13,8 +13,9 @@
       <th>上課時間</th>
       <th>時長(分鐘)</th>
       <th>人數上限</th>
-      <th>是否開放線上</th>
+      <th>開放線上</th>
       <th>線上課程人數上限</th>
+      <th>一對一</th>
       <th>上架日</th>
       <th>修改</th>
     </tr>
@@ -30,12 +31,19 @@
       <td >{{this.limitation}}</td>
       <td>
         {{#compare this.is_online 1}}
-        <span>是</span>
+        <i class="fas fa-check"></i>
         {{else}}
-        <span>否</span>
+        <span>-</span>
         {{/compare}}
       </td>
       <td>{{this.online_limitation}}</td>
+      <td>
+        {{#compare this.is_oneOnOne 1}}
+        <i class="fas fa-check"></i>
+        {{else}}
+        <span>-</span>
+        {{/compare}}
+      </td>
       <td>{{this.publish_at}}</td>
       <td class="admin-studio-edit-btn">
         <a href="/{{../studio.subdomain}}/admin/courseDetail/{{this.id}}">修改</a>

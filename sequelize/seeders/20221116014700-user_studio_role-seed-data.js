@@ -14,6 +14,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('SEED_USER_STUDIO_ROLE', null, {})
+    await queryInterface.bulkDelete('user_studio_role', null, {})
   }
 }

@@ -21,7 +21,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 2,
@@ -30,7 +31,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 0,
-    online_limitation: 25
+    online_limitation: 25,
+    is_oneOnOne: 0
   },
   {
     course_id: 10,
@@ -39,7 +41,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 15,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 4,
@@ -48,7 +51,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 12,
@@ -57,7 +61,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 14,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 8,
@@ -66,7 +71,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 15,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 3,
@@ -75,7 +81,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 17,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 14,
@@ -84,7 +91,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 20,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 5,
@@ -93,7 +101,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 15,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 1,
@@ -102,7 +111,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 15,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 2,
@@ -111,7 +121,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 0,
-    online_limitation: 25
+    online_limitation: 25,
+    is_oneOnOne: 0
   },
   {
     course_id: 11,
@@ -120,7 +131,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 7,
@@ -129,7 +141,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 1,
@@ -138,7 +151,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 9,
@@ -147,7 +161,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 0,
-    online_limitation: 30
+    online_limitation: 30,
+    is_oneOnOne: 0
   },
   {
     course_id: 12,
@@ -156,7 +171,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 13,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 13,
@@ -165,7 +181,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 20,
-    online_limitation: 5
+    online_limitation: 5,
+    is_oneOnOne: 0
   },
   {
     course_id: 2,
@@ -174,7 +191,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 18,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 4,
@@ -183,7 +201,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 5,
@@ -192,7 +211,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 13,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 1,
@@ -201,7 +221,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 6,
@@ -209,8 +230,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '16:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 16,
-    online_limitation: 8
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 10,
@@ -219,7 +241,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 9,
@@ -228,7 +251,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 12,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 14,
@@ -237,7 +261,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 15,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 13,
@@ -246,7 +271,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 18,
-    online_limitation: 12
+    online_limitation: 12,
+    is_oneOnOne: 0
   },
 
 
@@ -259,9 +285,10 @@ const SEED_COURSE_DETAIL = [
     date: thisMonday,
     start_time: '10:00:00',
     duration: 60,
-    is_online: 0,
-    limitation: 12,
-    online_limitation: 0
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 17,
@@ -270,7 +297,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 18,
@@ -279,7 +307,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 16,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 21,
@@ -288,7 +317,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 16,
-    online_limitation: 4
+    online_limitation: 4,
+    is_oneOnOne: 0
   },
   {
     course_id: 16,
@@ -297,7 +327,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 15,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 15,
@@ -305,8 +336,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '15:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 12,
-    online_limitation: 3
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 16,
@@ -315,7 +347,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 15,
-    online_limitation: 5
+    online_limitation: 5,
+    is_oneOnOne: 0
   },
   {
     course_id: 18,
@@ -324,16 +357,18 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 16,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 15,
     date: thisWednesday,
     start_time: '10:00:00',
     duration: 60,
-    is_online: 0,
-    limitation: 16,
-    online_limitation: 0
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 17,
@@ -342,7 +377,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 20,
@@ -351,7 +387,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 19,
@@ -360,7 +397,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 8,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 16,
@@ -369,7 +407,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 15,
@@ -377,8 +416,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '15:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 12,
-    online_limitation: 8
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 20,
@@ -387,7 +427,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 13,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 21,
@@ -396,16 +437,18 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 18,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 15,
     date: thisFriday,
     start_time: '10:00:00',
     duration: 60,
-    is_online: 0,
-    limitation: 12,
-    online_limitation: 0
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 17,
@@ -414,7 +457,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 15,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 19,
@@ -423,7 +467,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 16,
@@ -432,7 +477,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 13,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 15,
@@ -440,8 +486,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '15:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 13,
-    online_limitation: 7
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 16,
@@ -450,7 +497,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 18,
-    online_limitation: 4
+    online_limitation: 4,
+    is_oneOnOne: 0
   },
   {
     course_id: 18,
@@ -459,7 +507,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 16,
@@ -468,7 +517,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 16,
@@ -477,7 +527,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 12,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 18,
@@ -486,7 +537,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 21,
@@ -495,7 +547,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 15,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
 
 
@@ -510,7 +563,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 24,
@@ -519,7 +573,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 25,
@@ -528,7 +583,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 27,
@@ -537,7 +593,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 14,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 23,
@@ -546,16 +603,18 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 14,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 29,
     date: thisTuesday,
     start_time: '15:00:00',
     duration: 60,
-    is_online: 0,
-    limitation: 16,
-    online_limitation: 0
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 26,
@@ -564,7 +623,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 14,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 27,
@@ -573,7 +633,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 22,
@@ -582,7 +643,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 28,
@@ -590,8 +652,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '14:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 12,
-    online_limitation: 8
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 24,
@@ -600,7 +663,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 26,
@@ -609,7 +673,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 23,
@@ -618,7 +683,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 24,
@@ -627,7 +693,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 15,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 25,
@@ -636,7 +703,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 22,
@@ -645,7 +713,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 18,
-    online_limitation: 6
+    online_limitation: 6,
+    is_oneOnOne: 0
   },
   {
     course_id: 30,
@@ -654,7 +723,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 14,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 25,
@@ -663,7 +733,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 23,
@@ -672,7 +743,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 18,
-    online_limitation: 6
+    online_limitation: 6,
+    is_oneOnOne: 0
   },
   {
     course_id: 26,
@@ -681,7 +753,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 30,
@@ -690,7 +763,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 28,
@@ -698,8 +772,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '14:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 15,
-    online_limitation: 5
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 26,
@@ -708,7 +783,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
 
 
@@ -721,9 +797,10 @@ const SEED_COURSE_DETAIL = [
     date: thisMonday,
     start_time: '10:00:00',
     duration: 60,
-    is_online: 0,
-    limitation: 12,
-    online_limitation: 0
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 33,
@@ -732,7 +809,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 14,
-    online_limitation: 4
+    online_limitation: 4,
+    is_oneOnOne: 0
   },
   {
     course_id: 31,
@@ -741,7 +819,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 35,
@@ -750,7 +829,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 38,
@@ -758,8 +838,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '11:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 12,
-    online_limitation: 6
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 36,
@@ -768,7 +849,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 13,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 32,
@@ -777,7 +859,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 14,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 38,
@@ -785,8 +868,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '11:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 14,
-    online_limitation: 4
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 36,
@@ -795,7 +879,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 17,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 31,
@@ -804,7 +889,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 39,
@@ -813,16 +899,18 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 34,
     date: thisThursday,
     start_time: '10:00:00',
     duration: 60,
-    is_online: 0,
-    limitation: 16,
-    online_limitation: 0
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 33,
@@ -831,7 +919,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 18,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 32,
@@ -840,16 +929,18 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 34,
     date: thisFriday,
     start_time: '10:00:00',
     duration: 60,
-    is_online: 0,
-    limitation: 16,
-    online_limitation: 0
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 37,
@@ -858,7 +949,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 22,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 37,
@@ -867,7 +959,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 22,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 31,
@@ -876,7 +969,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 35,
@@ -885,7 +979,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 13,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 33,
@@ -894,7 +989,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 32,
@@ -903,7 +999,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 35,
@@ -912,7 +1009,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 13,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 40,
@@ -921,7 +1019,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 19,
-    online_limitation: 5
+    online_limitation: 5,
+    is_oneOnOne: 0
   },
   {
     course_id: 40,
@@ -930,7 +1029,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 19,
-    online_limitation: 5
+    online_limitation: 5,
+    is_oneOnOne: 0
   },
   {
     course_id: 33,
@@ -939,7 +1039,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 39,
@@ -948,7 +1049,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 19,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
 
 
@@ -963,7 +1065,18 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 16,
-    online_limitation: 6
+    online_limitation: 6,
+    is_oneOnOne: 0
+  },
+  {
+    course_id: 44,
+    date: thisMonday,
+    start_time: '10:00:00',
+    duration: 60,
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 43,
@@ -972,7 +1085,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 43,
@@ -981,7 +1095,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 18,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 47,
@@ -990,7 +1105,18 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
+  },
+  {
+    course_id: 44,
+    date: thisMonday,
+    start_time: '09:00:00',
+    duration: 60,
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 41,
@@ -998,8 +1124,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '11:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 16,
-    online_limitation: 6
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 45,
@@ -1008,7 +1135,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 14,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 46,
@@ -1017,7 +1145,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 14,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 46,
@@ -1026,7 +1155,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 14,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 49,
@@ -1035,7 +1165,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 14,
-    online_limitation: 7
+    online_limitation: 7,
+    is_oneOnOne: 0
   },
   {
     course_id: 41,
@@ -1043,8 +1174,9 @@ const SEED_COURSE_DETAIL = [
     start_time: '11:00:00',
     duration: 60,
     is_online: 1,
-    limitation: 16,
-    online_limitation: 6
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 47,
@@ -1053,7 +1185,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 15,
-    online_limitation: 5
+    online_limitation: 5,
+    is_oneOnOne: 0
   },
   {
     course_id: 42,
@@ -1062,7 +1195,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 42,
@@ -1071,7 +1205,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 42,
@@ -1080,7 +1215,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 42,
@@ -1089,16 +1225,18 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 12,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 41,
     date: thisFriday,
     start_time: '11:00:00',
     duration: 60,
-    is_online: 0,
-    limitation: 16,
-    online_limitation: 0
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 48,
@@ -1107,7 +1245,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 18,
-    online_limitation: 8
+    online_limitation: 8,
+    is_oneOnOne: 0
   },
   {
     course_id: 49,
@@ -1116,16 +1255,18 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 17,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 41,
     date: thisSaturday,
     start_time: '11:00:00',
     duration: 60,
-    is_online: 0,
-    limitation: 12,
-    online_limitation: 0
+    is_online: 1,
+    limitation: 0,
+    online_limitation: 1,
+    is_oneOnOne: 1
   },
   {
     course_id: 45,
@@ -1134,7 +1275,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 13,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 48,
@@ -1143,7 +1285,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 1,
     limitation: 18,
-    online_limitation: 4
+    online_limitation: 4,
+    is_oneOnOne: 0
   },
   {
     course_id: 49,
@@ -1152,7 +1295,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 16,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 45,
@@ -1161,7 +1305,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 19,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   },
   {
     course_id: 47,
@@ -1170,7 +1315,8 @@ const SEED_COURSE_DETAIL = [
     duration: 60,
     is_online: 0,
     limitation: 13,
-    online_limitation: 0
+    online_limitation: 0,
+    is_oneOnOne: 0
   }
 ]
 

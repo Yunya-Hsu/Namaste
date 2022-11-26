@@ -34,6 +34,11 @@ router.get('/:studioSubdomain/admin/live',
   auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES), // FIXME:
   wrapAsync(AdminStudio.renderLivePage)
 )
+router.get('/:studioSubdomain/admin/oneOnOne',
+  auth.authenticated,
+  auth.authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES), // FIXME:
+  wrapAsync(AdminStudio.renderOneOnOnePage)
+)
 
 
 
@@ -244,6 +249,10 @@ router.get('/:studioSubdomain/live',
   auth.authenticated,
   wrapAsync(Studio.renderLivePage)
 )
+router.get('/:studioSubdomain/oneOnOne',
+  auth.authenticated,
+  wrapAsync(Studio.renderOneOnOnePage)
+)
 router.get('/:studioSubdomain/checkout',
   auth.authenticated,
   wrapAsync(Studio.renderCheckoutPage)
@@ -258,6 +267,10 @@ router.get('/:studioSubdomain/about', wrapAsync(Studio.renderAboutPage))
 router.get('/:studioSubdomain/registration',
   auth.authenticated,
   wrapAsync(Studio.registerCourse)
+)
+router.delete('/deregister',
+  auth.authenticated,
+  wrapAsync(Studio.deregisterCourse)
 )
 router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
 
