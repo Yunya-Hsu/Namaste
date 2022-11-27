@@ -4,6 +4,7 @@ const router = express.Router()
 // router modules
 const adminRoot = require('./modules/admin_root')
 const user = require('./modules/user')
+const api = require('./modules/api')
 
 const { PERMISSION } = require('../models/auth_model')
 
@@ -25,6 +26,7 @@ const upload = require('../middleware/multer')
 // routers
 router.use('/admin', adminRoot)
 router.use('/user', user)
+router.use('/api', api)
 
 
 
@@ -268,16 +270,15 @@ router.get('/:studioSubdomain/registration',
   auth.authenticated,
   wrapAsync(Studio.registerCourse)
 )
-router.delete('/deregister',
-  auth.authenticated,
-  wrapAsync(Studio.deregisterCourse)
-)
 router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
 
 
 
 
-
+router.delete('/deregister',
+  auth.authenticated,
+  wrapAsync(Studio.deregisterCourse)
+)
 router.get('/', wrapAsync(AdminRoot.renderNamasteHomePage))
 
 module.exports = router
