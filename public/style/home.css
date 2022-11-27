@@ -50,6 +50,8 @@ home-title-intro {
 
 
 
+
+
 #home-studio-list-title {
   margin: 0 0 10px 6vw;
   color: #7f6b5e;
@@ -57,6 +59,59 @@ home-title-intro {
   font-weight: 400;
   letter-spacing: 7px;
 }
+
+
+
+
+
+
+#search-section {
+  padding: 0 7vw;
+  font-size: 25px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+#search-category {
+  border: none;
+  border-radius: 10px;
+  width: 5vw;
+  height: 38px;
+  text-align: center;
+  
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: #7f6b5e;
+}
+
+#search-input {
+  border: none;
+  border-radius: 10px;
+
+  width: 20vw;
+  height: 38px;
+  margin: 0 1vw;
+  padding: 0 10px;
+
+  font-size: 22px;
+  font-weight: 300;
+}
+
+#search-icon {
+  cursor: pointer;
+}
+
+#search-icon:hover {
+  color: #7f6b5e;
+}
+
+
+
+
+
+
+
 
 #studio-card-section {
   padding: 0 0 0 5vw;
