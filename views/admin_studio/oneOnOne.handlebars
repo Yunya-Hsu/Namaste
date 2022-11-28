@@ -22,9 +22,16 @@
 </div>
 
 
-<div class="d-flex justify-content-center align-items-center livestream-div">
-  <video autoplay id="myVideo" muted playsinline></video>
-  <video autoplay id="remoteVideo" playsinline></video>
+<div class="d-flex justify-content-center align-items-center flex-wrap livestream-div">
+  <div class="myVideo d-flex justify-content-center align-items-center">
+    <video autoplay id="myVideo" muted playsinline></video>
+  </div>
+
+  <div class="remoteVideo d-flex justify-content-center align-items-center">
+    <i class="fas fa-expand-arrows-alt" id="expand"></i>
+    <i class="fas fa-compress-arrows-alt" id="compress" style="display: none;"></i>
+    <video autoplay id="remoteVideo" playsinline></video>
+  </div>
 </div>
 
 
@@ -239,4 +246,32 @@
     }
   })
 
+</script>
+
+<script>
+  const expandBtn = document.querySelector('#expand')
+  const compressBtn = document.querySelector('#compress')
+
+  const myVideoDiv = document.querySelector('.myVideo')
+  const remoteVideoDiv = document.querySelector('.remoteVideo')
+
+  expandBtn.addEventListener('click', () => {
+    expandBtn.style.display = 'none'
+    compressBtn.removeAttribute('style')
+
+    myVideoDiv.classList.remove('revert-compress')
+    remoteVideoDiv.classList.remove('revert-expand')
+    myVideoDiv.classList.add('compress')
+    remoteVideoDiv.classList.add('expand')
+  })
+
+  compressBtn.addEventListener('click', () => {
+    compressBtn.style.display = 'none'
+    expandBtn.removeAttribute('style')
+
+    myVideoDiv.classList.remove('compress')
+    remoteVideoDiv.classList.remove('expand')
+    remoteVideoDiv.classList.add('revert-expand')
+    myVideoDiv.classList.add('revert-compress')
+  })
 </script>
