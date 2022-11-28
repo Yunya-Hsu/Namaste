@@ -20,11 +20,11 @@ const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_
 const renderHomePage = async (req, res) => {
   const studio = req.user.studio
 
-  const thisMonday = moment().day('Monday').format('YYYY-MM-DD')
-  const thisSunday = moment().day('Monday').add('7', 'days').format('YYYY-MM-DD')
-  const today = moment().format('YYYY-MM-DD HH:mm:ss')
-  const startOfMonth = moment().startOf('month').format('YYYY-MM-DD HH:mm:ss')
-  const endOfMonth = moment().endOf('month').format('YYYY-MM-DD HH:mm:ss')
+  const thisMonday = moment().tz('Asia/Taipei').day('Monday').format('YYYY-MM-DD')
+  const thisSunday = moment().tz('Asia/Taipei').day('Monday').add('7', 'days').format('YYYY-MM-DD')
+  const today = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  const startOfMonth = moment().tz('Asia/Taipei').startOf('month').format('YYYY-MM-DD HH:mm:ss')
+  const endOfMonth = moment().tz('Asia/Taipei').endOf('month').format('YYYY-MM-DD HH:mm:ss')
 
 
   const monthlyProfit = await StudioAdmin.getMonthlyProfit(studio.id, startOfMonth, endOfMonth)

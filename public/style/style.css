@@ -433,4 +433,14 @@
   letter-spacing: 4px;
 }
 
+#footer-home-link {
+  size: 100px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+#footer-home-link:hover {
+  text-shadow: 0.1em 0.1em 0.3em #ffffff;
+}
+
  /* footer */
