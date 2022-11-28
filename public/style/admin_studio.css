@@ -1,3 +1,31 @@
+/* studio admin home page (dashboard) */
+.admin-dashboard-title,
+#monthly-revenue {
+  font-size: 30px;
+  letter-spacing: 3px;
+  font-weight: 300;
+  color: #c59d7e;
+
+  margin: 5vh 5vw 3vh 5vw;
+}
+
+#monthly-revenue {
+  font-size: 70px;
+  color: #655848;
+
+  margin: 10vh auto;
+  text-align: center;
+}
+
+#pie {
+  border: 1px solid #efe4da;
+}
+/* studio admin home page (dashboard) */
+
+
+
+
+
 .studio-owner-create-btn {
   display: block;
   margin: 5vh 0 5vh 5vw;

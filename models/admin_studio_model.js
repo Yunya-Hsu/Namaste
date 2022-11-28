@@ -1,6 +1,42 @@
 /* eslint-disable camelcase */
 const db = require('../config/mysql')
 
+const getThisWeekOnlineCourses = async (studioId, thisMonday, thisSunday, today) => {
+  try {
+    const [result] = await db.execute(
+      'SELECT course_details.id, course_details.date, course_details.start_time, course_details.duration, course_details.is_oneOnOne, courses.title, courses.studio_id FROM course_details LEFT JOIN courses on courses.id = course_details.course_id WHERE courses.studio_id = (?) AND course_details.is_online = 1 AND course_details.date BETWEEN (?) AND (?) AND course_details.publish_at < (?) ORDER BY course_details.date DESC, course_details.start_time DESC;',
+      [studioId, thisMonday, thisSunday, today]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getMonthlyProfit = async (studioId, startOfMonth, endOfMonth) => {
+  try {
+    const [[result]] = await db.execute(
+      'SELECT SUM(total) AS monthlyProfit FROM orders WHERE studio_id = (?) AND date BETWEEN (?) AND (?);',
+      [studioId, startOfMonth, endOfMonth]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getMonthlyProfitGroupByRules = async (studioId, startOfMonth, endOfMonth) => {
+  try {
+    const [result] = await db.execute(
+      'SELECT COUNT(id) AS order_qty, SUM(total) AS total, total AS category FROM orders WHERE studio_id = (?) AND date BETWEEN (?) AND (?) GROUP BY total;',
+      [studioId, startOfMonth, endOfMonth]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const getCourseDetail = async (studioSubdomain, courseDetailId) => {
   try {
     const [[studio]] = await db.execute(
@@ -322,6 +358,10 @@ const updateStudio = async (studioId, name, logo, introduction_title, introducti
 
 
 module.exports = {
+  getThisWeekOnlineCourses,
+  getMonthlyProfit,
+  getMonthlyProfitGroupByRules,
+
   getCourseDetail,
 
   getLivestreamStudents,
