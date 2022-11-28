@@ -95,16 +95,24 @@
   margin: 3vh auto 20vh auto;
 }
 
-#myVideo,
-#remoteVideo {
-  transform: scaleX(-1);
+.myVideo,
+.remoteVideo {
   height: 60vh;
   width: 40vw;
-  object-fit: scale-down;
+  /* object-fit: scale-down; */
   margin: 0 1vw;
   border: 3px solid #E1E1DF;
-  border-radius: 70px;
+  border-radius: 20px;
   background-color: #fbfbf9;
+}
+
+.myVideo > video,
+.remoteVideo  > video {
+  margin: 0 auto;
+  transform: scaleX(-1);
+  height: 100%;
+  width: 90%;
+  /* object-fit: scale-down; */
 }
 
 #callBtn,
@@ -170,5 +178,87 @@
 
 .colored-toast .swal2-html-container {
   color: white;
+}
+
+#expand, #compress {
+  margin: 0 0.5vw 0 1vw;
+  font-size: 30px;
+  color: #7f6b5e;
+  
+  cursor: pointer;
+}
+#expand:hover,
+#compress:hover {
+  cursor: pointer;
+  font-size: 35px;
+  color: #CCB9AA;
+}
+
+.expand {
+  animation-name: expand-video;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.revert-expand {
+  animation-name: revert-expand-video;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.compress {
+  animation-name: compress-video;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.revert-compress {
+  animation-name: revert-compress-video;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes expand-video {
+  from {
+  }
+
+  to {
+    height: 90vh;
+    width: 70vw;
+  }
+}
+
+@keyframes revert-expand-video {
+  from {
+    height: 90vh;
+    width: 70vw;
+  }
+
+  to {
+    height: 60vh;
+    width: 40vw;
+  }
+}
+
+@keyframes compress-video {
+  from {
+  }
+
+  to {
+    height: 15vh;
+    width: 10vw;
+  }
+}
+
+@keyframes revert-compress-video {
+  from {
+    height: 15vh;
+    width: 10vw;
+  }
+
+  to {
+    height: 60vh;
+    width: 40vw;
+  }
 }
 /* live stream */

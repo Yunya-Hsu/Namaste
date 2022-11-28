@@ -15,9 +15,14 @@ const live = (a, b, options) => {
   return a == 1 && b != 1 ? options.fn(this) : options.inverse(this)
 }
 
+const toJson = (obj, options) => {
+  return JSON.stringify(obj)
+}
+
 module.exports = {
   compare,
   canBook,
   oneOnOne,
-  live
+  live,
+  toJson
 }

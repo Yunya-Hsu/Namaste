@@ -2832,6 +2832,86 @@ const SEED_PRICE_RULES = [
 
 const SEED_ORDER = [
   {
+    user_id: 39,
+    studio_id: 1,
+    total: 8800,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 24,
+    expire_date: 120,
+    remaining_point: 24
+  },
+  {
+    user_id: 40,
+    studio_id: 1,
+    total: 8800,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 24,
+    expire_date: 120,
+    remaining_point: 24
+  },
+  {
+    user_id: 40,
+    studio_id: 3,
+    total: 13199,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 24,
+    expire_date: 265,
+    remaining_point: 24
+  },
+  {
+    user_id: 41,
+    studio_id: 2,
+    total: 2200,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 10,
+    expire_date: 60,
+    remaining_point: 10
+  },
+  {
+    user_id: 42,
+    studio_id: 4,
+    total: 5220,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 36,
+    expire_date: 120,
+    remaining_point: 36
+  },
+  {
+    user_id: 43,
+    studio_id: 5,
+    total: 2550,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 6,
+    expire_date: 30,
+    remaining_point: 6
+  },
+  {
+    user_id: 44,
+    studio_id: 1,
+    total: 17200,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 60,
+    expire_date: 300,
+    remaining_point: 60
+  },
+  {
+    user_id: 45,
+    studio_id: 3,
+    total: 7399,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 12,
+    expire_date: 180,
+    remaining_point: 12
+  },
+  {
     user_id: 46,
     studio_id: 1,
     total: 4500,
@@ -2852,14 +2932,24 @@ const SEED_ORDER = [
     remaining_point: 22
   },
   {
-    user_id: 43,
-    studio_id: 5,
-    total: 2550,
+    user_id: 47,
+    studio_id: 4,
+    total: 499,
     status: 1,
     tappay_trade_id: 'D202211257i7rkr',
-    point: 6,
+    point: 3,
     expire_date: 30,
-    remaining_point: 6
+    remaining_point: 3
+  },
+  {
+    user_id: 47,
+    studio_id: 5,
+    total: 3200,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 8,
+    expire_date: 30,
+    remaining_point: 8
   }
 ]
 

@@ -1,0 +1,91 @@
+{{> nav_admin_studio}}
+
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<div class="d-flex justify-content-evenly align-items-start">
+  <div>
+    <h1 class="admin-dashboard-title">本月總收益</h1>
+    <p id="monthly-revenue">${{monthlyProfit.monthlyProfit}}</p>
+  </div>
+  
+  <div>
+    <h1 class="admin-dashboard-title">本月售出點數統計</h1>
+    {{!-- <div id="pie"></div> --}}
+    <canvas id="pie" width="400" height="400"></canvas>
+  </div>
+</div>
+
+
+<h1 class="admin-dashboard-title">本週線上課程直播連結</h1>
+<table class="admin-studio-table">
+  <thead class="admin-studio-table-head">
+    <tr>
+      <th>課程名稱</th>
+      <th>上課日期</th>
+      <th>上課時間</th>
+      <th>時長(分鐘)</th>
+      <th>開始線上課程</th>
+    </tr>
+  </thead>
+
+  {{#each onlineCourseList}}
+  <tbody>
+    <tr>
+      <td>{{this.title}}</td>
+      <td>{{this.date}}</td>
+      <td>{{this.start_time}}</td>
+      <td>{{this.duration}}</td>
+      <td class="admin-studio-edit-btn">
+        {{#compare this.is_oneOnOne 1}}
+        <a href="/{{../../studio.subdomain}}/admin/oneOnOne?courseDetailId={{../this.id}}">直播</a>
+        {{else}}
+        <a href="/{{../../studio.subdomain}}/admin/live?courseDetailId={{../this.id}}">直播</a>
+        {{/compare}}
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"></script>
+
+<script>
+  let monthlyProfitGroupByRules = {{{ toJson monthlyProfitGroupByRules }}}
+
+  const pie = document.getElementById('pie')
+  
+  
+  window.addEventListener('load', async event => {
+      renderPieChart()
+    })
+
+  // functions
+  const renderPieChart = async () => {
+    const valueForPie = []
+    const labelForPie = []
+    const backgroundColorForPie = ['#8E9BAE', '#95A098', '#FED59E', '#C3AAA6', '#C4C1BC', '#492620', '#75809C', '#F4BAAF', '#D3AC73', '#A2AFA6', ]
+    for (const i of monthlyProfitGroupByRules) {
+      valueForPie.push(i.order_qty)
+      labelForPie.push(`價格${i.category}`)
+    }
+
+    console.log('labelForPie: ', labelForPie);
+    console.log('valueForPie: ', valueForPie);
+    const myPie = new Chart(pie, {
+      type: 'doughnut', //圖表類型
+      data: {
+        labels: labelForPie,
+        datasets: [{
+          data: valueForPie, //資料
+          backgroundColor: backgroundColorForPie,
+          hoverOffset: 4
+        }]
+      }
+    });
+  }
+
+</script>

@@ -20,8 +20,23 @@ const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_
 const renderHomePage = async (req, res) => {
   const studio = req.user.studio
 
-  // FIXME: add dashboard page for studio admin
-  res.redirect(`/${studio.subdomain}/admin/price`)
+  const thisMonday = moment().tz('Asia/Taipei').day('Monday').format('YYYY-MM-DD')
+  const thisSunday = moment().tz('Asia/Taipei').day('Monday').add('7', 'days').format('YYYY-MM-DD')
+  const today = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+  const startOfMonth = moment().tz('Asia/Taipei').startOf('month').format('YYYY-MM-DD HH:mm:ss')
+  const endOfMonth = moment().tz('Asia/Taipei').endOf('month').format('YYYY-MM-DD HH:mm:ss')
+
+
+  const monthlyProfit = await StudioAdmin.getMonthlyProfit(studio.id, startOfMonth, endOfMonth)
+  const monthlyProfitGroupByRules = await StudioAdmin.getMonthlyProfitGroupByRules(studio.id, startOfMonth, endOfMonth)
+  const onlineCourseList = await StudioAdmin.getThisWeekOnlineCourses(studio.id, thisMonday, thisSunday, today)
+
+  res.render('admin_studio/home', {
+    studio,
+    monthlyProfit,
+    monthlyProfitGroupByRules,
+    onlineCourseList
+  })
 }
 
 
