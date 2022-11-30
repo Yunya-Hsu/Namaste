@@ -24,16 +24,32 @@ const storage = multer.diskStorage({
 })
 
 const multerFilter = (req, file, cb) => {
+  const fileSize = parseInt(req.headers['content-length'])
   if (!acceptedFileType.includes(file.mimetype)) {
-    return cb(new Error('Please upload picture with jpg, jpeg, png'))
+    req.fileValidationError = '圖片檔案格式錯誤，僅限 jpg, jpeg, png 檔'
+    return cb(null, false, new Error('圖片檔案格式錯誤，僅限 jpg, jpeg, png 檔'))
+  } else if (fileSize > fileSizeLimit) {
+    req.fileValidationError = '圖片過大，僅限 1 MB'
+    return cb(null, false, new Error('圖片過大，僅限 1 MB'))
   }
   cb(null, true)
 }
 
 const upload = multer({
   fileFilter: multerFilter,
-  limit: { fileSizeLimit },
+  limit: { fileSize: fileSizeLimit },
   storage
 })
 
-module.exports = upload
+const multerError = (req, res, next) => {
+  if (req.fileValidationError) {
+    req.flash('errorMessage', req.fileValidationError)
+    return res.redirect('back')
+  }
+  next()
+}
+
+module.exports = {
+  upload,
+  multerError
+}
