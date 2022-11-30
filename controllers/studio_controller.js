@@ -243,8 +243,8 @@ const registerCourse = async (req, res, next) => {
 
   // 確認目前時間是否還可以預約
   const currentTime = moment().tz('Asia/Taipei')
-  const courseStartTime = moment(courseDetail.date + ' ' + courseDetail.start_time)
-  if (!currentTime.isBefore(courseStartTime)) {
+  const courseStartTime = moment(courseDetail.date + ' ' + courseDetail.start_time).tz('Asia/Taipei', true)
+  if (currentTime.isAfter(courseStartTime)) {
     req.flash('errorMessage', '課程時間已過，無法預約')
     return res.redirect('back')
   }
@@ -300,9 +300,9 @@ const deregisterCourse = async (req, res, next) => {
 
   // 確認目前時間是否晚於取消時間（課程開始前 3 小時）
   const currentTime = moment().tz('Asia/Taipei')
-  const lastMomentToCancel = moment(registerDetail.date + ' ' + registerDetail.start_time).subtract(3, 'hours')
-  if (!currentTime.isBefore(lastMomentToCancel)) {
-    req.flash('errorMessage', '已無法取消')
+  const lastMomentToCancel = moment(registerDetail.date + ' ' + registerDetail.start_time).tz('Asia/Taipei', true).subtract(3, 'hours')
+  if (currentTime.isAfter(lastMomentToCancel)) {
+    req.flash('errorMessage', '取消時間已過，無法取消')
     return res.redirect('back')
   }
 
