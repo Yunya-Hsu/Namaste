@@ -196,6 +196,15 @@
       return swal("Miss information", "未填寫「持卡人資訊」", "warning")
     }
 
+    swal({
+      title: '結帳中，請稍候',
+      icon: "/images/loading.gif",
+      allowOutsideClick: false,
+      closeOnEsc: false,
+      closeOnClickOutside: false,
+      button: false,
+    })
+
     // 取得 TapPay Fields 的 status，為 true 才可以向 tappay 索取 prime
     const tappayStatus = TPDirect.card.getTappayFieldsStatus()
     if (tappayStatus.canGetPrime === false) {
@@ -207,7 +216,7 @@
     TPDirect.card.getPrime(async result => {
       if (result.status !== 0) {
         console.log(result.msg)
-        alert('get prime error ' + result.msg)
+        await swal("Error", `Get TapPay Prime Error: ${result.msg}`, "error")
         return
       }
 
@@ -230,8 +239,7 @@
       } catch (err) {
         console.log(err)
         console.log(err.response.data)
-        alert('付款失敗')
-        {{!-- FIXME: --}}
+        await swal("Error", "付款失敗，請重新付款", "error")
       }
     })
   })
