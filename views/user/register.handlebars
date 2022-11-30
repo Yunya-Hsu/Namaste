@@ -15,10 +15,11 @@
       <label for="email">E-mail</label>
       <input type="text" name="email" id="email" {{#if input.email}} value={{input.email}} {{/if}} required>
 
-      <label for="password">Password</label>
+      <label for="password">密碼</label>
+      <p class="strong-password">長度至少 8 字元，至少包含 1 個大寫字母、1 個小寫字母</p>
       <input type="password" name="password" id="password" {{#if input.password}} value={{input.password}} {{/if}} required>
 
-      <label for="confirmedPassword">Confirmed Password</label>
+      <label for="confirmedPassword">確認密碼</label>
       <input type="password" name="confirmedPassword" id="confirmedPassword" {{#if input.confirmedPassword}} value={{input.confirmedPassword}} {{/if}} required>
       
       <button type="submit" id="sign-up-btn">Submit</button>

@@ -1,6 +1,13 @@
 const moment = require('moment-timezone')
 const validator = require('validator')
 const argon2 = require('argon2')
+const passwordRule = {
+  minLength: 8,
+  minLowercase: 1,
+  minUppercase: 1,
+  minNumbers: 0,
+  minSymbols: 0
+}
 
 const User = require('../models/user_model')
 
@@ -19,16 +26,15 @@ const registerUser = async (req, res) => {
   // 檢查前端資料，若不足則擋下
   if (!name || !email) {
     req.flash('registerInput', req.body)
-    req.flash('errorMessage', 'Missing name or email')
+    req.flash('errorMessage', '缺少 email 或 name')
     return res.redirect('/user/register')
   }
 
   // 檢查 email 格式
   if (!validator.isEmail(email)) {
-    console.log(email) // TODO: check console.log level
     delete req.body.email
     req.flash('registerInput', req.body)
-    req.flash('errorMessage', 'Wrong email format')
+    req.flash('errorMessage', '請檢查 email 格式')
     return res.redirect('/user/register')
   }
 
@@ -37,16 +43,16 @@ const registerUser = async (req, res) => {
     delete req.body.password
     delete req.body.confirmedPassword
     req.flash('registerInput', req.body)
-    req.flash('errorMessage', 'Password and confirmed password does not match')
+    req.flash('errorMessage', '「密碼」及「確認密碼」不相符，請檢查')
     return res.redirect('/user/register')
   }
 
   // 檢查密碼強度
-  if (!validator.isStrongPassword(password)) {
+  if (!validator.isStrongPassword(password, passwordRule)) {
     delete req.body.password
     delete req.body.confirmedPassword
     req.flash('registerInput', req.body)
-    req.flash('errorMessage', 'Please use strong password')
+    req.flash('errorMessage', '請使用高強度密碼')
     return res.redirect('/user/register')
   }
 
@@ -62,10 +68,9 @@ const registerUser = async (req, res) => {
   // 加密 password
   const hashPassword = await argon2.hash(password)
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  const userId = await User.createUser(name, email, hashPassword, currentTime, currentTime)
-  return res.send(
-    `<h1>create user, id: ${userId}</h1>`
-  )
+  await User.createUser(name, email, hashPassword, currentTime, currentTime)
+  req.flash('successMessage', '註冊成功！')
+  res.redirect('/user/login')
 }
 
 const renderLoginPage = async (req, res) => {
@@ -73,9 +78,6 @@ const renderLoginPage = async (req, res) => {
 }
 
 const login = async (req, res, next) => {
-  if (req.user.role_id === 0) {
-    return res.redirect('/admin/studio')
-  }
   req.flash('successMessage', 'Login successfully')
   res.redirect('/')
 }

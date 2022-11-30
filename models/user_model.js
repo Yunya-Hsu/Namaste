@@ -17,8 +17,8 @@ const findUserByEmail = async email => {
 const createUser = async (name, email, password, created_at, updated_at) => {
   try {
     const [insertData] = await db.execute(
-      'INSERT INTO users (role_id, name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
-      [3, name, email, password, created_at, updated_at]
+      'INSERT INTO users (name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?)',
+      [name, email, password, created_at, updated_at]
     )
     return insertData.insertId
   } catch (error) {

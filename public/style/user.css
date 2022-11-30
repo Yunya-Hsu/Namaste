@@ -35,6 +35,13 @@
   color: #53565C;
 }
 
+.strong-password {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #8C736F;
+}
+
 .sign-form>button {
   height: 60px;
   border: none;
