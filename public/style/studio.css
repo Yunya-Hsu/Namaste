@@ -84,6 +84,17 @@
   background-color: #C3A491;
   color: #5e4f45;
 }
+
+.swal-icon > img {
+  width: 5vw;
+}
+
+.swal-title {
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-weight: 400;
+  margin: 5vh 0 10vh 0;
+}
 /* checkout */
 
 

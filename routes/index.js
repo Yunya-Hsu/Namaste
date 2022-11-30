@@ -16,7 +16,7 @@ const Studio = require('../controllers/studio_controller')
 // middleware & utils
 const auth = require('../middleware/auth')
 const { wrapAsync } = require('../util/util')
-const upload = require('../middleware/multer')
+const { upload, multerError } = require('../middleware/multer')
 
 
 
@@ -178,6 +178,7 @@ router.post('/:studioSubdomain/admin/teacher/create',
   upload.fields([
     { name: 'avatar', maxCount: 1 }
   ]),
+  multerError,
   wrapAsync(AdminStudio.createTeacher)
 )
 
@@ -195,6 +196,7 @@ router.put('/:studioSubdomain/admin/teacher/:teacherId',
   upload.fields([
     { name: 'avatar', maxCount: 1 }
   ]),
+  multerError,
   wrapAsync(AdminStudio.updateTeacher)
 )
 
@@ -225,6 +227,7 @@ router.put('/:studioSubdomain/admin/about',
     { name: 'logo', maxCount: 1 },
     { name: 'introduction_photo', maxCount: 1 }
   ]),
+  multerError,
   wrapAsync(AdminStudio.updateAbout)
 )
 

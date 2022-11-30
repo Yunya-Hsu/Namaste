@@ -6,7 +6,7 @@ const Admin = require('../../controllers/admin_root_controller')
 const { PERMISSION } = require('../../models/auth_model')
 
 // middleware & utils
-const upload = require('../../middleware/multer')
+const { upload, multerError } = require('../../middleware/multer')
 const auth = require('../../middleware/auth')
 const { wrapAsync } = require('../../util/util')
 
@@ -23,6 +23,7 @@ router.post('/studio',
     { name: 'logo', maxCount: 1 },
     { name: 'introduction_photo', maxCount: 1 }
   ]),
+  multerError,
   wrapAsync(Admin.createStudio)
 )
 

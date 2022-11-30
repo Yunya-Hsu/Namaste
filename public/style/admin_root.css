@@ -5,8 +5,6 @@
 
 
 #super-admin-title-left {
-  /* border: 1px solid salmon; */
-
   writing-mode: vertical-lr;
   text-orientation: mixed;
   font-size: 70px;
@@ -63,6 +61,11 @@
 
 #super-admin-create-studio-form>div>select {
   font-size: 15px;
+}
+
+.photo-limit {
+  font-size: 14px;
+  color: #8C736F;
 }
 
 #super-admin-create-studio-form>button {

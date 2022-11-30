@@ -56,10 +56,9 @@ app.use((req, res) => {
   res.render('basic/404')
 })
 
-
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   console.error(moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss'), err)
-  res.render('basic/500')
+  return res.render('basic/500')
 })
 
 require('./controllers/socketIo.js')(io)
