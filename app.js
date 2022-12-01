@@ -13,8 +13,11 @@ const flash = require('connect-flash')
 
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
-const { createClient } = require('redis')
-const redisClient = createClient({ legacyMode: true })
+const redis = require('redis')
+const redisClient = redis.createClient({
+  url: `redis://${process.env.REDIS_USERNAME}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+  legacyMode: true
+})
 redisClient.connect().catch(console.error)
 const passport = require('./config/passport')
 
