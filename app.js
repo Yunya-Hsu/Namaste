@@ -2,14 +2,22 @@ require('dotenv').config()
 const http = require('http')
 const express = require('express')
 const app = express()
+
 const path = require('path')
 const cors = require('cors')
+const methodOverride = require('method-override')
+
 const { engine } = require('express-handlebars')
 const handlebarsHelpers = require('./util/handlebars-helpers')
-const methodOverride = require('method-override')
-const session = require('express-session')
-const passport = require('./config/passport')
 const flash = require('connect-flash')
+
+const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
+const { createClient } = require('redis')
+const redisClient = createClient({ legacyMode: true })
+redisClient.connect().catch(console.error)
+const passport = require('./config/passport')
+
 const moment = require('moment-timezone')
 const rateLimiter = require('./middleware/rateLimiter')
 
@@ -38,6 +46,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(methodOverride('_method'))
 app.use(session({
+  store: new RedisStore({ client: redisClient }),
   secret: process.env.SESSION_SECRET,
   saveUninitialized: true,
   resave: false,
