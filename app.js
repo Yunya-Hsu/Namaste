@@ -11,6 +11,7 @@ const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
 const moment = require('moment-timezone')
+const rateLimiter = require('./middleware/rateLimiter')
 
 const server = http.createServer(app)
 const io = require('socket.io')(server, {
@@ -28,6 +29,8 @@ app.use('/images', express.static(path.join(__dirname, 'images'))) // 讓外部�
 app.engine('handlebars', engine({ helpers: handlebarsHelpers }))
 app.set('view engine', 'handlebars')
 app.set('views', './views')
+
+app.use(rateLimiter)
 
 app.use(cors())
 
