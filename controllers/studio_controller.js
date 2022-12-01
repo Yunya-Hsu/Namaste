@@ -336,7 +336,7 @@ const renderLivePage = async (req, res, next) => {
   // 檢查登入者有沒有註冊此課程
   const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, studioSubdomain)
   if (!verifyRegistration) {
-    req.flash('errorMessage', 'Permission denied: 未註冊此課程')
+    req.flash('errorMessage', '未註冊此課程')
     return res.redirect('/')
   }
 
@@ -369,7 +369,7 @@ const renderOneOnOnePage = async (req, res, next) => {
   // 檢查登入者有沒有註冊此課程
   const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, studioSubdomain)
   if (!verifyRegistration) {
-    req.flash('errorMessage', 'Permission denied: 未註冊此課程')
+    req.flash('errorMessage', '未註冊此課程')
     return res.redirect('/')
   }
 

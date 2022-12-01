@@ -25,7 +25,7 @@ const createStudio = async (req, res, next) => {
   // 檢查前端資料，若不足則擋下
   if (!req.files.logo || !requirementOfCreateStudio.every(e => req.body[e] !== '')) {
     req.flash('createStudioInput', req.body)
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect('/admin/studio')
   }
 
@@ -33,7 +33,7 @@ const createStudio = async (req, res, next) => {
   const checkSubdomainResult = await Admin.checkSubdomain(req.body.subdomain)
   if (checkSubdomainResult.length > 0) {
     req.flash('createStudioInput', req.body)
-    req.flash('errorMessage', 'subdomain is duplicate')
+    req.flash('errorMessage', 'subdomain 重複')
     return res.redirect('/admin/studio')
   }
 
@@ -43,7 +43,7 @@ const createStudio = async (req, res, next) => {
   const manager = await User.findUserByEmail(req.body.manager)
   if (!manager) {
     req.flash('createStudioInput', req.body)
-    req.flash('errorMessage', `${req.body.manager} does not exist`)
+    req.flash('errorMessage', `${req.body.manager} 不存在`)
     return res.redirect('/admin/studio')
   }
 
@@ -65,7 +65,7 @@ const createStudio = async (req, res, next) => {
 
   // insert into db
   await Admin.createStudio(name, introduction_title, introduction_detail, subdomain, manager.id, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, logoInS3.key, introPhotoInS3, currentTime, currentTime)
-  req.flash('successMessage', `Studio ${name} is created.`)
+  req.flash('successMessage', `Studio ${name} 已成功建立！`)
   return res.redirect('/admin/studio')
 }
 

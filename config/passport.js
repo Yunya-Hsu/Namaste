@@ -14,7 +14,7 @@ passport.use(new LocalStrategy(
       const theUser = await User.findUserByEmail(email)
 
       if (!theUser || !await argon2.verify(theUser.password, password)) {
-        return done(null, false, req.flash('errorMessage', 'Email or password incorrect'))
+        return done(null, false, req.flash('errorMessage', 'Email 或密碼錯誤，請重新輸入'))
       }
 
       delete theUser.password

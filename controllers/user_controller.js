@@ -60,7 +60,7 @@ const registerUser = async (req, res) => {
   const isExistEmail = await User.findUserByEmail(email)
   if (isExistEmail) {
     req.flash('registerInput', req.body)
-    req.flash('errorMessage', 'email already exist')
+    req.flash('errorMessage', 'Email 已註冊，請登入、或選擇其他 Email')
     return res.redirect('/user/register')
   }
 
@@ -78,7 +78,7 @@ const renderLoginPage = async (req, res) => {
 }
 
 const login = async (req, res, next) => {
-  req.flash('successMessage', 'Login successfully')
+  req.flash('successMessage', '登入成功')
   res.redirect('/')
 }
 
@@ -87,7 +87,7 @@ const logout = async (req, res, next) => {
     if (err) {
       return console.log(err)
     }
-    req.flash('successMessage', 'Logout')
+    req.flash('successMessage', '已登出')
     res.redirect('/user/login')
   })
 }
