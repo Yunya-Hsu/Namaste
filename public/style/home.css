@@ -172,3 +172,12 @@ home-title-intro {
   letter-spacing: 2px;
   color: #9b8282;
 }
+
+.address-link {
+  color: #9b8282;
+  text-decoration: none;
+}
+
+.address-link:hover {
+  text-shadow: 1px 1px #e7cbb9;
+}

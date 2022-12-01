@@ -378,12 +378,20 @@
   color: #7f6b5e;
 }
 
-#address-content>p {
+#address-content>p,
+#address-content>a {
+  display: block;
   margin: 0 0 5vh 0;
   padding: 0;
-  font-size: 16px;
+  font-size: 17px;
   letter-spacing: 1px;
   font-weight: 300;
+  text-decoration: none;
+  color: #353535;
+}
+
+#address-content>a:hover {
+  text-shadow: 1px 1px #cdcbcb;
 }
 
 #google-map {
