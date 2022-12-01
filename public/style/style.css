@@ -221,7 +221,8 @@
 
 
 #curriculum {
-  margin: 40px 50px 70px 50px;
+  margin: 40px auto 70px auto;
+  padding: 0 1vw;
 }
 
 #title-section {
@@ -229,7 +230,7 @@
 }
 
 .period {
-  min-width: 150px;
+  min-width: 170px;
   text-align: center;
   font-size: 25px;
   font-weight: 300;
@@ -250,40 +251,34 @@
 }
 
 /* card design */
-.design-1 {
-  margin: 20px 0;
-  background-color: #AD8B73;
+.course-detail {
+  margin: 3vh 0.5vw;
   border-radius: 5px;
+  padding: 4px 8px 6px 8px;
+}
+
+.design-1 {
+  background-color: #AD8B73;
   box-shadow: 0px 3px 10px #AD8B73;
   color: #FFFFFF;
-  padding: 4px 8px 6px 8px;
 }
 
 .design-2 {
-  margin: 20px 0;
   background-color: #FFFBE9;
-  border-radius: 5px;
   box-shadow: 0px 3px 10px #FFFBE9;
   color: #665A48;
-  padding: 4px 8px 6px 8px;
 }
 
 .design-3 {
-  margin: 20px 0;
   background-color: #E3CAA5;
-  border-radius: 5px;
   box-shadow: 0px 3px 10px #E3CAA5;
   color: #665A48;
-  padding: 4px 8px 6px 8px;
 }
 
 .design-4 {
-  margin: 20px 0;
   background-color: #B7C4CF;
-  border-radius: 5px;
   box-shadow: 0px 3px 10px #B7C4CF;
   color: #FFFBE9;
-  padding: 4px 8px 6px 8px;
 }
 /* card design */
 
