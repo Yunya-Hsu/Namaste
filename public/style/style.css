@@ -68,6 +68,28 @@
 
 
 
+/* sweet alert */
+.swal-icon>img {
+  width: 5vw;
+}
+
+.swal-title {
+  font-size: 30px;
+  letter-spacing: 2px;
+  font-weight: 400;
+  margin: 1vh 0 10vh 0;
+}
+
+.swal-text {
+  font-size: 18px;
+  font-weight: 300;
+  margin: 0 auto;
+}
+/* sweet alert */
+
+
+
+
 
 
 
