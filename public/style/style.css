@@ -159,13 +159,14 @@
 .buy > a {
   text-decoration: none;
   padding: 8px 8px 8px 16px;
-  background-color: #DBD2C9;
+  background-color: #C3AAA6;
   border-radius: 3px;
   color: #ffffff;
 }
 
 .buy>a:hover {
-  background-color: #655848;
+  font-size: 22px;
+  padding: 11px 11px 11px 20px;
 }
 /* studio - price page */
 
