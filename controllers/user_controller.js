@@ -93,14 +93,20 @@ const logout = async (req, res, next) => {
 }
 
 const renderProfilePage = async (req, res) => {
+  const today = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+
   // 取得 order 資料
-  const orderList = await User.getOrders(req.user.id)
+  const orderList = await User.getOrders(req.user.id, today)
+
+  // 取得過期 order 資料
+  const expireOrderList = await User.getExpiredOrders(req.user.id, today)
 
   // 取得 registration 資料
   const registrationList = await User.getRegistration(req.user.id)
 
   res.render('user/profile', {
     orderList,
+    expireOrderList,
     registrationList
   })
 }

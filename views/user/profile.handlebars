@@ -34,7 +34,7 @@
       <thead class="profile-table-head">
         <tr>
           <th>教室</th>
-          <th> 購買日期</th>
+          <th>購買日期</th>
           <th>總金額</th>
           <th>總點數</th>
           <th>訂單狀態</th>
@@ -75,6 +75,56 @@
     </div>
     {{/if}}
   </section>
+
+
+
+  <section>
+    {{#if expireOrderList}}
+    <div class="about-title d-flex justify-content-center align-items-center">
+      <p>過期訂單</p>
+    </div>
+
+    <table class="profile-table">
+      <thead class="profile-table-head">
+        <tr>
+          <th>教室</th>
+          <th>購買日期</th>
+          <th>總金額</th>
+          <th>總點數</th>
+          <th>訂單狀態</th>
+          <th>到期日</th>
+          <th>剩餘點數</th>
+        </tr>
+      </thead>
+
+
+      {{#each expireOrderList}}
+      <tbody>
+        <tr>
+          <td class="order-studio">
+            <a href="/{{this.subdomain}}/price">
+              {{this.studio_name}}
+            </a>
+          </td>
+          <td class="order-date">{{this.date}}</td>
+          <td class="order-total">$ {{this.total}}</td>
+          <td class="order-point">{{this.point}}</td>
+          <td class="order-status">
+            {{#compare this.status 1}}
+            付款完成
+            {{else}}
+            未付款
+            {{/compare}}
+          </td>
+          <td class="order-expire-date">{{this.expire_date}}</td>
+          <td class="order-remaining-point">{{this.remaining_point}}</td>
+        </tr>
+      </tbody>
+      {{/each}}
+    </table>
+    {{/if}}
+  </section>
+
 
 
 
