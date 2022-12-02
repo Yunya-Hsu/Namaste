@@ -60,7 +60,7 @@ const registerUser = async (req, res) => {
   const isExistEmail = await User.findUserByEmail(email)
   if (isExistEmail) {
     req.flash('registerInput', req.body)
-    req.flash('errorMessage', 'email already exist')
+    req.flash('errorMessage', 'Email 已註冊，請登入、或選擇其他 Email')
     return res.redirect('/user/register')
   }
 
@@ -78,7 +78,7 @@ const renderLoginPage = async (req, res) => {
 }
 
 const login = async (req, res, next) => {
-  req.flash('successMessage', 'Login successfully')
+  req.flash('successMessage', '登入成功')
   res.redirect('/')
 }
 
@@ -87,20 +87,26 @@ const logout = async (req, res, next) => {
     if (err) {
       return console.log(err)
     }
-    req.flash('successMessage', 'Logout')
+    req.flash('successMessage', '已登出')
     res.redirect('/user/login')
   })
 }
 
 const renderProfilePage = async (req, res) => {
+  const today = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
+
   // 取得 order 資料
-  const orderList = await User.getOrders(req.user.id)
+  const orderList = await User.getOrders(req.user.id, today)
+
+  // 取得過期 order 資料
+  const expireOrderList = await User.getExpiredOrders(req.user.id, today)
 
   // 取得 registration 資料
   const registrationList = await User.getRegistration(req.user.id)
 
   res.render('user/profile', {
     orderList,
+    expireOrderList,
     registrationList
   })
 }

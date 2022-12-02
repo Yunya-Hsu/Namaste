@@ -3,7 +3,7 @@ const Studio = require('../models/studio_model')
 
 const authenticated = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    req.flash('errorMessage', 'Please login')
+    req.flash('errorMessage', '請先登入')
     return res.redirect('/user/login')
   }
 
@@ -24,7 +24,7 @@ const authorization = permissionId => {
       })
 
       if (!verifyResult) {
-        req.flash('errorMessage', 'Permission denied')
+        req.flash('errorMessage', '無瀏覽權限')
         return res.redirect('/')
       }
 
@@ -32,7 +32,7 @@ const authorization = permissionId => {
       req.user.studio = studio
       next()
     } catch (error) {
-      req.flash('errorMessage', 'Permission denied')
+      req.flash('errorMessage', '無瀏覽權限')
       return res.redirect('/')
     }
   }

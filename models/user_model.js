@@ -35,11 +35,23 @@ const deserializeUserInfo = async id => {
   return user
 }
 
-const getOrders = async userId => {
+const getOrders = async (userId, today) => {
   try {
     const [result] = await db.execute(
-      'SELECT orders.id, orders.studio_id, studios.name AS studio_name, studios.subdomain, orders.date, orders.total, orders.status, orders.point, orders.expire_date, orders.remaining_point FROM orders LEFT JOIN studios ON studios.id = orders.studio_id WHERE user_id = (?) ORDER BY orders.expire_date DESC;',
-      [userId]
+      'SELECT orders.id, orders.studio_id, studios.name AS studio_name, studios.subdomain, orders.date, orders.total, orders.status, orders.point, orders.expire_date, orders.remaining_point FROM orders LEFT JOIN studios ON studios.id = orders.studio_id WHERE user_id = (?) AND orders.expire_date >= (?) ORDER BY orders.expire_date ASC;',
+      [userId, today]
+    )
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+const getExpiredOrders = async (userId, today) => {
+  try {
+    const [result] = await db.execute(
+      'SELECT orders.id, orders.studio_id, studios.name AS studio_name, studios.subdomain, orders.date, orders.total, orders.status, orders.point, orders.expire_date, orders.remaining_point FROM orders LEFT JOIN studios ON studios.id = orders.studio_id WHERE user_id = (?) AND orders.expire_date < (?) ORDER BY orders.expire_date DESC;',
+      [userId, today]
     )
     return result
   } catch (error) {
@@ -64,5 +76,6 @@ module.exports = {
   createUser,
   deserializeUserInfo,
   getOrders,
+  getExpiredOrders,
   getRegistration
 }

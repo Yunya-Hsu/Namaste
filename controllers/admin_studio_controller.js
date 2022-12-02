@@ -27,7 +27,8 @@ const renderHomePage = async (req, res) => {
   const endOfMonth = moment().tz('Asia/Taipei').endOf('month').format('YYYY-MM-DD HH:mm:ss')
 
 
-  const monthlyProfit = await StudioAdmin.getMonthlyProfit(studio.id, startOfMonth, endOfMonth)
+  let monthlyProfit = await StudioAdmin.getMonthlyProfit(studio.id, startOfMonth, endOfMonth)
+  monthlyProfit = monthlyProfit.monthlyProfit !== null ? monthlyProfit.monthlyProfit : 0
   const monthlyProfitGroupByRules = await StudioAdmin.getMonthlyProfitGroupByRules(studio.id, startOfMonth, endOfMonth)
   const onlineCourseList = await StudioAdmin.getThisWeekOnlineCourses(studio.id, thisMonday, thisSunday, today)
 
@@ -60,7 +61,7 @@ const createPriceRule = async (req, res) => {
   // 檢查前端資料，若不足則擋下
   if (!requirementOfPriceRule.every(e => req.body[e] !== '')) {
     req.flash('createPriceRoleInput', req.body)
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect(`/${studio.subdomain}/admin/price/create`)
   }
 
@@ -75,7 +76,7 @@ const createPriceRule = async (req, res) => {
   const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
   await StudioAdmin.createPriceRule(studio.id, category, price, point, remark, term, publishAt, currentTime, currentTime)
-  req.flash('successMessage', 'Price rule is created')
+  req.flash('successMessage', '價格規則已成功建立')
   res.redirect(`/${studio.subdomain}/admin/price`)
 }
 
@@ -103,7 +104,7 @@ const updatePriceRule = async (req, res) => {
 
   // 檢查前端資料，若不足則擋下
   if (!requirementOfPriceRule.every(e => req.body[e] !== '')) {
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect(`/${studio.subdomain}/admin/price/${priceRuleId}`)
   }
 
@@ -157,7 +158,7 @@ const createCourse = async (req, res) => {
   // 檢查前端資料，若不足則擋下
   if (!requirementOfCourse.every(e => req.body[e] !== '')) {
     req.flash('createCourseInput', req.body)
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect(`/${studio.subdomain}/admin/course/create`)
   }
 
@@ -189,7 +190,7 @@ const createCourse = async (req, res) => {
   // 寫入 db
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
   await StudioAdmin.createCourse(title, description, teacher_id, studio.id, livestreamAccount.id, point, currentTime)
-  req.flash('successMessage', 'Course is created')
+  req.flash('successMessage', '課程已建立')
   return res.redirect(`/${studio.subdomain}/admin/course/create`)
 }
 
@@ -218,7 +219,7 @@ const updateCourse = async (req, res) => {
 
   // 檢查前端資料，若不足則擋下
   if (!requirementOfCourse.every(e => req.body[e] !== '')) {
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect(`/${studio.subdomain}/admin/course/${courseId}`)
   }
 
@@ -286,7 +287,7 @@ const createCourseDetail = async (req, res) => {
   // 檢查前端資料，若不足則擋下
   if (!requirementOfCourseDetail.every(e => req.body[e] !== '')) {
     req.flash('createCourseDetailInput', req.body)
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
   }
 
@@ -357,7 +358,7 @@ const updateCourseDetail = async (req, res) => {
 
   // 檢查前端資料，若不足則擋下
   if (!requirementOfCourseDetail.every(e => req.body[e] !== '')) {
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
   }
 
@@ -433,7 +434,7 @@ const createTeacher = async (req, res) => {
   // 檢查前端資料，若不足則擋下
   if (!name || !major) {
     req.flash('createTeacherInput', req.body)
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect(`/${studio.subdomain}/admin/teacher/create`)
   }
 
@@ -473,7 +474,7 @@ const updateTeacher = async (req, res) => {
 
   // 檢查前端資料，若不足則擋下
   if (!name || !major) {
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect(`/${studio.subdomain}/admin/teacher/${teacherId}`)
   }
 
@@ -529,7 +530,7 @@ const updateAbout = async (req, res) => {
 
   // 檢查前端資料，若不足則擋下
   if (!requirementOfUpdateStudio.every(e => req.body[e] !== '')) {
-    req.flash('errorMessage', 'missing information')
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
     return res.redirect(`/${studio.subdomain}/admin/about`)
   }
 
@@ -552,7 +553,7 @@ const updateAbout = async (req, res) => {
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
 
   await StudioAdmin.updateStudio(studio.id, name, logo, introduction_title, introduction_detail, introduction_photo, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, currentTime)
-  req.flash('successMessage', '資訊已更新')
+  req.flash('successMessage', '教室資訊已更新')
   return res.redirect(`/${studio.subdomain}/admin/about`)
 }
 
@@ -580,7 +581,7 @@ const renderLivePage = async (req, res, next) => {
 
   // 檢查登入者是不是該堂課的老師(有沒有直播的權限)
   if (courseDetail.user_id !== req.user.id) {
-    req.flash('errorMessage', 'Permission denied: 沒有直播權限')
+    req.flash('errorMessage', '沒有直播權限')
     return res.redirect('/')
   }
 
@@ -614,7 +615,7 @@ const renderOneOnOnePage = async (req, res, next) => {
 
   // 檢查登入者是不是該堂課的老師(有沒有直播的權限)
   if (courseDetail.user_id !== req.user.id) {
-    req.flash('errorMessage', 'Permission denied: 沒有直播權限')
+    req.flash('errorMessage', '沒有直播權限')
     return res.redirect('/')
   }
 
