@@ -27,7 +27,8 @@ const renderHomePage = async (req, res) => {
   const endOfMonth = moment().tz('Asia/Taipei').endOf('month').format('YYYY-MM-DD HH:mm:ss')
 
 
-  const monthlyProfit = await StudioAdmin.getMonthlyProfit(studio.id, startOfMonth, endOfMonth)
+  let monthlyProfit = await StudioAdmin.getMonthlyProfit(studio.id, startOfMonth, endOfMonth)
+  monthlyProfit = monthlyProfit.monthlyProfit !== null ? monthlyProfit.monthlyProfit : 0
   const monthlyProfitGroupByRules = await StudioAdmin.getMonthlyProfitGroupByRules(studio.id, startOfMonth, endOfMonth)
   const onlineCourseList = await StudioAdmin.getThisWeekOnlineCourses(studio.id, thisMonday, thisSunday, today)
 
