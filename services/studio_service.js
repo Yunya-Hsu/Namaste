@@ -1,5 +1,7 @@
 const StudioModel = require('../models/studio_model')
-const { currentTime } = require('./all_service')
+const TimeService = require('./time_service')
+
+const moment = require('moment')
 
 class StudioDetail {
   constructor (req) {
@@ -13,14 +15,13 @@ class StudioDetail {
     this.introduction_title = studio.introduction_title
     this.introduction_detail = studio.introduction_detail
     this.introduction_photo = process.env.AWS_CDN_DOMAIN + studio.introduction_photo
-  }
-
-  async getDataForHomePage () {
-    const theStudio = await StudioModel.getStudioForHomePage(this.subdomain)
-    if (!theStudio) {
-      return
-    }
-    this.organizeData(theStudio)
+    this.address = studio.address
+    this.address_description = studio.address_description
+    this.phone = studio.phone
+    this.tappay_app_key = studio.tappay_app_key
+    this. tappay_partner_key = studio.tappay_partner_key
+    this.tappay_id = studio.tappay_id
+    this.tappay_app_id = studio.tappay_app_id
   }
 
   async getStudioBySubdomain () {
@@ -31,18 +32,107 @@ class StudioDetail {
     this.organizeData(theStudio)
   }
 
-  async getPriceRules () {
-    const time = currentTime()
-    return await StudioModel.getPriceRules(this.id, time)
+  async getDataForHomePage () {
+    const theStudio = await StudioModel.getStudioForHomePage(this.subdomain)
+    this.organizeData(theStudio)
   }
 
+  async getPriceRules () {
+    const currentTime = TimeService.currentTime()
+    return await StudioModel.getPriceRules(this.id, currentTime)
+  }
+
+  async getStudioForCheckout () {
+    const theStudio = await StudioModel.getStudioForCheckout(this.subdomain)
+    this.organizeData(theStudio)
+  }
+
+  async getDedicatedPriceRule (priceRuleId) {
+    const currentTime = TimeService.currentTime()
+    const priceRule = await StudioModel.getDedicatedPriceRule(priceRuleId, currentTime, this.id)
+    if (!priceRule) {
+      return
+    }
+    priceRule.expireDate = TimeService.expireDate(priceRule.term)
+    return priceRule
+  }
+
+  async getStudioForAbout () {
+    const theStudio = await StudioModel.getStudioForAbout(this.subdomain)
+    this.organizeData(theStudio)
+  }
+
+  async getTeachers () {
+    const teacherList = await StudioModel.getTeachers(this.id)
+    for (const teacher of teacherList) {
+      if (teacher.avatar) {
+        teacher.avatar = process.env.AWS_CDN_DOMAIN + teacher.avatar
+      }
+    }
+    return teacherList
+  }
 }
 
-const checkoutInput = () => {
 
+class CourseInWeek {
+  constructor (req) {
+    this.theYear = req.query.week ? req.query.week.split('-')[0] : TimeService.currentYear()
+    this.theWeek = req.query.week ? Number(req.query.week.split('-')[1].replace('W', '')) : TimeService.currentWeek()
+    this.theWeekForRender = this.theWeek.toString().length < 2 ? this.theWeek.toString().padStart(2, '0') : this.theWeek
+    
+    this.organizedCourseDetailList = organizedCourseDetailList(this.theYear, this.theWeek)
+  }
+
+  async getCourseDetails(id) {
+    const noontime = TimeService.noonTime()
+    const dinnerTime = TimeService.dinnerTime()
+
+    const courseDetailList = await StudioModel.getCourseDetails(id, this.organizedCourseDetailList.Monday.date, this.organizedCourseDetailList.Sunday.date, TimeService.currentTime())
+
+    for (const course of courseDetailList) {
+      const theDayOfWeek = moment(course.date).format('dddd')
+      const end_time = moment(course.start_time, 'HH:mm:ss').add(course.duration, 'minutes').format('HH:mm')
+      course.end_time = end_time
+      course.start_time = moment(course.start_time, 'HH:mm:ss').format('HH:mm')
+
+      if (moment(course.start_time, 'HH:mm').isBefore(noontime)) {
+        this.organizedCourseDetailList[theDayOfWeek].morning.push(course)
+      } else if (moment(course.start_time, 'HH:mm').isBefore(dinnerTime)) {
+        this.organizedCourseDetailList[theDayOfWeek].afternoon.push(course)
+      } else {
+        this.organizedCourseDetailList[theDayOfWeek].evening.push(course)
+      }
+    }
+  }
 }
+
+
+
+
+const organizedCourseDetailList = (theYear, theWeek) => {
+  const theMonday = moment().year(theYear).day('Monday').isoWeek(theWeek).format('YYYY-MM-DD')
+
+  const organizedCourseDetailList = {}
+  for (let i = 0; i < 7; i++) {
+    // 星期幾
+    const theDayOfWeek = moment(theMonday).add(i, 'days').format('dddd')
+    const theDate = moment().year(theYear).day('Monday').isoWeek(theWeek).add(i, 'days').format('YYYY-MM-DD')
+    organizedCourseDetailList[theDayOfWeek] = {
+      date: theDate,
+      morning: [],
+      afternoon: [],
+      evening: []
+    }
+  }
+  return organizedCourseDetailList
+}
+
+
+
+
+
 
 module.exports = {
   StudioDetail,
-  checkoutInput
+  CourseInWeek,
 }

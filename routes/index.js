@@ -17,7 +17,7 @@ const Studio = require('../controllers/studio_controller')
 const auth = require('../middleware/auth')
 const { wrapAsync } = require('../util/util')
 const { upload, multerError } = require('../middleware/multer')
-
+const verifyStudio = require('../middleware/verifyStudio')
 
 
 
@@ -27,6 +27,15 @@ const { upload, multerError } = require('../middleware/multer')
 router.use('/admin', adminRoot)
 router.use('/user', user)
 router.use('/api', api)
+
+
+router.delete('/deregister',
+  auth.authenticated,
+  wrapAsync(Studio.deregisterCourse)
+)
+
+// get studio 的 middleware
+router.use('/:studioSubdomain', wrapAsync(verifyStudio))
 
 
 
@@ -266,6 +275,7 @@ router.post('/:studioSubdomain/checkout',
   auth.authenticated,
   wrapAsync(Studio.checkout)
 )
+
 router.get('/:studioSubdomain/price', wrapAsync(Studio.renderPricePage))
 router.get('/:studioSubdomain/course', wrapAsync(Studio.renderCoursePage))
 router.get('/:studioSubdomain/about', wrapAsync(Studio.renderAboutPage))
@@ -273,15 +283,13 @@ router.get('/:studioSubdomain/registration',
   auth.authenticated,
   wrapAsync(Studio.registerCourse)
 )
+
 router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))
 
 
 
 
-router.delete('/deregister',
-  auth.authenticated,
-  wrapAsync(Studio.deregisterCourse)
-)
+
 router.get('/', wrapAsync(AdminRoot.renderNamasteHomePage))
 
 module.exports = router
