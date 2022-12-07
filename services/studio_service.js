@@ -1,7 +1,10 @@
+// models
 const StudioModel = require('../models/studio_model')
-const TimeService = require('./time_service')
+const AdminStudioModel = require('../models/admin_studio_model')
 
-const moment = require('moment')
+const TimeService = require('../util/time')
+
+const moment = require('moment') // FIXME:
 
 class StudioDetail {
   constructor (req) {
@@ -71,6 +74,10 @@ class StudioDetail {
     }
     return teacherList
   }
+
+  async getCourseDetail (courseDetailId) {
+    return await AdminStudioModel.getCourseDetail(this.subdomain, courseDetailId)
+  }
 }
 
 
@@ -105,8 +112,6 @@ class CourseInWeek {
     }
   }
 }
-
-
 
 
 const organizedCourseDetailList = (theYear, theWeek) => {

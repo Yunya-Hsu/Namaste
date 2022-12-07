@@ -258,15 +258,6 @@ router.get('/:studioSubdomain/admin',
 
 
 
-// users
-router.get('/:studioSubdomain/live',
-  auth.authenticated,
-  wrapAsync(Studio.renderLivePage)
-)
-router.get('/:studioSubdomain/oneOnOne',
-  auth.authenticated,
-  wrapAsync(Studio.renderOneOnOnePage)
-)
 router.get('/:studioSubdomain/checkout',
   auth.authenticated,
   wrapAsync(Studio.renderCheckoutPage)
@@ -282,6 +273,11 @@ router.get('/:studioSubdomain/about', wrapAsync(Studio.renderAboutPage))
 router.get('/:studioSubdomain/registration',
   auth.authenticated,
   wrapAsync(Studio.registerCourse)
+)
+
+router.get('/:studioSubdomain/:livestreamType',
+  auth.authenticated,
+  wrapAsync(Studio.renderLivePage)
 )
 
 router.get('/:studioSubdomain', wrapAsync(Studio.renderHomePage))

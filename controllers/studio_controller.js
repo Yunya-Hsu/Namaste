@@ -218,65 +218,26 @@ const deregisterCourse = async (req, res, next) => {
 
 
 const renderLivePage = async (req, res, next) => {
-  // search studio from DB
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioForCheckout(studioSubdomain)
-  if (!studio) {
-    return next()
+  const livestreamPage = {
+    live: 'studio/livestream',
+    oneOnOne: 'studio/oneOnOne'
   }
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-
+  const { livestreamType } = req.params
   const courseDetailId = req.query.courseDetailId
   const userId = req.user.id
-  // 撈出課程資料（確認該堂課是不是該教室的）
-  const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
+
+  const courseDetail = await req.studio.getCourseDetail(courseDetailId)
   if (!courseDetail) {
     return next()
   }
-
-
-  // 檢查登入者有沒有註冊此課程
-  const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, studioSubdomain)
+  const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, req.studio.subdomain)
   if (!verifyRegistration) {
     req.flash('errorMessage', '未註冊此課程')
     return res.redirect('/')
   }
 
-  res.render('studio/livestream', {
-    studio,
-    courseDetailId,
-    userId,
-    courseName: verifyRegistration.course_title
-  })
-}
-
-const renderOneOnOnePage = async (req, res, next) => {
-  // search studio from DB
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioForCheckout(studioSubdomain)
-  if (!studio) {
-    return next()
-  }
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-
-  const courseDetailId = req.query.courseDetailId
-  const userId = req.user.id
-  // 撈出課程資料（確認該堂課是不是該教室的）
-  const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
-  if (!courseDetail) {
-    return next()
-  }
-
-
-  // 檢查登入者有沒有註冊此課程
-  const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, studioSubdomain)
-  if (!verifyRegistration) {
-    req.flash('errorMessage', '未註冊此課程')
-    return res.redirect('/')
-  }
-
-  res.render('studio/oneOnOne', {
-    studio,
+  res.render(livestreamPage[livestreamType], {
+    studio: req.studio,
     courseDetailId,
     userId,
     courseName: verifyRegistration.course_title
@@ -295,6 +256,5 @@ module.exports = {
   checkout,
   registerCourse,
   deregisterCourse,
-  renderLivePage,
-  renderOneOnOnePage
+  renderLivePage
 }
