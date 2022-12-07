@@ -6,37 +6,25 @@ const axios = require('axios')
 const StudioAdmin = require('../models/admin_studio_model')
 const Studio = require('../models/studio_model')
 
+// services
+const { StudioDetail } = require('../services/studio_service')
+
 const renderHomePage = async (req, res, next) => {
-  // 確認是否有該教室
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioForHomePage(studioSubdomain)
-  if (!studio) {
+  const studio = new StudioDetail(req)
+  await studio.getDataForHomePage()
+  if (!studio.logo) {
     return next()
   }
-
-  // 整理資料
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-  studio.introduction_photo = process.env.AWS_CDN_DOMAIN + studio.introduction_photo
-
   return res.render('studio/home', { studio })
 }
 
 const renderPricePage = async (req, res, next) => {
-  // 確認是否有該教室
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioBySubdomain(studioSubdomain)
-  if (!studio) {
+  const studio = new StudioDetail(req)
+  await studio.getStudioBySubdomain()
+  if (!studio.logo) {
     return next()
   }
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-
-  // 取出該教室的價格
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  const priceRules = await Studio.getPriceRules(studio.id, currentTime)
-  if (priceRules.length <= 0) {
-    return res.render('studio/price', { studio })
-  }
-
+  const priceRules = await studio.getPriceRules()
   res.render('studio/price', { studio, priceRules })
 }
 
