@@ -28,7 +28,8 @@ const multerFilter = (req, file, cb) => {
   if (!acceptedFileType.includes(file.mimetype)) {
     req.fileValidationError = '圖片檔案格式錯誤，僅限 jpg, jpeg, png 檔'
     return cb(null, false, new Error('圖片檔案格式錯誤，僅限 jpg, jpeg, png 檔'))
-  } else if (fileSize > fileSizeLimit) {
+  }
+  if (fileSize > fileSizeLimit) {
     req.fileValidationError = '圖片過大，僅限 1 MB'
     return cb(null, false, new Error('圖片過大，僅限 1 MB'))
   }
