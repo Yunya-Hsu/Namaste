@@ -25,6 +25,7 @@ const moment = require('moment-timezone')
 const rateLimiter = require('./middleware/rateLimiter')
 
 const server = http.createServer(app)
+// FIXME: origin 改掉
 const io = require('socket.io')(server, {
   cors: {
     origin: '*'
@@ -43,7 +44,7 @@ app.set('views', './views')
 
 app.use(rateLimiter)
 
-app.use(cors())
+app.use(cors()) // FIXME: 拿掉
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -58,6 +59,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
+// FIXME: 拆 middleware
 app.use((req, res, next) => {
   res.locals.errorMessage = req.flash('errorMessage')
   res.locals.successMessage = req.flash('successMessage')
