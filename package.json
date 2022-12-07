@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watchAll",
     "dev": "nodemon app.js",
     "lint": "eslint \"**/*.js\" --fix"
   },
@@ -49,8 +49,10 @@
   "devDependencies": {
     "eslint": "^8.26.0",
     "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-jest": "^27.1.6",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-standard": "^5.0.0"
+    "eslint-plugin-standard": "^5.0.0",
+    "jest": "^29.3.1"
   }
 }
