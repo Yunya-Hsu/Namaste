@@ -15,8 +15,8 @@ const authenticated = (req, res, next) => {
 const authorization = permissionId => {
   return async function (req, res, next) {
     try {
-      const { studioSubdomain } = (req.params.studioSubdomain === undefined) ? { studioSubdomain: 'yogaWithLucie' } : req.params // FIXME: root 建立在 studio #1 裡面
-      const studio = await Studio.getStudioBySubdomain(studioSubdomain)
+      const studioSubdomain = (req.studio.subdomain === undefined) ? 'yogaWithLucie' : req.studio.subdomain // FIXME: root 建立在 studio #1 裡面
+      const studio = await Studio.getStudioBySubdomain(studioSubdomain) // FIXME: 
       const roleList = await Auth.getUserRoles(req.user.id)
 
       const verifyResult = roleList.some(element => {
@@ -28,6 +28,7 @@ const authorization = permissionId => {
         return res.redirect('/')
       }
 
+      // FIXME: 
       studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
       req.user.studio = studio
       next()

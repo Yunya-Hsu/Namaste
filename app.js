@@ -54,10 +54,6 @@ app.use(flash())
 app.use(connectFlash)
 app.use(router)
 
-app.use((req, res) => {
-  res.render('basic/404')
-})
-
 app.use((err, req, res, next) => {
   console.error(moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss'), err)
   return res.render('basic/500')
