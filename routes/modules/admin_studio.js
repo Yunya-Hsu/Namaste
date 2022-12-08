@@ -9,13 +9,14 @@ const { PERMISSION } = require('../../models/auth_model')
 // middleware & utils
 const { upload, multerError } = require('../../middleware/multer')
 const { authorization } = require('../../middleware/auth')
+const { verifyPriceRule } = require('../../middleware/verifyInput')
 const { wrapAsync } = require('../../util/util')
 
 
 router.get('/price/create', authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES), wrapAsync(AdminStudio.renderCreatePricePage))
-router.post('/price/create', authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES), wrapAsync(AdminStudio.createPriceRule))
+router.post('/price/create', authorization(PERMISSION.CREATE_STUDIO_PRICE_RULES), verifyPriceRule, wrapAsync(AdminStudio.createPriceRule))
 router.get('/price/:priceRuleId', authorization(PERMISSION.UPDATE_STUDIO_PRICE_RULES), wrapAsync(AdminStudio.renderEditPricePage))
-router.put('/price/:priceRuleId', authorization(PERMISSION.UPDATE_STUDIO_PRICE_RULES), wrapAsync(AdminStudio.updatePriceRule))
+router.put('/price/:priceRuleId', authorization(PERMISSION.UPDATE_STUDIO_PRICE_RULES), verifyPriceRule, wrapAsync(AdminStudio.updatePriceRule))
 router.get('/price', authorization(PERMISSION.UPDATE_STUDIO_PRICE_RULES), wrapAsync(AdminStudio.renderAllPriceRule))
 
 router.get('/course/create', authorization(PERMISSION.CREATE_STUDIO_COURSE), wrapAsync(AdminStudio.renderCreateCoursePage))

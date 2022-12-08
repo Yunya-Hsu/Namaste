@@ -1,5 +1,13 @@
 const moment = require('moment-timezone')
 
+const inputTimeReformat = (time) => {
+  return moment(time).format('YYYY-MM-DD HH:mm:ss')
+}
+
+const timeFormatToHTML = (time) => {
+  return moment(time).format('YYYY-MM-DD[T]HH:mm:ss')
+}
+
 const currentTime = () => {
   return moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
 }
@@ -26,6 +34,8 @@ const expireDate = (term) => {
 }
 
 module.exports = {
+  inputTimeReformat,
+  timeFormatToHTML,
   currentTime,
   currentYear,
   currentWeek,

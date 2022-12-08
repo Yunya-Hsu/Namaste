@@ -14,7 +14,7 @@
       <div>
         <label for="category">類別*</label>
         <input type="text" id="category" name="category" placeholder="單堂體驗" {{#if input.category}}
-          value={{input.category}} {{/if}}>
+          value="{{input.category}}" {{/if}}>
       </div>
 
       <div>
@@ -29,7 +29,7 @@
 
       <div>
         <label for="remark">備註</label>
-        <input type="text" id="remark" name="remark" placeholder="每人限購 1 次" {{#if input.remark}} value={{input.remark}}
+        <input type="text" id="remark" name="remark" placeholder="每人限購 1 次" {{#if input.remark}} value="{{input.remark}}"
           {{/if}}>
       </div>
 
@@ -43,8 +43,6 @@
         <input type="datetime-local" id="publish_at" name="publish_at" {{#if input.publish_at}}
           value={{input.publish_at}} {{/if}}>
       </div>
-
-      {{!-- TODO: 做一個新增價格的連結 --}}
       
       <button type="submit">更新</button>
     </form>

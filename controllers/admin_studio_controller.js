@@ -11,11 +11,17 @@ const util = require('util')
 const unlinkFile = util.promisify(fs.unlink)
 const { uploadFileToS3 } = require('../util/s3')
 
+// services
+const { PriceRule } = require('../services/studio_admin_service')
+
+
 // basic parameters
-const requirementOfPriceRule = ['category', 'price', 'point', 'term', 'publish_at']
 const requirementOfCourse = ['title', 'teacher_id', 'user', 'point', 'publish_at']
 const requirementOfCourseDetail = ['date', 'start_time', 'duration', 'limitation', 'is_online', 'online_limitation', 'publish_at']
 const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_partner_key', 'tappay_id', 'tappay_app_id']
+
+
+
 
 const renderHomePage = async (req, res) => {
   const studio = req.user.studio
@@ -45,9 +51,7 @@ const renderHomePage = async (req, res) => {
 
 
 const renderCreatePricePage = async (req, res) => {
-  const studio = req.user.studio
   const input = req.flash('createPriceRoleInput')[0]
-
   res.render('admin_studio/createPrice', {
     studio: req.studio,
     input
@@ -55,79 +59,39 @@ const renderCreatePricePage = async (req, res) => {
 }
 
 const createPriceRule = async (req, res) => {
-  const { category, price, point, remark, term, publish_at } = req.body
-  const studio = req.user.studio
-
-  // 檢查前端資料，若不足則擋下
-  if (!requirementOfPriceRule.every(e => req.body[e] !== '')) {
-    req.flash('createPriceRoleInput', req.body)
-    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
-    return res.redirect(`/${studio.subdomain}/admin/price/create`)
-  }
-
-  // check if price, point, term are numbers
-  if (isNaN(+price) || isNaN(+point) || isNaN(+term)) {
-    req.flash('createPriceRoleInput', req.body)
-    req.flash('errorMessage', '價格、點數、使用期限必須為「數字」')
-    return res.redirect(`/${studio.subdomain}/admin/price/create`)
-  }
-
-  // insert data
-  const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.createPriceRule(studio.id, category, price, point, remark, term, publishAt, currentTime, currentTime)
+  const priceRule = new PriceRule(req)
+  await priceRule.create(req.studio.id)
   req.flash('successMessage', '價格規則已成功建立')
-  res.redirect(`/${studio.subdomain}/admin/price`)
+  res.redirect(`/${req.studio.subdomain}/admin/price`)
 }
 
 const renderEditPricePage = async (req, res) => {
-  const studio = req.user.studio
-  const priceRuleId = req.params.priceRuleId
-  const input = await StudioAdmin.getDedicatedPriceRule(studio.id, priceRuleId)
+  const priceRule = new PriceRule(req)
+  const input = await priceRule.getOne(req.studio.id)
 
   if (!input) {
     req.flash('errorMessage', '價格編號有誤')
-    return res.redirect(`/${studio.subdomain}/admin/price`)
+    return res.redirect(`/${req.studio.subdomain}/admin/price`)
   }
 
-  input.publish_at = moment(input.publish_at).format('YYYY-MM-DD[T]HH:mm:ss')
   res.render('admin_studio/editPrice', {
-    studio,
+    studio: req.studio,
     input
   })
 }
 
 const updatePriceRule = async (req, res) => {
-  const studio = req.user.studio
-  const priceRuleId = req.params.priceRuleId
-  const { category, price, point, remark, term, publish_at } = req.body
+  const priceRule = new PriceRule(req)
+  await priceRule.update()
 
-  // 檢查前端資料，若不足則擋下
-  if (!requirementOfPriceRule.every(e => req.body[e] !== '')) {
-    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
-    return res.redirect(`/${studio.subdomain}/admin/price/${priceRuleId}`)
-  }
-
-  // check if price, point, term are numbers
-  if (isNaN(+price) || isNaN(+point) || isNaN(+term)) {
-    req.flash('errorMessage', '價格、點數、使用期限必須為「數字」')
-    return res.redirect(`/${studio.subdomain}/admin/price/${priceRuleId}`)
-  }
-
-  // update data
-  const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.updatePriceRule(priceRuleId, category, price, point, remark, term, publishAt, currentTime)
-  req.flash('successMessage', `「${category}」已更新`)
-  res.redirect(`/${studio.subdomain}/admin/price`)
+  req.flash('successMessage', `「${priceRule.category}」已更新`)
+  res.redirect(`/${req.studio.subdomain}/admin/price`)
 }
 
 const renderAllPriceRule = async (req, res) => {
-  const studio = req.user.studio
-  const priceRuleList = await StudioAdmin.getPriceRules(studio.id)
-
+  const priceRuleList = await PriceRule.getAll(req.studio.id)
   res.render('admin_studio/priceRule', {
-    studio,
+    studio: req.studio,
     priceRuleList
   })
 }
@@ -139,15 +103,14 @@ const renderAllPriceRule = async (req, res) => {
 
 
 const renderCreateCoursePage = async (req, res) => {
-  const studio = req.user.studio
   const input = req.flash('createCourseInput')[0]
 
   // 撈出該教室的 teacher 清單
-  const teacherList = await StudioAdmin.getStudioTeachers(studio.id)
-  studio.teacherList = teacherList
+  const teacherList = await StudioAdmin.getStudioTeachers(req.studio.id)
+  req.studio.teacherList = teacherList
 
   res.render('admin_studio/createCourse', {
-    studio,
+    studio: req.studio,
     input
   })
 }
@@ -208,7 +171,7 @@ const renderEditCoursePage = async (req, res) => {
   studio.teacherList = teacherList
 
   res.render('admin_studio/editCourse', {
-    studio,
+    studio: req.studio,
     input
   })
 }
@@ -257,7 +220,7 @@ const renderAllCourses = async (req, res) => {
   const courseList = await StudioAdmin.getStudioCourses(studio.id)
 
   res.render('admin_studio/course', {
-    studio,
+    studio: req.studio,
     courseList
   })
 }
@@ -276,7 +239,7 @@ const renderCreateCourseDetailPage = async (req, res) => {
   studio.courseList = courseList
 
   res.render('admin_studio/createCourseDetail', {
-    studio,
+    studio: req.studio,
     input
   })
 }
@@ -347,7 +310,7 @@ const renderEditCourseDetailPage = async (req, res) => {
 
   input.publish_at = moment(input.publish_at).format('YYYY-MM-DD[T]HH:mm:ss')
   res.render('admin_studio/editCourseDetail', {
-    studio,
+    studio: req.studio,
     input
   })
 }
@@ -403,11 +366,10 @@ const updateCourseDetail = async (req, res) => {
 }
 
 const renderAllCourseDetails = async (req, res) => {
-  const studio = req.user.studio
-  const courseDetailList = await StudioAdmin.getStudioCourseDetail(studio.id)
+  const courseDetailList = await StudioAdmin.getStudioCourseDetail(req.studio.id)
 
   res.render('admin_studio/courseDetail', {
-    studio,
+    studio: req.studio,
     courseDetailList
   })
 }
@@ -418,11 +380,10 @@ const renderAllCourseDetails = async (req, res) => {
 
 
 const renderCreateTeacherPage = async (req, res) => {
-  const studio = req.user.studio
   const input = req.flash('createTeacherInput')[0]
 
   res.render('admin_studio/createTeacher', {
-    studio,
+    studio: req.studio,
     input
   })
 }
@@ -452,17 +413,16 @@ const createTeacher = async (req, res) => {
 }
 
 const renderEditTeacherPage = async (req, res) => {
-  const studio = req.user.studio
   const teacherId = req.params.teacherId
-  const input = await StudioAdmin.getDedicatedTeacher(studio.id, teacherId)
+  const input = await StudioAdmin.getDedicatedTeacher(req.studio.id, teacherId)
 
   if (!input) {
     req.flash('errorMessage', '老師編號有誤')
-    return res.redirect(`/${studio.subdomain}/admin/teacher`)
+    return res.redirect(`/${req.studio.subdomain}/admin/teacher`)
   }
 
   res.render('admin_studio/editTeacher', {
-    studio,
+    studio: req.studio,
     input
   })
 }
@@ -500,7 +460,7 @@ const renderAllTeachers = async (req, res) => {
   }
 
   res.render('admin_studio/teacher', {
-    studio,
+    studio: req.studio,
     teacherList
   })
 }
@@ -520,7 +480,7 @@ const renderEditAboutPage = async (req, res) => {
   }
 
   res.render('admin_studio/editAbout', {
-    studio,
+    studio: req.studio,
     input
   })
 }
