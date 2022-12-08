@@ -13,26 +13,27 @@
 
       <div>
         <label for="title">課程名稱*</label>
-        <input type="text" id="title" name="title" {{#if input.title}} value={{input.title}} {{/if}} required>
+        <input type="text" id="title" name="title" {{#if input.title}} value="{{input.title}}" {{/if}} required>
       </div>
 
       <div>
         <label for="description">描述</label>
-        <input type="text" id="description" name="description" {{#if input.description}} value={{input.description}} {{/if}}>
+        <input type="text" id="description" name="description" {{#if input.description}} value="{{input.description}}" {{/if}}>
       </div>
 
       <div>
         <label for="teacher_id">授課老師*</label>
         <select name="teacher_id" id="teacher_id">
-        {{#each studio.teacherList}}
-          <option value="{{this.id}}">{{this.name}}（專業：{{this.major}}）</option>
-        {{/each}}
+          {{#each studio.teacherList}}
+          <option value="{{this.id}}" {{#compare this.id ../input.teacher_id}} selected {{/compare}}>
+            {{this.name}}（專業：{{this.major}}）</option>
+          {{/each}}
         </select>
       </div>
 
       <div>
         <label for="livestream_email">直播人員 email 帳號 *</label>
-        <input type="text" id="livestream_email" name="livestream_email" {{#if input.user_id}} value={{input.user_id}} {{/if}} required>
+        <input type="text" id="livestream_email" name="livestream_email" {{#if input.livestream_email}} value="{{input.livestream_email}}" {{/if}} required>
       </div>
 
       <div>

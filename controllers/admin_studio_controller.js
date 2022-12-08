@@ -12,11 +12,10 @@ const unlinkFile = util.promisify(fs.unlink)
 const { uploadFileToS3 } = require('../util/s3')
 
 // services
-const { PriceRule } = require('../services/studio_admin_service')
+const { PriceRule, Course } = require('../services/studio_admin_service')
 
 
 // basic parameters
-const requirementOfCourse = ['title', 'teacher_id', 'user', 'point', 'publish_at']
 const requirementOfCourseDetail = ['date', 'start_time', 'duration', 'limitation', 'is_online', 'online_limitation', 'publish_at']
 const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_partner_key', 'tappay_id', 'tappay_app_id']
 
@@ -105,10 +104,7 @@ const renderAllPriceRule = async (req, res) => {
 const renderCreateCoursePage = async (req, res) => {
   const input = req.flash('createCourseInput')[0]
 
-  // 撈出該教室的 teacher 清單
-  const teacherList = await StudioAdmin.getStudioTeachers(req.studio.id)
-  req.studio.teacherList = teacherList
-
+  req.studio.teacherList = await Course.getTeachers(req.studio.id)
   res.render('admin_studio/createCourse', {
     studio: req.studio,
     input
@@ -116,60 +112,21 @@ const renderCreateCoursePage = async (req, res) => {
 }
 
 const createCourse = async (req, res) => {
-  const studio = req.user.studio
-
-  // 檢查前端資料，若不足則擋下
-  if (!requirementOfCourse.every(e => req.body[e] !== '')) {
-    req.flash('createCourseInput', req.body)
-    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
-    return res.redirect(`/${studio.subdomain}/admin/course/create`)
-  }
-
-  const { title, description, teacher_id, livestream_email, point } = req.body
-
-  // 檢查 point 是否為數字
-  if (isNaN(+point)) {
-    req.flash('createCourseInput', req.body)
-    req.flash('errorMessage', '點數必須為「數字」')
-    return res.redirect(`/${studio.subdomain}/admin/course/create`)
-  }
-
-  // 檢查 teacher_id 是否可使用（隸屬該教室）
-  const validateTeacher = await StudioAdmin.validateStudioTeacher(+teacher_id, studio.id)
-  if (validateTeacher.length <= 0) {
-    req.flash('createCourseInput', req.body)
-    req.flash('errorMessage', '授課教師不正確')
-    return res.redirect(`/${studio.subdomain}/admin/course/create`)
-  }
-
-  // 檢查直播人員帳號是否存在
-  const livestreamAccount = await StudioAdmin.validateLivestreamAccount(livestream_email)
-  if (!livestreamAccount) {
-    req.flash('createCourseInput', req.body)
-    req.flash('errorMessage', '直播人員帳號錯誤')
-    return res.redirect(`/${studio.subdomain}/admin/course/create`)
-  }
-
-  // 寫入 db
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.createCourse(title, description, teacher_id, studio.id, livestreamAccount.id, point, currentTime)
+  const course = new Course(req)
+  await course.create(req.studio.id)
   req.flash('successMessage', '課程已建立')
-  return res.redirect(`/${studio.subdomain}/admin/course/create`)
+  return res.redirect(`/${req.studio.subdomain}/admin/course/create`)
 }
 
 const renderEditCoursePage = async (req, res) => {
-  const studio = req.user.studio
-  const courseId = req.params.courseId
-  const input = await StudioAdmin.getDedicatedCourse(studio.id, courseId)
-
+  const course = new Course(req)
+  const input = await course.getOne(req.studio.id)
   if (!input) {
     req.flash('errorMessage', '課程編號有誤')
-    return res.redirect(`/${studio.subdomain}/admin/course`)
+    return res.redirect(`/${req.studio.subdomain}/admin/course`)
   }
 
-  const teacherList = await StudioAdmin.getStudioTeachers(studio.id)
-  studio.teacherList = teacherList
-
+  req.studio.teacherList = await Course.getTeachers(req.studio.id)
   res.render('admin_studio/editCourse', {
     studio: req.studio,
     input
@@ -177,48 +134,14 @@ const renderEditCoursePage = async (req, res) => {
 }
 
 const updateCourse = async (req, res) => {
-  const studio = req.user.studio
-  const courseId = req.params.courseId
-
-  // 檢查前端資料，若不足則擋下
-  if (!requirementOfCourse.every(e => req.body[e] !== '')) {
-    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
-    return res.redirect(`/${studio.subdomain}/admin/course/${courseId}`)
-  }
-
-  const { title, description, teacher_id, livestream_email, point } = req.body
-
-  // 檢查 point 是否為數字
-  if (isNaN(+point)) {
-    req.flash('errorMessage', '點數必須為「數字」')
-    return res.redirect(`/${studio.subdomain}/admin/course/${courseId}`)
-  }
-
-  // 檢查 teacher_id 是否可使用（隸屬該教室）
-  const validateTeacher = await StudioAdmin.validateStudioTeacher(+teacher_id, studio.id)
-  if (validateTeacher.length <= 0) {
-    req.flash('errorMessage', '授課教師不正確')
-    return res.redirect(`/${studio.subdomain}/admin/course/${courseId}`)
-  }
-
-  // 檢查直播人員帳號是否存在
-  const livestreamAccount = await StudioAdmin.validateLivestreamAccount(livestream_email)
-  if (!livestreamAccount) {
-    req.flash('errorMessage', '直播人員帳號錯誤')
-    return res.redirect(`/${studio.subdomain}/admin/course/${courseId}`)
-  }
-
-  // 寫入 db
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.updateCourse(courseId, title, description, teacher_id, livestreamAccount.id, point, currentTime)
-  req.flash('successMessage', `「${title}」 已更新`)
-  res.redirect(`/${studio.subdomain}/admin/course`)
+  const course = new Course(req)
+  await course.update(req.studio.id)
+  req.flash('successMessage', `「${course.title}」 已更新`)
+  res.redirect(`/${req.studio.subdomain}/admin/course`)
 }
 
 const renderAllCourses = async (req, res) => {
-  const studio = req.user.studio
-  const courseList = await StudioAdmin.getStudioCourses(studio.id)
-
+  const courseList = await Course.getAll(req.studio.id)
   res.render('admin_studio/course', {
     studio: req.studio,
     courseList

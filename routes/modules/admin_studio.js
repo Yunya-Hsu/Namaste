@@ -9,7 +9,7 @@ const { PERMISSION } = require('../../models/auth_model')
 // middleware & utils
 const { upload, multerError } = require('../../middleware/multer')
 const { authorization } = require('../../middleware/auth')
-const { verifyPriceRule } = require('../../middleware/verifyInput')
+const { verifyPriceRule, verifyCourse } = require('../../middleware/verifyInput')
 const { wrapAsync } = require('../../util/util')
 
 
@@ -20,9 +20,9 @@ router.put('/price/:priceRuleId', authorization(PERMISSION.UPDATE_STUDIO_PRICE_R
 router.get('/price', authorization(PERMISSION.UPDATE_STUDIO_PRICE_RULES), wrapAsync(AdminStudio.renderAllPriceRule))
 
 router.get('/course/create', authorization(PERMISSION.CREATE_STUDIO_COURSE), wrapAsync(AdminStudio.renderCreateCoursePage))
-router.post('/course/create', authorization(PERMISSION.CREATE_STUDIO_COURSE), wrapAsync(AdminStudio.createCourse))
+router.post('/course/create', authorization(PERMISSION.CREATE_STUDIO_COURSE), verifyCourse, wrapAsync(AdminStudio.createCourse))
 router.get('/course/:courseId', authorization(PERMISSION.UPDATE_STUDIO_COURSE), wrapAsync(AdminStudio.renderEditCoursePage))
-router.put('/course/:courseId', authorization(PERMISSION.UPDATE_STUDIO_COURSE), wrapAsync(AdminStudio.updateCourse))
+router.put('/course/:courseId', authorization(PERMISSION.UPDATE_STUDIO_COURSE), verifyCourse, wrapAsync(AdminStudio.updateCourse))
 router.get('/course', authorization(PERMISSION.UPDATE_STUDIO_COURSE), wrapAsync(AdminStudio.renderAllCourses))
 
 router.get('/courseDetail/create', authorization(PERMISSION.CREATE_STUDIO_COURSE), wrapAsync(AdminStudio.renderCreateCourseDetailPage))
