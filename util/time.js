@@ -31,6 +31,22 @@ const dinnerTime = () => {
   return moment('18:00', 'HH:mm')
 }
 
+const monday = () => {
+  return moment().tz('Asia/Taipei').day('Monday').format('YYYY-MM-DD')
+}
+
+const sunday = () => {
+  return moment().tz('Asia/Taipei').day('Monday').add('7', 'days').format('YYYY-MM-DD')
+}
+
+const startOfMonth = () => {
+  return moment().tz('Asia/Taipei').startOf('month').format('YYYY-MM-DD HH:mm:ss')
+}
+
+const endOfMonth = () => {
+  return moment().tz('Asia/Taipei').endOf('month').format('YYYY-MM-DD HH:mm:ss')
+}
+
 
 
 // calculate time
@@ -52,6 +68,8 @@ const isTime = time => {
   return moment(time, 'HH:mm', true).isValid() || moment(time, 'HH:mm:ss', true).isValid()
 }
 
+
+
 module.exports = {
   inputTimeReformat,
   timeFormatToHTML,
@@ -61,6 +79,10 @@ module.exports = {
   currentWeek,
   noonTime,
   dinnerTime,
+  monday,
+  sunday,
+  startOfMonth,
+  endOfMonth,
 
   expireDate,
 

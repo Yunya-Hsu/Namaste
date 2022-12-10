@@ -2,7 +2,45 @@
 const AdminStudioModel = require('../models/admin_studio_model')
 const StudioModel = require('../models/studio_model')
 
-const { inputTimeReformat, timeFormatToHTML, currentTime } = require('../util/time')
+const { inputTimeReformat, timeFormatToHTML, currentTime, monday, sunday, startOfMonth, endOfMonth, } = require('../util/time')
+
+class AdminStudio {
+  constructor (id) {
+    this.studioId = id
+    this.monday = monday()
+    this.sunday = sunday()
+    this.today = currentTime()
+    this.startOfMonth = startOfMonth()
+    this.endOfMonth = endOfMonth()
+  }
+
+  async getMonthlyProfit() {
+    let result = await AdminStudioModel.getMonthlyProfit(this.studioId, this.startOfMonth, this.endOfMonth)
+    result = result.monthlyProfit !== null ? result.monthlyProfit : 0
+
+    return result
+  }
+
+  async getMonthlyProfitGroupByRules() {
+    return await AdminStudioModel.getMonthlyProfitGroupByRules(this.studioId, this.startOfMonth, this.endOfMonth)
+  }
+
+  async getThisWeekOnlineCourses() {
+    return await AdminStudioModel.getThisWeekOnlineCourses(this.studioId, this.monday, this.sunday, this.today)
+  }
+
+  async getAdminHomePageData() {
+    const monthlyProfit = await this.getMonthlyProfit()
+    const monthlyProfitGroupByRules = await this.getMonthlyProfitGroupByRules()
+    const onlineCourseList = await this.getThisWeekOnlineCourses()
+    return {
+      monthlyProfit,
+      monthlyProfitGroupByRules,
+      onlineCourseList
+    }
+  }
+
+}
 
 class PriceRule {
   constructor (req) {
@@ -149,6 +187,7 @@ class Teacher {
 }
 
 module.exports = {
+  AdminStudio,
   PriceRule,
   Course,
   CourseDetail,

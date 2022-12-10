@@ -12,7 +12,7 @@ const unlinkFile = util.promisify(fs.unlink)
 const { uploadFileToS3 } = require('../util/s3')
 
 // services
-const { PriceRule, Course, CourseDetail, Teacher } = require('../services/studio_admin_service')
+const { AdminStudio, PriceRule, Course, CourseDetail, Teacher } = require('../services/studio_admin_service')
 
 
 // basic parameters
@@ -20,32 +20,17 @@ const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_
 
 
 
-// FIXME:
 const renderHomePage = async (req, res) => {
-  const studio = req.user.studio
-
-  const thisMonday = moment().tz('Asia/Taipei').day('Monday').format('YYYY-MM-DD')
-  const thisSunday = moment().tz('Asia/Taipei').day('Monday').add('7', 'days').format('YYYY-MM-DD')
-  const today = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  const startOfMonth = moment().tz('Asia/Taipei').startOf('month').format('YYYY-MM-DD HH:mm:ss')
-  const endOfMonth = moment().tz('Asia/Taipei').endOf('month').format('YYYY-MM-DD HH:mm:ss')
-
-
-  let monthlyProfit = await StudioAdmin.getMonthlyProfit(studio.id, startOfMonth, endOfMonth)
-  monthlyProfit = monthlyProfit.monthlyProfit !== null ? monthlyProfit.monthlyProfit : 0
-  const monthlyProfitGroupByRules = await StudioAdmin.getMonthlyProfitGroupByRules(studio.id, startOfMonth, endOfMonth)
-  const onlineCourseList = await StudioAdmin.getThisWeekOnlineCourses(studio.id, thisMonday, thisSunday, today)
+  const adminStudio = new AdminStudio(req.studio.id)
+  const { monthlyProfit, monthlyProfitGroupByRules, onlineCourseList } = await adminStudio.getAdminHomePageData()
 
   res.render('admin_studio/home', {
-    studio,
+    studio: req.studio,
     monthlyProfit,
     monthlyProfitGroupByRules,
     onlineCourseList
   })
 }
-
-
-
 
 
 const renderCreatePricePage = async (req, res) => {
