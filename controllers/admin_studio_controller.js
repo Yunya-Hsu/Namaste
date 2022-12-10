@@ -12,16 +12,15 @@ const unlinkFile = util.promisify(fs.unlink)
 const { uploadFileToS3 } = require('../util/s3')
 
 // services
-const { PriceRule, Course } = require('../services/studio_admin_service')
+const { PriceRule, Course, CourseDetail } = require('../services/studio_admin_service')
 
 
 // basic parameters
-const requirementOfCourseDetail = ['date', 'start_time', 'duration', 'limitation', 'is_online', 'online_limitation', 'publish_at']
 const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_partner_key', 'tappay_id', 'tappay_app_id']
 
 
 
-
+// FIXME:
 const renderHomePage = async (req, res) => {
   const studio = req.user.studio
 
@@ -154,13 +153,8 @@ const renderAllCourses = async (req, res) => {
 
 
 const renderCreateCourseDetailPage = async (req, res) => {
-  const studio = req.user.studio
+  req.studio.courseList = await CourseDetail.getCourseList(req.studio.id)
   const input = req.flash('createCourseDetailInput')[0]
-
-  // 撈出該教室的 course 清單
-  const courseList = await StudioAdmin.getStudioCourses(studio.id)
-  studio.courseList = courseList
-
   res.render('admin_studio/createCourseDetail', {
     studio: req.studio,
     input
@@ -168,70 +162,19 @@ const renderCreateCourseDetailPage = async (req, res) => {
 }
 
 const createCourseDetail = async (req, res) => {
-  const studio = req.user.studio
-
-  // 檢查前端資料，若不足則擋下
-  if (!requirementOfCourseDetail.every(e => req.body[e] !== '')) {
-    req.flash('createCourseDetailInput', req.body)
-    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
-  }
-
-  const { course_id, date, start_time, duration, limitation, is_online, online_limitation, is_oneOnOne, publish_at } = req.body
-
-  // 檢查 course_id 是否隸屬該教室
-  const courseFromDb = await StudioAdmin.getCourseById(course_id, studio.id)
-  if (!courseFromDb) {
-    req.flash('createCourseDetailInput', req.body)
-    req.flash('errorMessage', '沒有權限新增此課程')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
-  }
-
-  // 檢查 duration, limitation, is_online, online_limitation 是否為數字
-  if (isNaN(+duration) || +duration <= 0 || isNaN(+limitation) || isNaN(+is_online) || isNaN(+online_limitation)) {
-    req.flash('createCourseDetailInput', req.body)
-    req.flash('errorMessage', '請檢查「時長」、「人數上限」、「開放線上」欄位')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
-  }
-
-  // 檢查 is_online, online_limitation, is_oneOnOne 狀態是否相符
-  if (+is_online === 0 && +online_limitation > 0) {
-    req.flash('createCourseDetailInput', req.body)
-    req.flash('errorMessage', '不開放線上課程時，「線上課程人數上限」須為 0')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
-  }
-  if (+is_online === 1 && +online_limitation <= 0) {
-    req.flash('createCourseDetailInput', req.body)
-    req.flash('errorMessage', '開放線上課程時，「線上課程人數上限」至少需 1 人')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
-  }
-  if (+is_oneOnOne === 1) {
-    if (+online_limitation !== 1 || +limitation !== 0) {
-      req.flash('createCourseDetailInput', req.body)
-      req.flash('errorMessage', '建立「一對一」課程時，實體人數須為 0、線上人數須為 1')
-      return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
-    }
-  }
-
-  // 寫入 db
-  const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.createCourseDetail(course_id, date, start_time, duration, is_online, limitation, online_limitation, is_oneOnOne, publishAt, currentTime)
+  const courseDetail = new CourseDetail(req)
+  await courseDetail.create(req.studio.id)
   req.flash('successMessage', '課程上架成功！')
-  return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
+  return res.redirect(`/${req.studio.subdomain}/admin/courseDetail`)
 }
 
 const renderEditCourseDetailPage = async (req, res) => {
-  const studio = req.user.studio
-  const courseDetailId = req.params.courseDetailId
-  const input = await StudioAdmin.getDedicatedCourseDetail(studio.id, courseDetailId)
-
+  const courseDetail = new CourseDetail(req)
+  const input = await courseDetail.getOne(req.studio.id)
   if (!input) {
     req.flash('errorMessage', '課程編號有誤')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
+    return res.redirect(`/${req.studio.subdomain}/admin/courseDetail`)
   }
-
-  input.publish_at = moment(input.publish_at).format('YYYY-MM-DD[T]HH:mm:ss')
   res.render('admin_studio/editCourseDetail', {
     studio: req.studio,
     input
@@ -239,58 +182,14 @@ const renderEditCourseDetailPage = async (req, res) => {
 }
 
 const updateCourseDetail = async (req, res) => {
-  const studio = req.user.studio
-  const courseDetailId = req.params.courseDetailId
-
-  // 檢查前端資料，若不足則擋下
-  if (!requirementOfCourseDetail.every(e => req.body[e] !== '')) {
-    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
-  }
-
-  const { course_id, date, start_time, duration, limitation, is_online, online_limitation, is_oneOnOne, publish_at } = req.body
-
-  // 檢查 course_id 是否隸屬該教室
-  const courseFromDb = await StudioAdmin.getCourseById(course_id, studio.id)
-  if (!courseFromDb) {
-    req.flash('errorMessage', '沒有權限新增此課程')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
-  }
-
-  // 檢查 duration, limitation, is_online, online_limitation 是否為數字
-  if (isNaN(+duration) || +duration <= 0 || isNaN(+limitation) || isNaN(+is_online) || isNaN(+online_limitation)) {
-    req.flash('errorMessage', '請檢查「時長」、「人數上限」、「開放線上」欄位')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
-  }
-
-  // 檢查 is_online, online_limitation, is_oneOnOne 狀態是否相符
-  if (+is_online === 0 && +online_limitation > 0) {
-    req.flash('errorMessage', '不開放線上課程時，「線上課程人數上限」須為 0')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
-  }
-  if (+is_online === 1 && +online_limitation <= 0) {
-    req.flash('errorMessage', '開放線上課程時，「線上課程人數上限」至少需 1 人')
-    return res.redirect(`/${studio.subdomain}/admin/courseDetail/${courseDetailId}`)
-  }
-  if (+is_oneOnOne === 1) {
-    if (+online_limitation !== 1 || +limitation !== 0) {
-      req.flash('createCourseDetailInput', req.body)
-      req.flash('errorMessage', '建立「一對一」課程時，實體人數須為 0、線上人數須為 1')
-      return res.redirect(`/${studio.subdomain}/admin/courseDetail/create`)
-    }
-  }
-
-  // 寫入 db
-  const publishAt = moment(publish_at).format('YYYY-MM-DD HH:mm:ss')
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.updateCourseDetail(courseDetailId, date, start_time, duration, is_online, limitation, online_limitation, is_oneOnOne, publishAt, currentTime)
+  const courseDetail = new CourseDetail(req)
+  await courseDetail.update()
   req.flash('successMessage', '課程更新成功！')
-  return res.redirect(`/${studio.subdomain}/admin/courseDetail`)
+  return res.redirect(`/${req.studio.subdomain}/admin/courseDetail`)
 }
 
 const renderAllCourseDetails = async (req, res) => {
-  const courseDetailList = await StudioAdmin.getStudioCourseDetail(req.studio.id)
-
+  const courseDetailList = await CourseDetail.getAll(req.studio.id)
   res.render('admin_studio/courseDetail', {
     studio: req.studio,
     courseDetailList

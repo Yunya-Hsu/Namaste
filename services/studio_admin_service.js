@@ -70,7 +70,49 @@ class Course {
   }
 }
 
+class CourseDetail {
+  constructor (req) {
+    this.courseId = req.body.course_id
+    this.date = req.body.date
+    this.startTime = req.body.start_time
+    this.duration = req.body.duration
+    this.limitation = req.body.limitation
+    this.isOnline = req.body.is_online
+    this.onlineLimitation = req.body.online_limitation
+    this.isOneOnOne = req.body.is_oneOnOne
+    this.publishAt = inputTimeReformat(req.body.publish_at)
+    this.currentTime = currentTime()
+    this.CourseDetailId = req.params.courseDetailId
+  }
+
+  static async getCourseList(studioId) {
+    return await AdminStudioModel.getStudioCourses(studioId)
+  }
+
+  async create() {
+    await AdminStudioModel.createCourseDetail(this.courseId, this.date, this.startTime, this.duration, this.isOnline, this.limitation, this.onlineLimitation, this.isOneOnOne, this.publishAt, this.currentTime)
+  }
+
+  async getOne(studioId) {
+    const result = await AdminStudioModel.getDedicatedCourseDetail(studioId, this.CourseDetailId)
+    if (!result) {
+      return
+    }
+    result.publish_at = timeFormatToHTML(result.publish_at)
+    return result
+  }
+
+  async update() {
+    await AdminStudioModel.updateCourseDetail(this.CourseDetailId, this.date, this.startTime, this.duration, this.isOnline, this.limitation, this.onlineLimitation, this.isOneOnOne, this.publishAt, this.currentTime)
+  }
+
+  static async getAll(studioId) {
+    return await AdminStudioModel.getStudioCourseDetail(studioId)
+  }
+}
+
 module.exports = {
   PriceRule,
-  Course
+  Course,
+  CourseDetail
 }
