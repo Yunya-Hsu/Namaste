@@ -1,22 +1,8 @@
-/* eslint-disable camelcase */
-const moment = require('moment-timezone')
-
 // models
 const StudioAdmin = require('../models/admin_studio_model')
-const Studio = require('../models/studio_model')
 
-// utils
-const fs = require('fs')
-const util = require('util')
-const unlinkFile = util.promisify(fs.unlink)
-const { uploadFileToS3 } = require('../util/s3')
-
-// services
-const { AdminStudio, PriceRule, Course, CourseDetail, Teacher } = require('../services/studio_admin_service')
-
-
-// basic parameters
-const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_partner_key', 'tappay_id', 'tappay_app_id']
+// class
+const { AdminStudio, PriceRule, Course, CourseDetail, Teacher, StudioInfo } = require('../services/studio_admin_service')
 
 
 
@@ -51,7 +37,6 @@ const createPriceRule = async (req, res) => {
 const renderEditPricePage = async (req, res) => {
   const priceRule = new PriceRule(req)
   const input = await priceRule.getOne(req.studio.id)
-
   if (!input) {
     req.flash('errorMessage', '價格編號有誤')
     return res.redirect(`/${req.studio.subdomain}/admin/price`)
@@ -173,10 +158,6 @@ const renderAllCourseDetails = async (req, res) => {
 }
 
 
-
-
-
-
 const renderCreateTeacherPage = async (req, res) => {
   const input = req.flash('createTeacherInput')[0]
   res.render('admin_studio/createTeacher', {
@@ -188,7 +169,6 @@ const renderCreateTeacherPage = async (req, res) => {
 const createTeacher = async (req, res) => {
   const teacher = new Teacher(req)
   await teacher.create(req.studio.id)
-
   req.flash('successMessage', `${teacher.name} 老師建立成功`)
   return res.redirect(`/${req.studio.subdomain}/admin/teacher/create`)
 }
@@ -210,7 +190,6 @@ const renderEditTeacherPage = async (req, res) => {
 const updateTeacher = async (req, res) => {
   const teacher = new Teacher(req)
   await teacher.update()
-
   req.flash('successMessage', `${teacher.name} 老師更新成功`)
   return res.redirect(`/${req.studio.subdomain}/admin/teacher`)
 }
@@ -224,17 +203,12 @@ const renderAllTeachers = async (req, res) => {
 }
 
 
-
-
-
-
 const renderEditAboutPage = async (req, res) => {
-  const studio = req.user.studio
-  const input = await Studio.getStudioForAbout(studio.subdomain)
-
+  const studioInfo = new StudioInfo(req)
+  const input = await studioInfo.getInfo()
   if (!input) {
     req.flash('errorMessage', '系統錯誤，請洽管理員')
-    return res.redirect(`/${studio.subdomain}/admin`)
+    return res.redirect(`/${req.studio.subdomain}/admin`)
   }
 
   res.render('admin_studio/editAbout', {
@@ -244,46 +218,11 @@ const renderEditAboutPage = async (req, res) => {
 }
 
 const updateAbout = async (req, res) => {
-  const studio = req.user.studio
-
-  // 檢查前端資料，若不足則擋下
-  if (!requirementOfUpdateStudio.every(e => req.body[e] !== '')) {
-    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
-    return res.redirect(`/${studio.subdomain}/admin/about`)
-  }
-
-  // 整理資料
-  const originStudioInfo = await Studio.getStudioForAbout(studio.subdomain)
-  const { name, introduction_title, introduction_detail, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id } = req.body
-
-  let logo = req.files.logo ? req.files.logo[0].path : originStudioInfo.logo
-  let introduction_photo = req.files.introduction_photo ? req.files.introduction_photo[0].path : originStudioInfo.introduction_photo
-  if (req.files.logo) { // 如果 logo 有更新
-    logo = await uploadFileToS3(req.files.logo[0].path)
-    logo = logo.key
-    await unlinkFile(req.files.logo[0].path)
-  }
-  if (req.files.introduction_photo) { // 如果 logo 有更新
-    introduction_photo = await uploadFileToS3(req.files.introduction_photo[0].path)
-    introduction_photo = introduction_photo.key
-    await unlinkFile(req.files.introduction_photo[0].path)
-  }
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-
-  await StudioAdmin.updateStudio(studio.id, name, logo, introduction_title, introduction_detail, introduction_photo, address, address_description, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id, currentTime)
+  const studioInfo = new StudioInfo(req)
+  await studioInfo.update(req.studio.id)
   req.flash('successMessage', '教室資訊已更新')
-  return res.redirect(`/${studio.subdomain}/admin/about`)
+  return res.redirect(`/${req.studio.subdomain}/admin/about`)
 }
-
-
-
-
-
-
-
-
-
-
 
 
 const renderLivePage = async (req, res, next) => {

@@ -253,8 +253,11 @@ module.exports = {
   renderCoursePage,
   renderAboutPage,
   renderCheckoutPage,
+
   checkout,
+  
   registerCourse,
   deregisterCourse,
+
   renderLivePage
 }

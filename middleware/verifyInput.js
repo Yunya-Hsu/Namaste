@@ -10,26 +10,21 @@ const passwordRule = {
   minSymbols: 0
 }
 
-// time utils
-const { isISO8601, isDate, isTime } = require('../util/time')
-
 // checklist
 const requirementOfPriceRule = ['category', 'price', 'point', 'term', 'publish_at']
 const requirementOfCourse = ['title', 'teacher_id', 'user', 'point', 'publish_at']
 const requirementOfCourseDetail = ['date', 'start_time', 'duration', 'limitation', 'is_online', 'online_limitation', 'publish_at']
+const requirementOfUpdateStudio = ['name', 'address', 'tappay_app_key', 'tappay_partner_key', 'tappay_id', 'tappay_app_id']
+
+// utils
+const { isISO8601, isDate, isTime } = require('../util/time')
+const { allBeNumber, allBeBoolean } = require('../util/util')
+
 
 // models
 const UserModel = require('../models/user_model')
 const AdminStudioModel = require('../models/admin_studio_model')
-
-// functions
-const allBeNumber = (array) => {
-  return array.some(item => isNaN(item))
-}
-
-const allBeBoolean = (array) => {
-  return array.every(item => Number(item) === 1 || Number(item) === 0)
-}
+const AdminRootModel = require('../models/admin_root_model')
 
 
 
@@ -62,7 +57,7 @@ const verifyRegisterData = async (req, res, next) => {
   next()
 }
 
-const verifyPriceRule = async (req, res, next) => {
+const verifyPriceRule = (req, res, next) => {
   const { category, price, point, remark, term, publish_at } = req.body
 
   if (!requirementOfPriceRule.every(e => req.body[e] !== '')) {
@@ -205,11 +200,80 @@ const verifyTeacher = (req, res, next) => {
   next()
 }
 
+const verifyStudioInfo = (req, res, next) => {
+  const { name, introduction_title, address, phone, tappay_app_key, tappay_partner_key, tappay_id, tappay_app_id } = req.body
+
+  if (!requirementOfUpdateStudio.every(e => req.body[e] !== '')) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
+    return res.redirect('back')
+  }
+  if (name.length > 30 || introduction_title.length > 50 || address.length > 30 || phone.length > 30) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', '「教室名稱、地址、電話」限填 30 字、「簡介」限填 50 字')
+    return res.redirect('back')
+  }
+  if (tappay_app_key.length > 70) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', '請檢查「TapPay App Key」')
+    return res.redirect('back')
+  }
+  if (tappay_partner_key.length > 70) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', '請檢查「TapPay Partner Key」')
+    return res.redirect('back')
+  }
+  if (tappay_id.length > 30) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', '請檢查「TapPay ID」')
+    return res.redirect('back')
+  }
+  if (tappay_app_id.length > 8) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', '請檢查「TapPay App ID」')
+    return res.redirect('back')
+  }
+
+  next()
+}
+
+const verifyStudioForCreate = async (req, res, next) => {
+  const { name, subdomain, manager} = req.body
+
+  if (!req.files.logo) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', '缺少「Logo 圖檔」')
+    return res.redirect('back')
+  }
+  if (!name || !subdomain) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', '缺少「教室名稱」或「Subdomain」')
+    return res.redirect('back')
+  }
+  const checkSubdomainResult = await AdminRootModel.checkSubdomain(subdomain)
+  if (checkSubdomainResult.length > 0) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', '「subdomain」重複')
+    return res.redirect('back')
+  }
+  
+  const managerAccount = await UserModel.findUserByEmail(manager)
+  if (!managerAccount) {
+    req.flash('createStudioInput', req.body)
+    req.flash('errorMessage', `${manager} 不存在`)
+    return res.redirect('back')
+  }
+  req.body.managerId = managerAccount.id
+
+  next()
+}
 
 module.exports = {
   verifyRegisterData,
   verifyPriceRule,
   verifyCourse,
   verifyCourseDetail,
-  verifyTeacher
+  verifyTeacher,
+  verifyStudioInfo,
+  verifyStudioForCreate
 }

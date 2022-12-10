@@ -1,6 +1,7 @@
 // models
 const StudioModel = require('../models/studio_model')
 const AdminStudioModel = require('../models/admin_studio_model')
+const AuthModel = require('../models/auth_model')
 
 const TimeService = require('../util/time')
 
@@ -80,7 +81,6 @@ class StudioDetail {
   }
 }
 
-
 class CourseInWeek {
   constructor (req) {
     this.theYear = req.query.week ? req.query.week.split('-')[0] : TimeService.currentYear()
@@ -113,6 +113,20 @@ class CourseInWeek {
   }
 }
 
+class UserPermission {
+  constructor (userId, studioId) {
+    this.userId = userId
+    this.studioId = studioId
+  }
+
+  async authorize(permissionId) {
+    const roleList = await AuthModel.getUserRoles(this.userId)
+    const verifyResult = roleList.some(element => {
+      return element.studio_id === this.studioId && element.permission_id === permissionId
+    })
+    return verifyResult
+  }
+}
 
 const organizedCourseDetailList = (theYear, theWeek) => {
   const theMonday = moment().year(theYear).day('Monday').isoWeek(theWeek).format('YYYY-MM-DD')
@@ -140,4 +154,5 @@ const organizedCourseDetailList = (theYear, theWeek) => {
 module.exports = {
   StudioDetail,
   CourseInWeek,
+  UserPermission,
 }

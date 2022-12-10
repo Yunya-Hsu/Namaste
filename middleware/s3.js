@@ -1,22 +1,18 @@
 // utils
-const fs = require('fs')
-const util = require('util')
-const unlinkFile = util.promisify(fs.unlink)
-const uploadFileToS3 = require('../util/s3')
+const uploadS3 = require('../util/s3')
 
 
-
-const avatarToS3 = async (req, res, next) => {
-  if (!req.files.avatar) {
-    return next()
+const photoToS3 = async (req, res, next) => {
+  if (req.files.logo) {
+    req.body.logo = await uploadS3(req.files.logo[0].path)
   }
-
-  const avatarOnS3 = await uploadFileToS3(req.files.avatar[0].path)
-  req.body.avatar = avatarOnS3.key
-  await unlinkFile(req.files.avatar[0].path)
+  if (req.files.introduction_photo) {
+    req.body.introduction_photo = await uploadS3(req.files.introduction_photo[0].path)
+  }
+  if (req.files.avatar) {
+    req.body.avatar = await uploadS3(req.files.avatar[0].path)
+  }
   next()
 }
 
-module.exports = {
-  avatarToS3
-}
+module.exports = photoToS3

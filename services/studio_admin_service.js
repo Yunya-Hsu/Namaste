@@ -1,4 +1,5 @@
 // models
+const AdminRootModel = require('../models/admin_root_model')
 const AdminStudioModel = require('../models/admin_studio_model')
 const StudioModel = require('../models/studio_model')
 
@@ -186,10 +187,54 @@ class Teacher {
   }
 }
 
+class StudioInfo {
+  constructor (req) {
+    this.name = req.body.name
+    this.logo = req.body.logo
+    this.introduction_title = req.body.introduction_title
+    this.introduction_detail = req.body.introduction_detail
+    this.introduction_photo = req.body.introduction_photo || ''
+    this.subdomain = req.body.subdomain || req.studio.subdomain
+    this.manager = req.body.managerId
+    this.address = req.body.address
+    this.address_description = req.body.address_description
+    this.phone = req.body.phone
+    this.tappay_app_key = req.body.tappay_app_key
+    this.tappay_partner_key = req.body.tappay_partner_key
+    this.tappay_id = req.body.tappay_id
+    this.tappay_app_id = req.body.tappay_app_id
+    this.currentTime = currentTime()
+  }
+
+  async getInfo() {
+    return await StudioModel.getStudioForAbout(this.subdomain)
+  }
+
+  async updateLogoAndIntroPhoto() {
+    const originStudioInfo = await this.getInfo()
+    this.logo = this.logo || originStudioInfo.logo
+    this.introduction_photo = this.introduction_photo || originStudioInfo.introduction_photo
+  }
+
+  async create() {
+    console.log(this);
+    await AdminRootModel.createStudio(this.name, this.introduction_title, this.introduction_detail, this.subdomain, this.manager, this.address, this.address_description, this.phone, this.tappay_app_key, this.tappay_partner_key, this.tappay_id, this.tappay_app_id, this.logo, this.introduction_photo, this.currentTime, this.currentTime)
+  }
+
+
+  async update(studioId) {
+    await this.updateLogoAndIntroPhoto()
+    await AdminStudioModel.updateStudio(studioId, this.name, this.logo, this.introduction_title, this.introduction_detail, this.introduction_photo, this.address, this.address_description, this.phone, this.tappay_app_key, this.tappay_partner_key, this.tappay_id, this.tappay_app_id, this.currentTime)
+  }
+
+  
+}
+
 module.exports = {
   AdminStudio,
   PriceRule,
   Course,
   CourseDetail,
-  Teacher
+  Teacher,
+  StudioInfo
 }
