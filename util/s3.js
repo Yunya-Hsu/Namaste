@@ -25,6 +25,4 @@ const uploadFileToS3 = file => {
 }
 
 
-module.exports = {
-  uploadFileToS3
-}
+module.exports = uploadFileToS3

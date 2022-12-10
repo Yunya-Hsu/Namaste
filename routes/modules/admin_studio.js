@@ -6,10 +6,13 @@ const AdminStudio = require('../../controllers/admin_studio_controller')
 // permission
 const { PERMISSION } = require('../../models/auth_model')
 
-// middleware & utils
+// middleware
 const { upload, multerError } = require('../../middleware/multer')
 const { authorization } = require('../../middleware/auth')
-const { verifyPriceRule, verifyCourse, verifyCourseDetail } = require('../../middleware/verifyInput')
+const { verifyPriceRule, verifyCourse, verifyCourseDetail, verifyTeacher } = require('../../middleware/verifyInput')
+const { avatarToS3 } = require('../../middleware/s3')
+
+// utils
 const { wrapAsync } = require('../../util/util')
 
 
@@ -36,6 +39,8 @@ router.post('/teacher/create',
   authorization(PERMISSION.CREATE_STUDIO_TEACHER),
   upload.fields([{ name: 'avatar', maxCount: 1 }]),
   multerError,
+  verifyTeacher,
+  wrapAsync(avatarToS3),
   wrapAsync(AdminStudio.createTeacher)
 )
 router.get('/teacher/:teacherId', authorization(PERMISSION.UPDATE_STUDIO_TEACHER), wrapAsync(AdminStudio.renderEditTeacherPage))
@@ -43,6 +48,8 @@ router.put('/teacher/:teacherId',
   authorization(PERMISSION.UPDATE_STUDIO_TEACHER),
   upload.fields([{ name: 'avatar', maxCount: 1 }]),
   multerError,
+  verifyTeacher,
+  wrapAsync(avatarToS3),
   wrapAsync(AdminStudio.updateTeacher)
 )
 router.get('/teacher', authorization(PERMISSION.UPDATE_STUDIO_TEACHER), wrapAsync(AdminStudio.renderAllTeachers))

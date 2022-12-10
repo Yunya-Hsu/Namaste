@@ -1,5 +1,6 @@
 // models
 const AdminStudioModel = require('../models/admin_studio_model')
+const StudioModel = require('../models/studio_model')
 
 const { inputTimeReformat, timeFormatToHTML, currentTime } = require('../util/time')
 
@@ -111,8 +112,45 @@ class CourseDetail {
   }
 }
 
+class Teacher {
+  constructor (req) {
+    this.name = req.body.name
+    this.avatar = req.body.avatar
+    this.major = req.body.major
+    this.introduction = req.body.introduction
+    this.currentTime = currentTime()
+    this.teacherId = req.params.teacherId
+  }
+
+  async create(studioId) {
+    await AdminStudioModel.createTeacher(this.name, this.avatar, this.major, this.introduction, studioId, this.currentTime)
+  }
+
+  async getOne(studioId) {
+    return await AdminStudioModel.getDedicatedTeacher(studioId, this.teacherId)
+  }
+
+  async update() {
+    if (this.avatar) {
+      return await AdminStudioModel.updateTeacherWithAvatar(this.teacherId, this.name, this.avatar, this.major, this.introduction, this.currentTime)
+    }
+    return await AdminStudioModel.updateTeacherWithoutAvatar(this.teacherId, this.name, this.major, this.introduction, this.currentTime)
+  }
+
+  static async getAll(studioId) {
+    const teacherList = await StudioModel.getTeachers(studioId)
+    if (teacherList) {
+      for (const teacher of teacherList) {
+        teacher.avatar = process.env.AWS_CDN_DOMAIN + teacher.avatar
+      }
+    }
+    return teacherList
+  }
+}
+
 module.exports = {
   PriceRule,
   Course,
-  CourseDetail
+  CourseDetail,
+  Teacher
 }

@@ -12,7 +12,7 @@ const unlinkFile = util.promisify(fs.unlink)
 const { uploadFileToS3 } = require('../util/s3')
 
 // services
-const { PriceRule, Course, CourseDetail } = require('../services/studio_admin_service')
+const { PriceRule, Course, CourseDetail, Teacher } = require('../services/studio_admin_service')
 
 
 // basic parameters
@@ -95,11 +95,6 @@ const renderAllPriceRule = async (req, res) => {
 }
 
 
-
-
-
-
-
 const renderCreateCoursePage = async (req, res) => {
   const input = req.flash('createCourseInput')[0]
 
@@ -146,10 +141,6 @@ const renderAllCourses = async (req, res) => {
     courseList
   })
 }
-
-
-
-
 
 
 const renderCreateCourseDetailPage = async (req, res) => {
@@ -203,7 +194,6 @@ const renderAllCourseDetails = async (req, res) => {
 
 const renderCreateTeacherPage = async (req, res) => {
   const input = req.flash('createTeacherInput')[0]
-
   res.render('admin_studio/createTeacher', {
     studio: req.studio,
     input
@@ -211,33 +201,16 @@ const renderCreateTeacherPage = async (req, res) => {
 }
 
 const createTeacher = async (req, res) => {
-  const studio = req.user.studio
-  const { name, major, introduction } = req.body
+  const teacher = new Teacher(req)
+  await teacher.create(req.studio.id)
 
-  // 檢查前端資料，若不足則擋下
-  if (!name || !major) {
-    req.flash('createTeacherInput', req.body)
-    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
-    return res.redirect(`/${studio.subdomain}/admin/teacher/create`)
-  }
-
-  let avatar = null
-  if (req.files.avatar) {
-    avatar = await uploadFileToS3(req.files.avatar[0].path)
-    avatar = avatar.key
-    await unlinkFile(req.files.avatar[0].path)
-  }
-
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  await StudioAdmin.createTeacher(name, avatar, major, introduction, studio.id, currentTime)
-  req.flash('successMessage', `${name} 老師建立成功`)
-  return res.redirect(`/${studio.subdomain}/admin/teacher/create`)
+  req.flash('successMessage', `${teacher.name} 老師建立成功`)
+  return res.redirect(`/${req.studio.subdomain}/admin/teacher/create`)
 }
 
 const renderEditTeacherPage = async (req, res) => {
-  const teacherId = req.params.teacherId
-  const input = await StudioAdmin.getDedicatedTeacher(req.studio.id, teacherId)
-
+  const teacher = new Teacher(req)
+  const input = await teacher.getOne(req.studio.id)
   if (!input) {
     req.flash('errorMessage', '老師編號有誤')
     return res.redirect(`/${req.studio.subdomain}/admin/teacher`)
@@ -250,37 +223,15 @@ const renderEditTeacherPage = async (req, res) => {
 }
 
 const updateTeacher = async (req, res) => {
-  const studio = req.user.studio
-  const teacherId = req.params.teacherId
-  const { name, major, introduction } = req.body
+  const teacher = new Teacher(req)
+  await teacher.update()
 
-  // 檢查前端資料，若不足則擋下
-  if (!name || !major) {
-    req.flash('errorMessage', '缺少必須資訊，請重新檢查')
-    return res.redirect(`/${studio.subdomain}/admin/teacher/${teacherId}`)
-  }
-
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  if (req.files.avatar) { // 如果頭像有更新
-    const avatar = req.files.avatar[0].path
-    const avatarInS3 = await uploadFileToS3(avatar)
-    await unlinkFile(avatar) // 把檔案從 images 資料夾刪除
-    await StudioAdmin.updateTeacherWithAvatar(teacherId, name, avatarInS3.key, major, introduction, currentTime)
-  } else { // 如果頭像沒有更新
-    await StudioAdmin.updateTeacherWithoutAvatar(teacherId, name, major, introduction, currentTime)
-  }
-
-  req.flash('successMessage', `${name} 老師更新成功`)
-  return res.redirect(`/${studio.subdomain}/admin/teacher`)
+  req.flash('successMessage', `${teacher.name} 老師更新成功`)
+  return res.redirect(`/${req.studio.subdomain}/admin/teacher`)
 }
 
 const renderAllTeachers = async (req, res) => {
-  const studio = req.user.studio
-  const teacherList = await Studio.getTeachers(studio.id)
-  for (const teacher of teacherList) {
-    teacher.avatar = process.env.AWS_CDN_DOMAIN + teacher.avatar
-  }
-
+  const teacherList = await Teacher.getAll(req.studio.id)
   res.render('admin_studio/teacher', {
     studio: req.studio,
     teacherList

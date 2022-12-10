@@ -63,7 +63,7 @@ const verifyRegisterData = async (req, res, next) => {
 }
 
 const verifyPriceRule = async (req, res, next) => {
-  let { category, price, point, remark, term, publish_at } = req.body
+  const { category, price, point, remark, term, publish_at } = req.body
 
   if (!requirementOfPriceRule.every(e => req.body[e] !== '')) {
     req.flash('createPriceRoleInput', req.body)
@@ -130,7 +130,7 @@ const verifyCourse = async (req, res, next) => {
 }
 
 const verifyCourseDetail = async (req, res, next) => {
-  let { course_id, date, start_time, duration, limitation, is_online, online_limitation, is_oneOnOne, publish_at } = req.body
+  const { course_id, date, start_time, duration, limitation, is_online, online_limitation, is_oneOnOne, publish_at } = req.body
 
   if (!requirementOfCourseDetail.every(e => req.body[e] !== '')) {
     req.flash('createCourseDetailInput', req.body)
@@ -187,10 +187,29 @@ const verifyCourseDetail = async (req, res, next) => {
   next()
 }
 
+const verifyTeacher = (req, res, next) => {
+  const { name, major } = req.body
+
+  if (!name || !major) {
+    req.flash('createTeacherInput', req.body)
+    req.flash('errorMessage', '缺少「老師名稱」或「專業」')
+    return res.redirect('back')
+  }
+
+  if (name.length > 15 || major.length > 30) {
+    req.flash('createTeacherInput', req.body)
+    req.flash('errorMessage', '「老師名稱」限填 15 字、「專業」限填 30 字')
+    return res.redirect('back')
+  }
+
+  next()
+}
+
 
 module.exports = {
   verifyRegisterData,
   verifyPriceRule,
   verifyCourse,
-  verifyCourseDetail
+  verifyCourseDetail,
+  verifyTeacher
 }
