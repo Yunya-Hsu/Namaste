@@ -23,7 +23,7 @@ class StudioDetail {
     this.address_description = studio.address_description
     this.phone = studio.phone
     this.tappay_app_key = studio.tappay_app_key
-    this. tappay_partner_key = studio.tappay_partner_key
+    this.tappay_partner_key = studio.tappay_partner_key
     this.tappay_id = studio.tappay_id
     this.tappay_app_id = studio.tappay_app_id
   }
