@@ -1,7 +1,5 @@
 name: "Namaste project CI/CD"
 
-
-
 on: 
   pull_request:
     types: [opened, synchronize, closed]
@@ -9,7 +7,6 @@ on:
       - master
       - develop
     resolve: merged
-
 
 
 jobs: 
