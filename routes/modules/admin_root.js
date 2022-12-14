@@ -5,9 +5,13 @@ const Admin = require('../../controllers/admin_root_controller')
 
 const { PERMISSION } = require('../../models/auth_model')
 
-// middleware & utils
-const { upload, multerError } = require('../../middleware/multer')
+// middleware
 const auth = require('../../middleware/auth')
+const { upload, multerError } = require('../../middleware/multer')
+const photoToS3 = require('../../middleware/s3')
+const { verifyStudioInfo, verifyStudioForCreate } = require('../../middleware/verifyInput')
+
+// utils
 const { wrapAsync } = require('../../util/util')
 
 // routers
@@ -24,6 +28,9 @@ router.post('/studio',
     { name: 'introduction_photo', maxCount: 1 }
   ]),
   multerError,
+  verifyStudioInfo,
+  wrapAsync(verifyStudioForCreate),
+  wrapAsync(photoToS3),
   wrapAsync(Admin.createStudio)
 )
 

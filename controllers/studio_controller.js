@@ -6,154 +6,56 @@ const axios = require('axios')
 const StudioAdmin = require('../models/admin_studio_model')
 const Studio = require('../models/studio_model')
 
+// services 
+const { CourseInWeek } = require('../services/studio_service')
+
 const renderHomePage = async (req, res, next) => {
-  // 確認是否有該教室
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioForHomePage(studioSubdomain)
-  if (!studio) {
-    return next()
-  }
-
-  // 整理資料
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-  studio.introduction_photo = process.env.AWS_CDN_DOMAIN + studio.introduction_photo
-
-  return res.render('studio/home', { studio })
+  await req.studio.getDataForHomePage()
+  return res.render('studio/home', { studio: req.studio })
 }
 
-const renderPricePage = async (req, res, next) => {
-  // 確認是否有該教室
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioBySubdomain(studioSubdomain)
-  if (!studio) {
-    return next()
-  }
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-
-  // 取出該教室的價格
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  const priceRules = await Studio.getPriceRules(studio.id, currentTime)
-  if (priceRules.length <= 0) {
-    return res.render('studio/price', { studio })
-  }
-
-  res.render('studio/price', { studio, priceRules })
+const renderPricePage = async (req, res, next) => {  
+  const priceRules = await req.studio.getPriceRules()
+  res.render('studio/price', { studio: req.studio, priceRules })
 }
 
 const renderCoursePage = async (req, res, next) => {
-  // 確認是否有該教室
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioBySubdomain(studioSubdomain)
-  if (!studio) {
+  const courseInWeek = new CourseInWeek(req)
+  if (courseInWeek.theWeek > 53) {
     return next()
   }
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-
-
-  // 算出所需的區間
-  const theYear = req.query.week ? req.query.week.split('-')[0] : moment().tz('Asia/Taipei').format('YYYY')
-  const theWeek = req.query.week ? Number(req.query.week.split('-')[1].replace('W', '')) : moment().tz('Asia/Taipei').isoWeek()
-  if (theWeek > 53) {
-    return next()
-  }
-  const theMonday = moment().year(theYear).day('Monday').isoWeek(theWeek).format('YYYY-MM-DD')
-  const theSunday = moment(theMonday, 'YYYY-MM-DD').add(6, 'days').format('YYYY-MM-DD')
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-
-  const organizedCourseDetailList = {}
-  for (let i = 0; i < 7; i++) {
-    // 星期幾
-    const theDayOfWeek = moment(theMonday).add(i, 'days').format('dddd')
-    const theDate = moment().year(theYear).day('Monday').isoWeek(theWeek).add(i, 'days').format('YYYY-MM-DD')
-    organizedCourseDetailList[theDayOfWeek] = {
-      date: theDate,
-      morning: [],
-      afternoon: [],
-      evening: []
-    }
-  }
-
-
-  // 依照區間取出該教室的 course detail 清單
-  const courseDetailList = await Studio.getCourseDetails(studio.id, theMonday, theSunday, currentTime)
-
-
-  // 分類
-  const noontime = moment('12:00', 'HH:mm')
-  const dinnerTime = moment('18:00', 'HH:mm')
-  for (const course of courseDetailList) {
-    const theDayOfWeek = moment(course.date).format('dddd')
-    const end_time = moment(course.start_time, 'HH:mm:ss').add(course.duration, 'minutes').format('HH:mm')
-    course.end_time = end_time
-    course.start_time = moment(course.start_time, 'HH:mm:ss').format('HH:mm')
-
-    if (moment(course.start_time, 'HH:mm').isBefore(noontime)) {
-      organizedCourseDetailList[theDayOfWeek].morning.push(course)
-    } else if (moment(course.start_time, 'HH:mm').isBefore(dinnerTime)) {
-      organizedCourseDetailList[theDayOfWeek].afternoon.push(course)
-    } else {
-      organizedCourseDetailList[theDayOfWeek].evening.push(course)
-    }
-  }
-
+  await courseInWeek.getCourseDetails(req.studio.id)
   res.render('studio/course', {
-    theYear,
-    theWeek: theWeek.toString().length < 2 ? theWeek.toString().padStart(2, '0') : theWeek,
-    studio,
-    organizedCourseDetailList
+    theYear: courseInWeek.theYear,
+    theWeek: courseInWeek.theWeekForRender,
+    studio: req.studio,
+    organizedCourseDetailList: courseInWeek.organizedCourseDetailList
   })
 }
 
 const renderAboutPage = async (req, res, next) => {
-  // 確認是否有該教室
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioForAbout(studioSubdomain)
-  if (!studio) {
-    return next()
-  }
-
-  const teacherList = await Studio.getTeachers(studio.id)
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-  for (const teacher of teacherList) {
-    if (teacher.avatar) {
-      teacher.avatar = process.env.AWS_CDN_DOMAIN + teacher.avatar
-    }
-  }
-
-  res.render('studio/about', {
-    studio,
-    teacherList
-  })
+  await req.studio.getStudioForAbout()
+  const teacherList = await req.studio.getTeachers()
+  res.render('studio/about', { studio: req.studio, teacherList })
 }
 
 const renderCheckoutPage = async (req, res, next) => {
-  // search studio from DB
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioForCheckout(studioSubdomain)
-  if (!studio) {
-    return next()
-  }
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-
-  // get the price rule
-  const priceRuleId = req.query.priceRuleId
-  const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  const priceRule = await Studio.getDedicatedPriceRule(priceRuleId, currentTime, studio.id)
+  await req.studio.getStudioForCheckout()
+  const priceRule = await req.studio.getDedicatedPriceRule(req.query.priceRuleId)
   if (!priceRule) {
-    req.flash('errorMessage', '無此課程')
+    req.flash('errorMessage', '該教室無此價格')
     return res.redirect('back')
   }
-  priceRule.expireDate = moment().tz('Asia/Taipei').add(priceRule.term, 'days').format('YYYY-MM-DD')
   const TappayServerType = process.env.TAPPAY_SERVER_TYPE
 
   res.render('studio/checkout', {
-    studio,
+    studio: req.studio,
     priceRule,
     TappayServerType
   })
 }
 
-const checkout = async (req, res) => {
+const checkout = async (req, res, next) => {
   // 判斷 prime & price rule id 是否齊全
   const { prime, priceRuleId, cardholder } = req.body
   if (!prime || !priceRuleId || !cardholder.phone_number || !cardholder.name || !cardholder.email) {
@@ -163,9 +65,8 @@ const checkout = async (req, res) => {
   }
 
   // 撈出訂單資料 & studio tappay 資料
-  const { studioSubdomain } = req.params
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  const studio = await Studio.getStudioForCheckout(studioSubdomain)
+  const studio = await Studio.getStudioForCheckout(req.studio.subdomain)
   const priceRule = await Studio.getDedicatedPriceRule(priceRuleId, currentTime, studio.id)
   if (!priceRule || !studio) {
     return res.status(400).json({
@@ -200,8 +101,8 @@ const checkout = async (req, res) => {
 
   // 若 tapPayResponse status 不為 0，傳送 error message
   if (tapPayResponse.data.status !== 0) {
-    console.log(`${newOrderId} has TapPay error: `)
-    console.log(tapPayResponse)
+    console.error(`${newOrderId} has TapPay error: `)
+    console.error(tapPayResponse)
     return res.status(400).json({
       error: 'TapPay prime error',
       data: { number: newOrderId }
@@ -316,65 +217,26 @@ const deregisterCourse = async (req, res, next) => {
 
 
 const renderLivePage = async (req, res, next) => {
-  // search studio from DB
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioForCheckout(studioSubdomain)
-  if (!studio) {
-    return next()
+  const livestreamPage = {
+    live: 'studio/livestream',
+    oneOnOne: 'studio/oneOnOne'
   }
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-
+  const { livestreamType } = req.params
   const courseDetailId = req.query.courseDetailId
   const userId = req.user.id
-  // 撈出課程資料（確認該堂課是不是該教室的）
-  const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
+
+  const courseDetail = await req.studio.getCourseDetail(courseDetailId)
   if (!courseDetail) {
     return next()
   }
-
-
-  // 檢查登入者有沒有註冊此課程
-  const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, studioSubdomain)
+  const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, req.studio.subdomain)
   if (!verifyRegistration) {
     req.flash('errorMessage', '未註冊此課程')
     return res.redirect('/')
   }
 
-  res.render('studio/livestream', {
-    studio,
-    courseDetailId,
-    userId,
-    courseName: verifyRegistration.course_title
-  })
-}
-
-const renderOneOnOnePage = async (req, res, next) => {
-  // search studio from DB
-  const { studioSubdomain } = req.params
-  const studio = await Studio.getStudioForCheckout(studioSubdomain)
-  if (!studio) {
-    return next()
-  }
-  studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-
-  const courseDetailId = req.query.courseDetailId
-  const userId = req.user.id
-  // 撈出課程資料（確認該堂課是不是該教室的）
-  const courseDetail = await StudioAdmin.getCourseDetail(studioSubdomain, courseDetailId)
-  if (!courseDetail) {
-    return next()
-  }
-
-
-  // 檢查登入者有沒有註冊此課程
-  const verifyRegistration = await Studio.verifyRegistration(userId, courseDetailId, studioSubdomain)
-  if (!verifyRegistration) {
-    req.flash('errorMessage', '未註冊此課程')
-    return res.redirect('/')
-  }
-
-  res.render('studio/oneOnOne', {
-    studio,
+  res.render(livestreamPage[livestreamType], {
+    studio: req.studio,
     courseDetailId,
     userId,
     courseName: verifyRegistration.course_title
@@ -390,9 +252,11 @@ module.exports = {
   renderCoursePage,
   renderAboutPage,
   renderCheckoutPage,
+
   checkout,
+  
   registerCourse,
   deregisterCourse,
-  renderLivePage,
-  renderOneOnOnePage
+
+  renderLivePage
 }

@@ -15,6 +15,12 @@ const mysqlConfig = {
     user: process.env.DB_PROD_USER,
     password: process.env.DB_PROD_PASSWORD,
     database: process.env.DB_PROD_DATABASENAME
+  },
+  test: {
+    host: process.env.DB_TEST_HOST,
+    user: process.env.DB_TEST_USER,
+    password: process.env.DB_TEST_PASSWORD,
+    database: process.env.DB_TEST_DATABASENAME
   }
 }
 

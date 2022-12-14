@@ -147,7 +147,7 @@ const getDedicatedCourseDetail = async courseDetailId => {
 const getUserOrder = async (userId, studioId, currentTime) => {
   try {
     const [userOrder] = await db.execute(
-      'SELECT id, remaining_point FROM orders WHERE user_id = (?) AND studio_id = (?) AND remaining_point > 0 AND expire_date > (?) ORDER BY expire_date',
+      'SELECT id, remaining_point FROM orders WHERE user_id = (?) AND studio_id = (?) AND remaining_point > 0 AND expire_date > (?) AND status = 1 ORDER BY expire_date',
       [userId, studioId, currentTime]
     )
     return userOrder

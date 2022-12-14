@@ -4,6 +4,16 @@ const wrapAsync = fn => {
   }
 }
 
+const allBeNumber = (array) => {
+  return array.some(item => isNaN(item))
+}
+
+const allBeBoolean = (array) => {
+  return array.every(item => Number(item) === 1 || Number(item) === 0)
+}
+
 module.exports = {
-  wrapAsync
+  wrapAsync,
+  allBeNumber,
+  allBeBoolean
 }

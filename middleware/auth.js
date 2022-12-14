@@ -1,5 +1,4 @@
-const Auth = require('../models/auth_model')
-const Studio = require('../models/studio_model')
+const { UserPermission } = require('../services/studio_service')
 
 const authenticated = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -10,26 +9,20 @@ const authenticated = (req, res, next) => {
   next()
 }
 
-
-
 const authorization = permissionId => {
   return async function (req, res, next) {
     try {
-      const { studioSubdomain } = (req.params.studioSubdomain === undefined) ? { studioSubdomain: 'yogaWithLucie' } : req.params // FIXME: root 建立在 studio #1 裡面
-      const studio = await Studio.getStudioBySubdomain(studioSubdomain)
-      const roleList = await Auth.getUserRoles(req.user.id)
-
-      const verifyResult = roleList.some(element => {
-        return element.studio_id === studio.id && element.permission_id === permissionId
-      })
-
+      let userPermission
+      if (req.studio === undefined) {
+        userPermission = new UserPermission(req.user.id, 1)
+      } else {
+        userPermission = new UserPermission(req.user.id, req.studio.id)
+      }
+      const verifyResult = await userPermission.authorize(permissionId)
       if (!verifyResult) {
         req.flash('errorMessage', '無瀏覽權限')
         return res.redirect('/')
       }
-
-      studio.logo = process.env.AWS_CDN_DOMAIN + studio.logo
-      req.user.studio = studio
       next()
     } catch (error) {
       req.flash('errorMessage', '無瀏覽權限')
@@ -37,8 +30,6 @@ const authorization = permissionId => {
     }
   }
 }
-
-
 
 
 
