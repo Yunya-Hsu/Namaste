@@ -65,9 +65,8 @@ const checkout = async (req, res, next) => {
   }
 
   // 撈出訂單資料 & studio tappay 資料
-  const { studioSubdomain } = req.params
   const currentTime = moment().tz('Asia/Taipei').format('YYYY-MM-DD HH:mm:ss')
-  const studio = await Studio.getStudioForCheckout(studioSubdomain)
+  const studio = await Studio.getStudioForCheckout(req.studio.subdomain)
   const priceRule = await Studio.getDedicatedPriceRule(priceRuleId, currentTime, studio.id)
   if (!priceRule || !studio) {
     return res.status(400).json({
@@ -102,8 +101,8 @@ const checkout = async (req, res, next) => {
 
   // 若 tapPayResponse status 不為 0，傳送 error message
   if (tapPayResponse.data.status !== 0) {
-    console.log(`${newOrderId} has TapPay error: `)
-    console.log(tapPayResponse)
+    console.error(`${newOrderId} has TapPay error: `)
+    console.error(tapPayResponse)
     return res.status(400).json({
       error: 'TapPay prime error',
       data: { number: newOrderId }
