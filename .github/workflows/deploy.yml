@@ -46,7 +46,7 @@ jobs:
 
 
   deploy-on-AWS-EC2: 
-    if: ${{ github.event.action }} == 'closed'
+    if: ${{ github.event.pull_request.merged }} == true
     runs-on: ubuntu-latest
     needs: "continuous-integration"
     steps:
