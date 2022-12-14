@@ -5,12 +5,13 @@ name: "Namaste project CI/CD"
 on: 
   pull_request:
     branches: [develop]
-    types: [closed]
+    types: [opened, closed]
 
 
 
 jobs: 
   continuous-integration:
+    if: ${{ github.event.action }} == 'opened'
     runs-on: ubuntu-latest
 
     steps:
@@ -20,9 +21,32 @@ jobs:
       - name: "Install node.js"
         uses: actions/setup-node@v3
 
+      - name: "Install npm"
+        run: npm install
+
+      - name: "Create env file"
+        run: |
+          touch .env
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: "run db migrate for test database & insert data"
+        run: |
+          export NODE_ENV=test
+          npx sequelize db:migrate
+          npx sequelize db:seed:all
+      
+      - name: "run test"
+        run: npm run test
+
+      - name: "clear tables in test database"
+        run: |
+          export NODE_ENV=test
+          cd test
+          node clearTables.js
 
 
   deploy-on-AWS-EC2: 
+    if: ${{ github.event.action }} == 'closed'
     runs-on: ubuntu-latest
     needs: "continuous-integration"
     steps:
@@ -38,4 +62,3 @@ jobs:
             git pull origin develop
             npm install
             pm2 restart "namaste"
-
