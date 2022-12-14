@@ -4,14 +4,16 @@ name: "Namaste project CI/CD"
 
 on: 
   pull_request:
-    branches: [develop]
-    types: [opened, closed]
+    types: [opened, synchronize, closed]
+    branches: 
+      - master
+      - develop
+    resolve: merged
 
 
 
 jobs: 
   continuous-integration:
-    if: ${{ github.event.action }} == 'opened'
     runs-on: ubuntu-latest
 
     steps:
@@ -46,8 +48,8 @@ jobs:
 
 
   deploy-on-AWS-EC2: 
-    if: ${{ github.event.pull_request.merged }} == true
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     needs: "continuous-integration"
     steps:
       - name: "executing remote ssh commands using ssh key"
