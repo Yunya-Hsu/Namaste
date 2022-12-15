@@ -136,7 +136,7 @@ Users are only allowed to access the pages necessary to effectively perform thei
 Use WebRTC (Web Real-Time Communication) to accomplish real time media communications directly between browsers, and utilize WebSocket technology to let browsers exchange SDP and ICE candidate with signal server.  
 With live streaming feature, yoga teachers and students can have online live streaming classes anytime and location is no longer a barrier.
 <p align="center">
-    
+    <img src="/readme/livestream_1.gif" style="width: 800px;" />
     
 </p>
 <br>
@@ -146,6 +146,7 @@ With live streaming feature, yoga teachers and students can have online live str
 Each studio has their own customized website to display dedicated price rules, weekly courses, studio information and teachers.  
 <p align="center">
     <img src="/readme/customized_website_1.gif" style="width: 800px;" /> 
+    <br>
     <img src="/readme/customized_website_2.gif" style="width: 800px;" />
 </p>
 
