@@ -54,7 +54,7 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
 
 ### **User**
 
-    email: azole@test.com // FIXME:
+    email: test@test.com
     password: test1234
 
 ### **Credit card**
@@ -137,7 +137,7 @@ Use WebRTC (Web Real-Time Communication) to accomplish real time media communica
 With live streaming feature, yoga teachers and students can have online live streaming classes anytime and location is no longer a barrier.
 <p align="center">
     <img src="/readme/livestream_1.gif" style="width: 800px;" />
-    
+    <br>
 </p>
 <br>
 <br>
@@ -146,6 +146,7 @@ With live streaming feature, yoga teachers and students can have online live str
 Each studio has their own customized website to display dedicated price rules, weekly courses, studio information and teachers.  
 <p align="center">
     <img src="/readme/customized_website_1.gif" style="width: 800px;" /> 
+    <br>
     <br>
     <img src="/readme/customized_website_2.gif" style="width: 800px;" />
 </p>

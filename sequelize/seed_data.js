@@ -251,6 +251,10 @@ const SEED_USERS_STUDENT = [
   {
     name: 'Shirney',
     email: 'shirney@test.com'
+  },
+  {
+    name: 'test user for demo',
+    email: 'test@test.com'
   }
 ]
 
@@ -2950,6 +2954,26 @@ const SEED_ORDER = [
     point: 8,
     expire_date: 30,
     remaining_point: 8
+  },
+  {
+    user_id: 56,
+    studio_id: 2,
+    total: 4380,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 22,
+    expire_date: 90,
+    remaining_point: 22
+  },
+  {
+    user_id: 56,
+    studio_id: 3,
+    total: 7399,
+    status: 1,
+    tappay_trade_id: 'D202211257i7rkr',
+    point: 12,
+    expire_date: 180,
+    remaining_point: 12
   }
 ]
 
