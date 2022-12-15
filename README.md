@@ -36,8 +36,6 @@
   - [Live Streaming](#live-streaming)
   - [Customized Website for studios](#customized-website-for-studios)
 
-  
-
 <br>
 <br>
 
@@ -47,20 +45,17 @@ have right to [create studio](https://www.namaste-tw.com/admin/studio):
     
     account: root@test.com
     password: test1234
-<br>  
 
 ### **Studio owner**
 For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio: 
     
     account: lucie@test.com
     password: test1234
-<br>  
 
 ### **User**
 
     email: azole@test.com // FIXME:
     password: test1234
-<br>  
 
 ### **Credit card**
 
@@ -73,13 +68,16 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
 
 
 # Tech Stack
-- **Front-End**: HTML, CSS, JavaScript, SweatAlert, Express Handlebars, WebRTC
-- **Back-End**: Node.js, Express, Socket.IO
-- **Database**: MySQL, Redis
-- **Amazon Cloud Service**: EC2, RDS, S3, CloudFront, ElastiCache
-- **Test & CI/CD**: Jest, GitHub Action
+- **Front-End**: HTML <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="25" height="25"/> </a> , CSS <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="25" height="25"/> </a>, JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="25" height="25"/> </a> , SweatAlert, Express Handlebars, WebRTC
+- **Back-End**: Node.js <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="25" height="25"/> </a> , Express <a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> </a> , Socket.IO
+- **Database**: MySQL <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="25" height="25"/> </a>, Redis <a href="https://redis.io" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redis/redis-original-wordmark.svg" alt="redis" width="25" height="25"/> </a> 
+- **Amazon Cloud Service** <a href="https://aws.amazon.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" width="25" height="25"/> </a>: EC2, RDS, S3, CloudFront, ElastiCache
+- **Test & CI/CD**: Postman <a href="https://postman.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="25" height="25"/> </a>, Jest <a href="https://jestjs.io" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/jestjsio/jestjsio-icon.svg" alt="jest" width="25" height="25"/> </a>, GitHub Action
+- **Version Control**: Git <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="25" height="25"/> </a>
 - **Authorization**: Role-Based Access Control(RBAC)
 - **Other Concepts**: cookie-session, RESTful API
+
+
 
 <br>
 <br>
@@ -104,7 +102,7 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
 # Features
 
 ## Multi-Tenancy
-Namaste utilize `multi-tenancy` to serves multiple studios, each studio is called a tenant. Tenants(studios) can be given the ability to customize some parts of the application, such as home page/ price rules/ courses and studio information. 
+Namaste utilize `multi-tenancy` to serves multiple studios, each studio is called a tenant. Tenants(studios) can be given the ability to customize some parts of the application, such as home page/ price rules/ courses and studio information.  
 In this way, Namaste can share a dedicated instance of configurations, data, management and other properties with studios.  
 <p align="center">
     <img src="/readme/multi_tenancy_1.gif" style="width: 800px;" />
@@ -115,7 +113,7 @@ In this way, Namaste can share a dedicated instance of configurations, data, man
 
 
 ## RBAC 
-Role-based access control (RBAC) restricts network access based on a person's role within an studio, and the roles in RBAC refer to the levels of access that users have to the studio.
+Role-based access control (RBAC) restricts network access based on a person's role within an studio, and the roles in RBAC refer to the levels of access that users have to the studio.  
 Users are only allowed to access the pages necessary to effectively perform their job duties. Access can be based on several factors, such as authority, responsibility, and job competency. In addition, access can be limited to specific tasks such as the ability to view, create, or modify a file.
 <p align="center">
     <img src="/readme/RBAC_intro.png" style="width: 600px;" />
@@ -124,8 +122,8 @@ Users are only allowed to access the pages necessary to effectively perform thei
 <br>
 
 <p align="center">
-    <img src="/readme/RBAC_1.gif" style="width: 400px;" />
-    <img src="/readme/RBAC_2.gif" style="width: 400px;" />
+    <img src="/readme/RBAC_1.gif" style="width: 800px;" />
+    <img src="/readme/RBAC_2.gif" style="width: 800px;" />
     <br>
     Only the studio admin user can access their admin dashboard and update/ create studio info.
 </p>
@@ -135,16 +133,20 @@ Users are only allowed to access the pages necessary to effectively perform thei
 
 
 ## Live Streaming
-
-
+Use WebRTC (Web Real-Time Communication) to accomplish real time media communications directly between browsers, and utilize WebSocket technology to let browsers exchange SDP and ICE candidate with signal server.  
+With live streaming feature, yoga teachers and students can have online live streaming classes anytime and location is no longer a barrier.
+<p align="center">
+    
+    
+</p>
 <br>
 <br>
 
 ## Customized Website for studios
 Each studio has their own customized website to display dedicated price rules, weekly courses, studio information and teachers.  
 <p align="center">
-    <img src="/readme/customized_website_1.gif" style="width: 400px;" /> 
-    <img src="/readme/customized_website_2.gif" style="width: 400px;" />
+    <img src="/readme/customized_website_1.gif" style="width: 800px;" /> 
+    <img src="/readme/customized_website_2.gif" style="width: 800px;" />
 </p>
 
 <br>
