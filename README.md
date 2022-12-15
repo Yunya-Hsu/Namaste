@@ -87,8 +87,8 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
 
 # Architecture Diagram and Git flow
 <p align="center">
-    <img src="https://d298mxo82mdv9e.cloudfront.net/readme/architecture.png" style="width: 900px;" />
-    <img src="https://d298mxo82mdv9e.cloudfront.net/readme/CICD.png" style="width: 900px;" />
+    <img src="/readme/architecture.png" style="width: 900px;" />
+    <img src="/readme/CICD.png" style="width: 900px;" />
 </p>
 
 <br>
@@ -96,7 +96,7 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
 
 # Table Schema
 <p align="center">
-    <img src="https://d298mxo82mdv9e.cloudfront.net/readme/table_schema.png" />
+    <img src="/readme/table_schema.png" />
 </p>
 <br>
 <br>
@@ -107,7 +107,7 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
 Namaste utilize `multi-tenancy` to serves multiple studios, each studio is called a tenant. Tenants(studios) can be given the ability to customize some parts of the application, such as home page/ price rules/ courses and studio information. 
 In this way, Namaste can share a dedicated instance of configurations, data, management and other properties with studios.  
 <p align="center">
-    <img src="https://d298mxo82mdv9e.cloudfront.net/readme/multi_tenancy_1.gif" style="width: 800px;" />
+    <img src="/readme/multi_tenancy_1.gif" style="width: 800px;" />
 </p>
 
 <br>
@@ -118,14 +118,14 @@ In this way, Namaste can share a dedicated instance of configurations, data, man
 Role-based access control (RBAC) restricts network access based on a person's role within an studio, and the roles in RBAC refer to the levels of access that users have to the studio.
 Users are only allowed to access the pages necessary to effectively perform their job duties. Access can be based on several factors, such as authority, responsibility, and job competency. In addition, access can be limited to specific tasks such as the ability to view, create, or modify a file.
 <p align="center">
-    <img src="https://d298mxo82mdv9e.cloudfront.net/readme/RBAC_intro.png" style="width: 600px;" />
+    <img src="/readme/RBAC_intro.png" style="width: 600px;" />
 </p>
 
 <br>
 
 <p align="center">
-    <img src="https://d298mxo82mdv9e.cloudfront.net/readme/RBAC_1.gif" style="width: 400px;" />
-    <img src="https://d298mxo82mdv9e.cloudfront.net/readme/RBAC_2.gif" style="width: 400px;" />
+    <img src="/readme/RBAC_1.gif" style="width: 400px;" />
+    <img src="/readme/RBAC_2.gif" style="width: 400px;" />
     <br>
     Only the studio admin user can access their admin dashboard and update/ create studio info.
 </p>
@@ -143,8 +143,8 @@ Users are only allowed to access the pages necessary to effectively perform thei
 ## Customized Website for studios
 Each studio has their own customized website to display dedicated price rules, weekly courses, studio information and teachers.  
 <p align="center">
-    <img src="https://d298mxo82mdv9e.cloudfront.net/readme/customized_website_1.gif" style="width: 400px;" /> 
-    <img src="https://d298mxo82mdv9e.cloudfront.net/readme/customized_website_2.gif" style="width: 400px;" />
+    <img src="/readme/customized_website_1.gif" style="width: 400px;" /> 
+    <img src="/readme/customized_website_2.gif" style="width: 400px;" />
 </p>
 
 <br>
