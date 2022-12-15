@@ -1,7 +1,7 @@
+<br>
 <p align="center">
-  <img src="/public/namaste/namaste_logo.png" style="width: 180px;" />
+  <img src="/public/namaste/namaste_logo.png" style="width: 300px;" />
 </p>
-<h1 align='center'>Namaste</h1> 
 
 [Namaste](https://www.namaste-tw.com/) is a one-stop yoga course platform where B2C and B2B services are offered, allowing studio owners and customers to access different services.  
 <br>
@@ -41,7 +41,7 @@
 
 # Seed Data   
 ### **Root owner**
-have right to [create studio](https://www.namaste-tw.com/admin/studio): 
+Have right to [create studio](https://www.namaste-tw.com/admin/studio): 
     
     account: root@test.com
     password: test1234
@@ -53,6 +53,7 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
     password: test1234
 
 ### **User**
+[Login](https://www.namaste-tw.com/user/login) page:
 
     email: test@test.com
     password: test1234
