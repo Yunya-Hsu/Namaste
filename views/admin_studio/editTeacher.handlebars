@@ -1,0 +1,38 @@
+{{> nav_admin_studio}}
+
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<div class="d-flex align-items-stretch justify-content-center super-admin-div">
+  <section id="super-admin-title-left">
+    <span>編輯老師資料</span>
+    <hr id="hr">
+  </section>
+
+  <section id="super-admin-create-studio-section">
+    <form action="/{{ studio.subdomain }}/admin/teacher/{{input.id}}?_method=PUT" method="POST" enctype="multipart/form-data" id="super-admin-create-studio-form">
+
+      <div>
+        <label for="name">老師名稱 *</label>
+        <input type="text" id="name" name="name" value="{{input.name}}" required>
+      </div>
+
+      <div class="d-flex flex-wrap">
+        <label>頭像</label>
+        <input type="file" id="avatar" name="avatar" class="upload-pic-btn">
+        <p class="photo-limit">圖片格式僅限 jpg/ jpeg/ png 檔，檔案上限 1 MB</p>
+      </div>
+
+      <div>
+        <label for="major">專業（限30字）*</label>
+        <textarea rows="3" id="major" name="major" required>{{input.major}}</textarea>
+      </div>
+
+      <div>
+        <label for="introduction">詳細介紹</label>
+        <textarea rows="5" id="introduction" name="introduction">{{input.introduction}}</textarea>
+      </div>
+
+      <button type="submit">更新</button>
+    </form>
+  </section>
+</div>

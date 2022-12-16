@@ -1,0 +1,57 @@
+{{> nav_studio}}
+
+
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>教室地址</p>
+</div>
+
+<div class="d-flex justify-content-evenly align-items-center">
+  <div id="address-content">
+    <h2>電話</h2>
+    <p>{{studio.phone}}</p>
+
+    <h2>地址</h2>
+    <a href="https://www.google.com/maps/dir/?api=1&destination={{studio.address}}" target="_blank" class="address-link">{{studio.address}}</a>
+
+    <h2>如何抵達</h2>
+    <p>{{studio.address_description}}</p>
+  </div>
+
+  <iframe id="google-map"
+    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBh9vt56phN_LUOmcuJ41y2Pf24FVtgvmM&q='{{studio.address}}'" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
+
+
+
+
+
+
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>師資介紹</p>
+</div>
+
+
+<div class="d-flex justify-content-start align-items-center" id="teachers">
+
+  {{#each teacherList}}
+  <div class="teacher-card d-flex align-items-center">
+    <div class="teacher-avatar" style="background: url({{ this.avatar }}); background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;">
+    </div>
+
+    <div class="d-flex flex-column">
+      <span class="teacher-name">{{this.name}}</span>
+
+      <span class="teacher-title">專長</span>
+      <span class="teacher-intro">{{this.major}}</span>
+
+      <span class="teacher-title">簡介、經歷及證照</span>
+      <span class="teacher-intro">{{this.introduction}}</span>
+    </div>
+  </div>
+  {{/each}}
+
+</div>
+

@@ -1,0 +1,41 @@
+{{> nav_admin_studio}}
+
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<a href="/{{studio.subdomain}}/admin/teacher/create" class="studio-owner-create-btn">建立老師資料</a>
+
+{{#if teacherList}}
+<table class="admin-studio-table">
+  <thead class="admin-studio-table-head">
+    <tr>
+      <th>頭像</th>
+      <th>老師</th>
+      <th>專業</th>
+      <th>介紹</th>
+      <th>修改</th>
+    </tr>
+  </thead>
+
+  {{#each teacherList}}
+  <tbody>
+    <tr>
+      <td>
+        <div class="teacher-avatar admin-studio-teacher-avatar" style="background: url({{ this.avatar }}); background-position: center; background-repeat: no-repeat; background-size: cover;">
+      </td>
+      <td>{{this.name}}</td>
+      <td>{{this.major}}</td>
+      <td>{{this.introduction}}</td>
+      <td class="admin-studio-edit-btn">
+        <a href="/{{../studio.subdomain}}/admin/teacher/{{this.id}}">修改</a>
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
+
+
+{{else}}
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>暫無老師資料</p>
+</div>
+{{/if}}

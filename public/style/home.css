@@ -1,0 +1,183 @@
+/* Namaste home page */
+
+home-title-intro {
+  margin: 0 5vw 0 0;
+}
+
+#home-title-intro>h1 {
+  font-size: 80px;
+  font-weight: 200;
+  letter-spacing: 20px;
+  margin: 0 0 3vh;
+}
+
+#home-title-intro>span {
+  margin: 2vh 0 0 0;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 5px;
+}
+
+#home-gif {
+  width: 30vw;
+  border: 1px solid #EEE3CB;
+  margin: 10vh 5vw;
+
+  animation-name: fade-home-gif;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fade-home-gif {
+  from {
+    /* opacity: 0.8; */
+  }
+
+  to {
+    opacity: 1;
+    box-shadow: 1.5vw 2.5vh 2px 2px #DBD2C9, 3vw 5vh 2px 2px #99806f;
+  }
+}
+
+
+
+#home-hr {
+  width: 90vw;
+  height: 2px;
+  background-color: #d7d5d5;
+  margin: 5vh auto;
+}
+
+
+
+
+
+#home-studio-list-title {
+  margin: 0 0 10px 6vw;
+  color: #7f6b5e;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 7px;
+}
+
+
+
+
+
+
+#search-section {
+  padding: 0 7vw;
+  font-size: 25px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+#search-category {
+  border: none;
+  border-radius: 10px;
+  width: 5vw;
+  height: 38px;
+  text-align: center;
+  
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: #7f6b5e;
+}
+
+#search-input {
+  border: none;
+  border-radius: 10px;
+
+  width: 20vw;
+  height: 38px;
+  margin: 0 1vw;
+  padding: 0 10px;
+
+  font-size: 22px;
+  font-weight: 300;
+}
+
+#search-icon {
+  cursor: pointer;
+}
+
+#search-icon:hover {
+  color: #7f6b5e;
+}
+
+
+
+
+
+
+
+
+#studio-card-section {
+  padding: 0 0 0 5vw;
+}
+
+.studio-card {
+  max-width: 20vw;
+  min-width: 270px;
+  margin: 5vh 1vw;
+  border: 1px solid #d7bfaf;
+  border-radius: 20px;
+  flex-grow: 1;
+}
+
+.studio-card:hover {
+  box-shadow: 0px 2px 3px 3px #ebd1bf;
+}
+
+.home-studio-logo {
+  margin: 15px 0;
+  width: 13vw;
+}
+
+.home-studio-logo:hover {
+  box-shadow: 0px 2px 5px 5px #e2e2e2;
+}
+
+.studio-card-name {
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: #7f6b5e;
+
+  margin: 0 0 1vw 0;
+}
+
+.studio-card-name:hover {
+  text-shadow: 2px 3px #e7cbb9;
+}
+
+.home-studio-content {
+  height: 20vh;
+}
+
+.studio-card-introduction {
+  margin: 1vh 1.5vw 0vh 1.5vw;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: #6e5e54;
+}
+
+.studio-card-address {
+  margin: 1vh 1.5vw;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #9b8282;
+}
+
+.address-link {
+  color: #9b8282;
+  text-decoration: none;
+}
+
+.address-link:hover {
+  text-shadow: 1px 1px #e7cbb9;
+}

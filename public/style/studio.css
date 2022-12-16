@@ -1,0 +1,264 @@
+/* checkout */
+#checkout-section {
+  width: 42vw;
+}
+
+.checkout-order-detail {
+  background-color: #ffffff;
+  border-radius: 15px;
+
+  box-shadow: 0px 3px 2px 2px #E1E1DF;
+  padding: 3vh 2vw;
+  margin: 0 0 5vh 0;
+}
+
+#order-title {
+  font-size: 28px;
+  letter-spacing: 8px;
+  margin-bottom: 4vh;
+  font-weight: 300;
+}
+
+.checkout-order-detail > p {
+  margin: 1vh 0;
+  letter-spacing: 3px;
+  font-weight: 200;
+  color: #8C736F;
+}
+
+.checkout-order-detail > p > span {
+  color: #000000;
+  font-weight: 300;
+}
+
+
+.credit-card-input {
+  font-weight: 300;
+  margin: 1vh 0;
+}
+
+
+
+#credit-card-title {
+  margin: 6vh 0 0 0;
+  font-size: 22px;
+  font-weight: 300;
+  color: #8C736F;
+}
+
+
+.tpfield,
+.credit-card-owner {
+  height: 40px;
+  width: 300px;
+  margin: 5px 0;
+  padding: 5px 10px;
+
+  border: none;
+  border-radius: 8px;
+  background-color: #ffffff;
+
+  color: #53565C;
+  letter-spacing: 2px;
+}
+
+.credit-card-owner {
+  font-size: 16px;
+}
+
+#tappay-submit-btn {
+  width: 100%;
+  height: 6vh;
+  margin: 5vh 0 0 0;
+  border: none;
+  background-color: #7f6b5e;
+
+  color: #ffffff;
+  font-size: 22px;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+#tappay-submit-btn:hover {
+  cursor: pointer;
+  background-color: #C3A491;
+  color: #5e4f45;
+}
+/* checkout */
+
+
+
+
+
+/* live stream */
+.livestream-div {
+  margin: 3vh auto 20vh auto;
+}
+
+.myVideo,
+.remoteVideo {
+  height: 60vh;
+  width: 40vw;
+  /* object-fit: scale-down; */
+  margin: 0 1vw;
+  border: 3px solid #E1E1DF;
+  border-radius: 20px;
+  background-color: #fbfbf9;
+}
+
+.myVideo > video,
+.remoteVideo  > video {
+  margin: 0 auto;
+  transform: scaleX(-1);
+  height: 100%;
+  width: 90%;
+  /* object-fit: scale-down; */
+}
+
+#callBtn,
+#conn-btn,
+#turn-off-camera-btn,
+#turn-on-camera-btn,
+#turn-off-voice-btn,
+#turn-on-voice-btn {
+  display: inline-block;
+  margin: 20px 1vw;
+  padding: 10px 15px 40px 20px;
+
+  height: 45px;
+  min-width: 70px;
+
+  border: none;
+  border-radius: 10px;
+  background-color: #8C736F;
+
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 5px;
+
+  cursor: pointer;
+}
+
+#turn-on-camera-btn,
+#turn-on-voice-btn {
+  background-color: #f87864;
+  color: #ffffff;
+}
+
+#callBtn:hover,
+#conn-btn:hover {
+  background-color: #DDDDC8;
+  color: #53565C;
+}
+
+#one-on-one-course-name {
+  /* display: block; */
+  margin: 1vh auto 0 auto;
+  text-align: center;
+
+  font-size: 60px;
+  letter-spacing: 10px;
+  font-weight: 300;
+  color: #CCB9AA;
+}
+
+.colored-toast.swal2-icon-success {
+  background-color: #CCB9AA;
+  color: #ffffff;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
+}
+
+#expand, #compress {
+  margin: 0 0.5vw 0 1vw;
+  font-size: 30px;
+  color: #7f6b5e;
+  
+  cursor: pointer;
+}
+#expand:hover,
+#compress:hover {
+  cursor: pointer;
+  font-size: 35px;
+  color: #CCB9AA;
+}
+
+.expand {
+  animation-name: expand-video;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.revert-expand {
+  animation-name: revert-expand-video;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.compress {
+  animation-name: compress-video;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.revert-compress {
+  animation-name: revert-compress-video;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes expand-video {
+  from {
+  }
+
+  to {
+    height: 90vh;
+    width: 70vw;
+  }
+}
+
+@keyframes revert-expand-video {
+  from {
+    height: 90vh;
+    width: 70vw;
+  }
+
+  to {
+    height: 60vh;
+    width: 40vw;
+  }
+}
+
+@keyframes compress-video {
+  from {
+  }
+
+  to {
+    height: 15vh;
+    width: 10vw;
+  }
+}
+
+@keyframes revert-compress-video {
+  from {
+    height: 15vh;
+    width: 10vw;
+  }
+
+  to {
+    height: 60vh;
+    width: 40vw;
+  }
+}
+/* live stream */

@@ -1,0 +1,45 @@
+{{> nav_admin_studio}}
+
+
+<div class="d-flex align-items-stretch justify-content-center super-admin-div">
+  <section id="super-admin-title-left">
+    <span>建立老師</span>
+    <hr id="hr">
+  </section>
+
+  <section id="super-admin-create-studio-section">
+    <form action="/{{ studio.subdomain }}/admin/teacher/create" method="POST" enctype="multipart/form-data" id="super-admin-create-studio-form">
+
+      <div>
+        <label for="name">老師名稱 *</label>
+        <input type="text" id="name" name="name" {{#if input.name}} value="{{input.name}}" {{/if}} required>
+      </div>
+
+      <div>
+        <label>頭像</label>
+        <input type="file" id="avatar" name="avatar" class="upload-pic-btn">
+        <p class="photo-limit">圖片格式僅限 jpg/ jpeg/ png 檔，檔案上限 1 MB</p>
+      </div>
+
+      <div>
+        <label for="major">專業（限30字）*</label>
+        {{#if input.major}}
+        <textarea rows="3" id="major" name="major" required>{{input.major}}</textarea>
+        {{else}}
+        <textarea rows="3" id="major" name="major" required></textarea>
+        {{/if}}
+      </div>
+
+      <div>
+        <label for="introduction">詳細介紹</label>
+        {{#if input.introduction}}
+        <textarea rows="5" id="introduction" name="introduction">{{input.introduction}}</textarea>
+        {{else}}
+        <textarea rows="5" id="introduction" name="introduction"></textarea>
+        {{/if}}
+      </div>
+
+      <button type="submit">建立</button>
+    </form>
+  </section>
+</div>

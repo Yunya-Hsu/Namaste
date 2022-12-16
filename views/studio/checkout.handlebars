@@ -1,0 +1,247 @@
+{{> nav_studio}}
+
+<link rel="stylesheet" href="/style/studio.css"></link>
+
+<div class="d-flex align-items-stretch justify-content-center super-admin-div">
+  <section id="super-admin-title-left">
+    <span>
+      信用卡付款
+    </span>
+    <hr id="hr">
+  </section>
+
+
+  <section id="checkout-section">
+    <div class="checkout-order-detail">
+      <p id="order-title">/ 購買明細</p>
+      <p>種類：<span>{{priceRule.category}}</span></p>
+      <p>價格：<span>NTD $ {{priceRule.price}}</span></p>
+      <p>點數：<span>{{priceRule.point}}</span></p>
+      <p>備註：<span>{{#if priceRule.remark}} {{priceRule.remark}} {{else}} 無 {{/if}}</span></p>
+      <p>使用期限：<span>{{priceRule.term}}</span></p>
+      <p>到期日（若今日購買）：<span>{{priceRule.expireDate}}</span></p>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center credit-card-input">
+      <span>信用卡卡號</span>
+      <div class="tpfield" id="card-number"></div>
+    </div>
+    <div id="validate-card-number"></div>
+
+    <div class="d-flex justify-content-between align-items-center credit-card-input">
+      <span>到期日</span>
+      <div class="tpfield" id="card-expiration-date"></div>
+    </div>
+    <div id="validate-expiration-date"></div>
+
+    <div class="d-flex justify-content-between align-items-center credit-card-input">
+      <span>CCV</span>
+      <div class="tpfield" id="card-ccv"></div>
+    </div>
+    <div id="validate-card-ccv"></div>
+
+
+
+    <p id="credit-card-title">持卡人資訊</p>
+
+    <div class="d-flex justify-content-between align-items-center credit-card-input">
+      <label for="phone">聯絡電話</label>
+      <input type="text" id="phone" name="phone" class="credit-card-owner">
+    </div>
+    <div class="d-flex justify-content-between align-items-center credit-card-input">
+      <label for="name">姓名</label>
+      <input type="text" id="name" name="name" class="credit-card-owner">
+    </div>
+    <div class="d-flex justify-content-between align-items-center credit-card-input">
+      <label for="email">電子信箱</label>
+      <input type="text" id="email" name="email" class="credit-card-owner">
+    </div>
+    <button type="button" id="tappay-submit-btn" style="display: none;">確認付款</button>
+  </section>
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://js.tappaysdk.com/tpdirect/v5.13.1"></script>
+<script>
+  const phone = document.querySelector('#phone')
+  const name = document.querySelector('#name')
+  const email = document.querySelector('#email')
+  const tappaySubmit = document.querySelector('#tappay-submit-btn')
+
+  TPDirect.setupSDK({{ studio.tappay_app_id }}, "{{studio.tappay_app_key}}", "{{TappayServerType}}")
+  
+  const fields = {
+    number: {
+      // css selector
+      element: '#card-number',
+      placeholder: '**** **** **** ****'
+    },
+    expirationDate: {
+      // DOM object
+      element: document.getElementById('card-expiration-date'),
+      placeholder: 'MM / YY'
+    },
+    ccv: {
+      element: '#card-ccv',
+      placeholder: '卡片背面，共三碼'
+    }
+  }
+
+  TPDirect.card.setup({
+    fields,
+    styles: {
+      // Style all elements
+      'input': {
+        'color': 'gray'
+      },
+      // Styling ccv field
+      'input.ccv': {
+        'font-size': '16px'
+      },
+      // Styling expiration-date field
+      'input.expiration-date': {
+        'font-size': '16px'
+      },
+      // Styling card-number field
+      'input.card-number': {
+        'font-size': '16px'
+      },
+      // style focus state
+      ':focus': {
+        'color': 'black'
+      },
+      // style valid state
+      '.valid': {
+        'color': 'green'
+      },
+      // style invalid state
+      '.invalid': {
+        'color': 'red'
+      },
+      // Media queries
+      // Note that these apply to the iframe, not the root window.
+      '@media screen and (max-width: 400px)': {
+        'input': {
+          'color': 'orange'
+        }
+      }
+    },
+    isMaskCreditCardNumber: true, // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
+    maskCreditCardNumberRange: {
+      beginIndex: 6,
+      endIndex: 11
+    }
+  })
+
+  TPDirect.card.onUpdate(function (update) {
+    const validateCardNumber = document.querySelector('#validate-card-number')
+    const validateExpirationDate = document.querySelector('#validate-expiration-date')
+    const validateCardCcv = document.querySelector('#validate-card-ccv')
+
+    if (update.canGetPrime) { 
+      document.querySelector('#tappay-submit-btn').removeAttribute('style')
+    } else {
+      document.querySelector('#tappay-submit-btn').style.display = 'none'
+    }
+
+    // 驗證 card number 欄位
+    if (update.status.number === 2) { // 欄位有誤
+      validateCardNumber.innerHTML = `
+        <div class="d-flex align-items-center justify-content-end" style="color: red; width: 100%;">
+          <span style="font-size: 10px">卡號輸入有誤</span>
+        </div>
+      `
+    } else if (update.status.number === 0) { // 欄位正確
+      validateCardNumber.innerHTML = ''
+    } else {
+      validateCardNumber.innerHTML = ''
+    }
+
+    // 驗證 card expiration data 欄位
+    if (update.status.expiry === 2) {
+      validateExpirationDate.innerHTML = `
+        <div class="d-flex align-items-center justify-content-end" style="color: red; width: 100%;">
+          <span style="font-size: 10px">有效期限輸入有誤</span>
+        </div>
+      `
+    } else if (update.status.expiry === 0) {
+      validateExpirationDate.innerHTML = ''
+    } else {
+      validateExpirationDate.innerHTML = ''
+    }
+
+    // 驗證 card ccv 欄位
+    if (update.status.ccv === 2) {
+      validateCardCcv.innerHTML = `
+        <div class="d-flex align-items-center justify-content-end" style="color: red; width: 100%;">
+          <span style="font-size: 10px">CCV 輸入有誤</span>
+        </div>
+      `
+    } else if (update.status.ccv === 0) {
+      validateCardCcv.innerHTML = ''
+    } else {
+      validateCardCcv.innerHTML = ''
+    }
+  })
+
+  // 監聽 pay 按鈕
+  tappaySubmit.addEventListener('click', event => {
+    event.preventDefault()
+
+    if (!phone.value || !name.value || !email.value) {
+      return swal("Miss information", "未填寫「持卡人資訊」", "warning")
+    }
+
+    swal({
+      title: 'Loading',
+      text: '結帳中，請稍候',
+      icon: "/namaste/loading.gif",
+      allowOutsideClick: false,
+      closeOnEsc: false,
+      closeOnClickOutside: false,
+      button: false,
+    })
+
+    // 取得 TapPay Fields 的 status，為 true 才可以向 tappay 索取 prime
+    const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+    if (tappayStatus.canGetPrime === false) {
+      alert('can not get prime')
+      return
+    }
+
+    // 向 tappay 索取 prime
+    TPDirect.card.getPrime(async result => {
+      if (result.status !== 0) {
+        console.log(result.msg)
+        await swal("Error", `Get TapPay Prime Error: ${result.msg}`, "error")
+        return
+      }
+
+      try {
+        // 向後台傳送資料
+        const paymentResult = await axios.post(
+          window.location.href,
+          {
+            prime: result.card.prime,
+            priceRuleId: "{{ priceRule.id }}",
+            cardholder: {
+              phone_number: phone.value,
+              name: name.value,
+              email:email.value
+            }
+          }
+        )
+        await swal("Success", "付款成功！", "success")
+        window.location.href = '/user/profile'
+      } catch (err) {
+        console.log(err)
+        console.log(err.response.data)
+        await swal("Error", "付款失敗，請重新付款", "error")
+      }
+    })
+  })
+</script>

@@ -1,0 +1,112 @@
+<link rel="stylesheet" href="/style/home.css"></link>
+
+{{> nav_general}}
+<div class="d-flex justify-content-center align-items-center ">
+  
+  <div class="d-flex flex-column" id="home-title-intro">
+    <h1>Namaste</h1>
+    <span>為瑜珈而生的雲端管理系統</span>
+    <span>/ 為妳打造的一站式瑜珈平台</span>
+  </div>
+
+  <img src="/namaste/home_move.gif" alt="" id="home-gif">
+</div>
+
+
+<div id="home-hr"></div>
+
+<h1 id="home-studio-list-title">教室列表</h1>
+
+<section class="d-flex justify-content-end align-items-center" id="search-section">
+  <select name="search-category" id="search-category">
+    <option value="address">地址</option>
+  </select>
+
+  <input type="text" name="search-input" id="search-input">
+  <i class="fas fa-search" id="search-icon"></i>
+</section>
+
+<section class="d-flex flex-wrap justify-content-start" id="studio-card-section">
+  {{#each studioList}}
+  <div class="d-flex flex-column align-items-center studio-card">
+    <a href="/{{this.subdomain}}">
+      <img src="{{this.logo}}" alt="{{this.name}}-logo" class="home-studio-logo">
+    </a>
+    <a href="/{{this.subdomain}}" class="studio-card-name">
+      <span >{{this.name}}</span>
+    </a>
+
+    <div class="d-flex flex-column justify-content-around home-studio-content">
+      <span class="studio-card-introduction">{{this.introduction_detail}}</span>
+
+      <span class="studio-card-address">
+        <i class="fas fa-map-marker-alt"></i>
+        <a href="https://www.google.com/maps/dir/?api=1&destination={{this.address}}" target="_blank" class="address-link">{{this.address}}</a>
+      </span>
+    </div>
+
+  </div>
+  {{/each}}
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  window.onload = () => {
+    document.getElementById('home-gif').src = document.getElementById('home-gif').src
+  }
+
+  const category = document.querySelector('#search-category')
+  const input = document.querySelector('#search-input')
+  const searchBtn = document.querySelector('#search-icon')
+  const studioSection = document.querySelector('#studio-card-section')
+
+
+  searchBtn.addEventListener('click', async () => {
+    const theCategory = category.value
+    const keyword = input.value
+
+    // 確認關鍵字是否正確
+    if (!keyword) {
+      return swal("Error", "請輸入關鍵字", "error")
+    }
+    if (!theCategory) {
+      return swal("Error", "請選擇類別", "error")
+    }
+
+    // 向 server 拿取資料
+    let searchResult = await axios.get(`/api/search?category=${theCategory}&keyword=${keyword}`)
+    if (searchResult.status !== 200) {  
+      return swal("Error", "關鍵字有誤", "error")
+    }
+
+    
+    searchResult = searchResult.data.data
+    if (searchResult.length <= 0) {
+      return studioDiv.innerHTML = ''
+    }
+    studioSection.innerHTML = ''
+    for (let studio of searchResult) {
+      const studioDiv = document.createElement('div')
+      studioDiv.classList.add('d-flex', 'flex-column', 'align-items-center', 'studio-card')
+      studioDiv.innerHTML = `
+        <a href="/${studio.subdomain}">
+          <img src="${studio.logo}" alt="${studio.name}-logo" class="home-studio-logo">
+        </a>
+        <a href="/${studio.subdomain}" class="studio-card-name">
+          <span >${studio.name}</span>
+        </a>
+
+        <div class="d-flex flex-column justify-content-around home-studio-content">
+          <span class="studio-card-introduction">${studio.introduction_detail}</span>
+
+          <span class="studio-card-address">
+            <i class="fas fa-map-marker-alt"></i>
+            ${studio.address}
+          </span>
+      `
+      studioSection.appendChild(studioDiv)
+    }
+  })
+
+</script>

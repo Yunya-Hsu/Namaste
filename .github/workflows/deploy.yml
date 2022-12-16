@@ -1,0 +1,65 @@
+name: "Namaste project CI/CD"
+
+on: 
+  pull_request:
+    types: [opened, synchronize, closed]
+    branches: 
+      - master
+      - develop
+    resolve: merged
+
+
+jobs: 
+  continuous-integration:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: github.event.pull_request.merged == false
+
+    steps:
+      - name: "Checkout Github Action"
+        uses: actions/checkout@v3
+
+      - name: "Install node.js"
+        uses: actions/setup-node@v3
+
+      - name: "Install npm"
+        run: npm install
+
+      - name: "Create env file"
+        run: |
+          touch .env
+          echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: "run db migrate for test database & insert data"
+        run: |
+          export NODE_ENV=test
+          npx sequelize db:migrate
+          npx sequelize db:seed:all
+      
+      - name: "run test"
+        run: npm run test
+
+      - name: "clear tables in test database"
+        run: |
+          export NODE_ENV=test
+          cd test
+          node clearTables.js
+
+
+  deploy-on-AWS-EC2: 
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    needs: "continuous-integration"
+    steps:
+      - name: "executing remote ssh commands using ssh key"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST}}
+          username: ${{ secrets.EC2_USER}}
+          key: ${{ secrets.EC2_SSH_KEY}}
+          script: |
+            cd ~/Namaste
+            git switch develop
+            git pull origin develop
+            npm install
+            pm2 restart "namaste"

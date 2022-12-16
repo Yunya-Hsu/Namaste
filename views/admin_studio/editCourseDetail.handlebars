@@ -1,0 +1,83 @@
+{{> nav_admin_studio}}
+
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+
+<div class="d-flex align-items-stretch justify-content-center super-admin-div">
+  <section id="super-admin-title-left">
+    <span>編輯上架課程</span>
+    <hr id="hr">
+  </section>
+
+  <section id="super-admin-create-studio-section">
+    <form action="/{{ studio.subdomain }}/admin/courseDetail/{{input.id}}?_method=PUT" method="POST" enctype="application/json"
+      id="super-admin-create-studio-form">
+
+      <div>
+        <label for="course_id">課程名稱*</label>
+        <span class="fixed">{{input.title}}</span>
+        <input type="number" id="course_id" name="course_id" value="{{input.course_id}}" hidden>
+      </div>
+
+      <div>
+        <label for="date">上課日期*</label>
+        <input type="date" id="date" name="date" value={{input.date}} required>
+      </div>
+
+      <div>
+        <label for="start_time">上課時間*</label>
+        <input type="time" id="start_time" name="start_time" value={{input.start_time}} required>
+      </div>
+
+      <div>
+        <label for="duration">時長*（分鐘）</label>
+        <input type="number" id="duration" name="duration" value={{input.duration}} required>
+      </div>
+
+      <div>
+        <label for="limitation">人數上限*</label>
+        <input type="number" id="limitation" name="limitation" value={{input.limitation}} required>
+      </div>
+
+      <div>
+        <label for="is_online">開放線上*</label>
+        <select name="is_online" id="is_online" required>
+          <option value="0" {{#compare 0 input.is_online}} selected {{/compare}}>不開放</option>
+          <option value="1" {{#compare 1 input.is_online}} selected {{/compare}}>開放</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="online_limitation">線上課程人數上限</label>
+        <input type="number" id="online_limitation" name="online_limitation" value={{input.online_limitation}} required>
+      </div>
+
+      <div>
+        <label for="is_oneOnOne">一對一課程*</label>
+        <select name="is_oneOnOne" id="is_oneOnOne" required>
+          <option value="0" {{#compare 0 input.is_oneOnOne}} selected {{/compare}}>否</option>
+          <option value="1" {{#compare 1 input.is_oneOnOne}} selected {{/compare}}>一對一 VIP 課程</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="publish_at">上架日 *（台灣時間）</label>
+        <input type="datetime-local" id="publish_at" name="publish_at" value={{input.publish_at}} required>
+      </div>
+
+      <button type="submit">更新</button>
+    </form>
+  </section>
+</div>
+
+<script>
+  const isOnline = document.querySelector('#is_online')
+  const onlineLimitation = document.querySelector('#online_limitation')
+  isOnline.addEventListener('change', () => {
+    if (isOnline.value === '1') {
+      return onlineLimitation.value = 5
+    } else {
+      return onlineLimitation.value = 0
+    }
+  })
+</script>

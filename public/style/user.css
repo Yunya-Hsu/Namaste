@@ -1,0 +1,200 @@
+/* Sign in & Sign up page */
+.sign-form-div {
+  margin: 50px auto;
+  font-size: 20px;
+  min-width: 400px;
+}
+
+.signin-signup-title {
+  display: block;
+  font-size: 35px;
+  color: #CCB9AA;
+  margin: 0 0 40px 0;
+}
+
+.sign-form>* {
+  margin: 10px 0;
+}
+
+.sign-form>label{
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: #53565C;
+}
+
+.sign-form>input{
+  height: 35px;
+  border: none;
+  border-radius: 8px;
+  padding: 2px 0 2px 10px;
+
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: #53565C;
+}
+
+.strong-password {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #8C736F;
+}
+
+.sign-form>button {
+  height: 60px;
+  border: none;
+  border-radius: 10px;
+  background-color: #8C736F;
+
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 5px;
+
+  cursor: pointer;
+}
+
+.sign-form>button:hover {
+  background-color: #DDDDC8;
+  color: #53565C;
+}
+
+/* Sign in & Sign up page */
+
+
+
+
+
+
+
+
+
+
+/* Profile page */
+#profile-page-div{
+  min-height: 70vh;
+}
+
+#profile-title {
+  display: block;
+  font-size: 35px;
+  color: #a8a8a8;
+  margin: 0 0 25px 0;
+}
+
+.profile-div {
+  min-width: 25vw;
+  margin: 0 0 8vh 0;
+
+  font-size: 20px;
+  font-weight: 300;
+  color: #888888;
+}
+
+.profile-column {
+  border-bottom: 1px solid #8C736F;
+  margin: 20px 0 8px 0;
+  padding: 15px 0 15px 3px;
+}
+
+#user-name,
+#user-email,
+#user-password {
+  color: #000000;
+}
+
+
+.profile-table {
+  margin: 5vh auto 13vh auto;
+  border-collapse: collapse;
+  border: none;
+}
+
+
+.profile-table-head > tr > th {
+  background-color: #655848;
+  box-shadow: 2px 2px 10px 0 #655848;
+  padding: 2vh 1.5vw;
+
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 4px;
+
+  border-right: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+}
+
+
+.order-studio,
+.order-date,
+.order-total,
+.order-point,
+.order-status,
+.order-expire-date,
+.order-remaining-point,
+.profile-register-studio,
+.profile-register-course,
+.profile-register-teacher,
+.profile-register-date,
+.profile-register-start-time,
+.profile-register-point,
+.profile-register-livestream,
+.profile-register-deregister{
+  text-align: center;
+  padding: 4vh 1.5vw;
+  
+  color: #000000;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 3px;
+
+  border-bottom: 1px solid #f0e6dc;
+  border-right: 1px solid #f0e6dc;
+  border-left: 1px solid #f0e6dc;
+}
+
+.order-studio > a,
+.profile-register-studio > a {
+  text-decoration: none;
+  font-weight: 400;
+  color: #8C736F;
+}
+
+.order-studio>a:hover, 
+.profile-register-studio>a:hover {
+  color: #CCB9AA;
+}
+
+.order-remaining-point {
+  font-weight: 400;
+  font-size: 23px;
+  color: #9D5A16;
+}
+
+.profile-register-livestream > a,
+.deregister-btn {
+  display: inline-block;
+  width: 80px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  background-color: #8C736F;
+  border: none;
+  border-radius: 10px;
+
+  font-size: 16px;
+  font-weight: 300;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.profile-register-livestream>a:hover,
+.deregister-btn:hover {
+  cursor: pointer;
+  background-color: #DDDDC8;
+  color: #53565C;
+}
+/* Profile page */

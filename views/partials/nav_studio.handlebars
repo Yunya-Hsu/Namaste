@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
+
+<nav class="nav-bar d-flex justify-content-between align-items-center">
+
+  <div id="nav-left" class="d-flex justify-content-around align-items-center">
+    <a href="/{{ studio.subdomain}}">
+      <img src="{{ studio.logo }}" alt="logo" id="nav-logo">
+    </a>
+    <div id="nav-studio-name">
+      <a href="/{{ studio.subdomain}}">{{ studio.name }}</a>
+    </div>
+  </div>
+
+  <div id="nav-right" class="d-flex justify-content-around align-items-center">
+    <ul id="nav-links" class="d-flex align-items-center">
+
+      <li class="nav-li">
+        <a href="/{{ studio.subdomain}}/price" class="nav-link">
+          收費標準
+        </a>
+      </li>
+
+      <li class="nav-li">
+        <a href="/{{ studio.subdomain}}/course" class="nav-link">
+          預約課程
+        </a>
+      </li>
+
+      <li class="nav-li">
+        <a href="/{{ studio.subdomain}}/about" class="nav-link">
+          教室資訊
+        </a>
+      </li>
+
+      {{#if loginUser}}
+      <li class="nav-li">
+        <a href="/user/profile" class="nav-link" aria-label="Hi, {{loginUser.name}}" data-balloon-pos="up">
+          個人資訊
+        </a>
+      </li>
+
+      <li class="nav-li">
+        <a href="/user/logout" class="nav-link login-logout">
+          登出
+        </a>
+      </li>
+      {{else}}
+      <li class="nav-li">
+        <a href="/user/login" class="nav-link login-logout">
+          登入
+        </a>
+      </li>
+      <li class="nav-li">
+        <a href="/user/register" class="nav-link register">
+          註冊
+        </a>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+
+</nav>

@@ -1,0 +1,18 @@
+env:
+  browser: true
+  commonjs: true
+  es2021: true
+extends:
+  - standard
+parserOptions:
+  ecmaVersion: 2018
+plugins:
+  - jest
+env:
+  # jest: true
+rules:
+  arrow-parens:
+    - warn
+    - as-needed
+  no-multiple-empty-lines: 'off'
+  quotes: ['error', 'single']

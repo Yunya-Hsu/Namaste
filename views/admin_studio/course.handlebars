@@ -1,0 +1,41 @@
+{{> nav_admin_studio}}
+
+<link rel="stylesheet" href="/style/admin_studio.css"></link>
+
+<a href="/{{studio.subdomain}}/admin/course/create" class="studio-owner-create-btn">建立課程</a>
+
+{{#if courseList}}
+<table class="admin-studio-table">
+  <thead class="admin-studio-table-head">
+    <tr>
+      <th>課程名稱</th>
+      <th>描述</th>
+      <th>授課老師</th>
+      <th>直播人員 email 帳號</th>
+      <th>點數</th>
+      <th>修改</th>
+    </tr>
+  </thead>
+
+  {{#each courseList}}
+  <tbody>
+    <tr>
+      <td>{{this.title}}</td>
+      <td>{{this.description}}</td>
+      <td>{{this.teacher}}</td>
+      <td>{{this.email}}</td>
+      <td>{{this.point}}</td>
+      <td class="admin-studio-edit-btn">
+        <a href="/{{../studio.subdomain}}/admin/course/{{this.id}}">修改</a>
+      </td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
+
+
+{{else}}
+<div class="about-title d-flex justify-content-center align-items-center">
+  <p>暫無課程</p>
+</div>
+{{/if}}
