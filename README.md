@@ -3,10 +3,10 @@
   <img src="/public/namaste/namaste_logo.png" style="width: 300px;" />
 </p>
 
-[Namaste](https://www.namaste-tw.com/) is a one-stop yoga course platform where B2C and B2B services are offered, allowing studio owners and customers to access different services.  
+[Namaste](https://www.namaste-tw.com/) is a one-stop yoga course platform where `B2C` and `B2B` services are offered, allowing studio owners and customers to access different services.  
 <br>
 
-### Namaste home page
+### Home page
 - [Namaste](https://www.namaste-tw.com/)
 
 ### Studio's dedicated pages
@@ -15,7 +15,6 @@
 - [SPACE Wellness](https://www.namaste-tw.com/spaceWellness)
 - [AppleTree Studio](https://www.namaste-tw.com/appleTreeStudio)
 - [Amazing Factory](https://www.namaste-tw.com/appleTreeStudio)
-
 
 ### Studio admin pages
 - [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) (must login with studio owner account **FIRST**)
@@ -41,7 +40,7 @@
 
 # Seed Data   
 ### **Root owner**
-Have right to [create studio](https://www.namaste-tw.com/admin/studio): 
+Have authority to [create studio](https://www.namaste-tw.com/admin/studio): 
     
     account: root@test.com
     password: test1234
@@ -87,6 +86,7 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
 # Architecture Diagram and Git flow
 <p align="center">
     <img src="/readme/architecture.png" style="width: 900px;" />
+    <br>
     <img src="/readme/CICD.png" style="width: 900px;" />
 </p>
 
@@ -103,7 +103,8 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
 # Features
 
 ## Multi-Tenancy
-Namaste utilize `multi-tenancy` to serves multiple studios, each studio is called a tenant. Tenants(studios) can be given the ability to customize some parts of the application, such as home page/ price rules/ courses and studio information.  
+Namaste utilize `multi-tenancy` to serves multiple studios, each studio is called a tenant.   
+Tenants(studios) can be given the ability to customize some parts of the application, such as home page/ price rules/ courses and studio information.  
 In this way, Namaste can share a dedicated instance of configurations, data, management and other properties with studios.  
 <p align="center">
     <img src="/readme/multi_tenancy_1.gif" style="width: 800px;" />
@@ -114,16 +115,18 @@ In this way, Namaste can share a dedicated instance of configurations, data, man
 
 
 ## RBAC 
-Role-based access control (RBAC) restricts network access based on a person's role within an studio, and the roles in RBAC refer to the levels of access that users have to the studio.  
-Users are only allowed to access the pages necessary to effectively perform their job duties. Access can be based on several factors, such as authority, responsibility, and job competency. In addition, access can be limited to specific tasks such as the ability to view, create, or modify a file.
+`Role-based access control (RBAC)` restricts network access based on a person's role within an studio, and the roles in RBAC refer to the levels of access that users have to the studio.  
 <p align="center">
     <img src="/readme/RBAC_intro.png" style="width: 600px;" />
 </p>
-
 <br>
-
+<br>
+Users are only allowed to access the pages necessary to effectively perform their job duties. Access can be based on several factors, such as authority, responsibility, and job competency. In addition, access can be limited to specific tasks such as the ability to view, create, or modify a file.
 <p align="center">
     <img src="/readme/RBAC_1.gif" style="width: 800px;" />
+</p>
+<hr>
+<p align="center">
     <img src="/readme/RBAC_2.gif" style="width: 800px;" />
     <br>
     Only the studio admin user can access their admin dashboard and update/ create studio info.
@@ -134,24 +137,29 @@ Users are only allowed to access the pages necessary to effectively perform thei
 
 
 ## Live Streaming
-Use WebRTC (Web Real-Time Communication) to accomplish real time media communications directly between browsers, and utilize WebSocket technology to let browsers exchange SDP and ICE candidate with signal server.  
+Use `WebRTC` (Web Real-Time Communication) to accomplish real time media communications directly between browsers, and utilize `WebSocket` technology to let browsers exchange SDP and ICE candidate with signal server.  
 With live streaming feature, yoga teachers and students can have online live streaming classes anytime and location is no longer a barrier.
 <p align="center">
     <img src="/readme/livestream_1.gif" style="width: 800px;" />
     <br>
 </p>
+<p align="center">
+    <img src="/readme/livestream_2.gif" style="width: 450px;" />
+    <img src="/readme/livestream_3.gif" style="width: 450px;" />
+    <br>
+</p>
 <br>
 <br>
 
-## Customized Website for studios
-Each studio has their own customized website to display dedicated price rules, weekly courses, studio information and teachers.  
+## Customized Website for Studios
+Each studio has their `own customized website` to display dedicated price rules, weekly courses, studio information and teachers.  
 <p align="center">
-    <img src="/readme/customized_website_1.gif" style="width: 800px;" /> 
-    <br>
-    <br>
+    <img src="/readme/customized_website_1.gif" style="width: 800px;" />     
+</p>
+<hr>
+<p align="center">
     <img src="/readme/customized_website_2.gif" style="width: 800px;" />
 </p>
-
 <br>
 <br>
 
