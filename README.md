@@ -138,14 +138,20 @@ Users are only allowed to access the pages necessary to effectively perform thei
 
 ## Live Streaming
 Use `WebRTC` (Web Real-Time Communication) to accomplish real time media communications directly between browsers, and utilize `WebSocket` technology to let browsers exchange SDP and ICE candidate with signal server.  
-With live streaming feature, yoga teachers and students can have online live streaming classes anytime and location is no longer a barrier.
+With live streaming feature, yoga teachers and students can have online live streaming classes anytime and location is no longer a barrier.   
+  
+There are two way of live stream: 
+1. **Group yoga course**: teacher will share his/her video and student can watch it.
 <p align="center">
-    <img src="/readme/livestream_1.gif" style="width: 800px;" />
+    <img src="/readme/livestream_1.gif" style="width: 550px;" />
     <br>
 </p>
+<hr>  
+
+2. **Ono-on-one yoga courses**: teacher and student can share their video & voice separately.
 <p align="center">
-    <img src="/readme/livestream_2.gif" style="width: 450px;" />
-    <img src="/readme/livestream_3.gif" style="width: 450px;" />
+    <img src="/readme/livestream_2.gif" style="width: 430px;" />
+    <img src="/readme/livestream_3.gif" style="width: 430px;" />
     <br>
 </p>
 <br>
