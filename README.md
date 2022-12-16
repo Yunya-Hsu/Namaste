@@ -150,8 +150,8 @@ There are two way of live stream:
 
 2. **Ono-on-one yoga courses**: teacher and student can share their video & voice separately.
 <p align="center">
-    <img src="/readme/livestream_2.gif" style="width: 430px;" />
-    <img src="/readme/livestream_3.gif" style="width: 430px;" />
+    <img src="/readme/livestream_2.gif" style="width: 550px;" />
+    <img src="/readme/livestream_3.gif" style="width: 550px;" />
     <br>
 </p>
 <br>
