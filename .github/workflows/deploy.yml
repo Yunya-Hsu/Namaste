@@ -12,8 +12,6 @@ on:
 jobs: 
   continuous-integration:
     runs-on: ubuntu-latest
-    continue-on-error: true
-    if: github.event.pull_request.merged == false
 
     steps:
       - name: "Checkout Github Action"
