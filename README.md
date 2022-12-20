@@ -24,8 +24,9 @@
 <br>
 <br>
 
-# Table of Contetns
-- [Seed Data](#seed-data)
+# Table of Contents
+- [Test Credit Card](#test-credit-card)
+- [Seed Users](#seed-users)
 - [Tech Stack](#tech-stack)
 - [Architecture Diagram and Git flow](#architecture-diagram-and-git-flow)
 - [Table Schema](#table-schema)
@@ -38,7 +39,23 @@
 <br>
 <br>
 
-# Seed Data   
+
+# Test Credit Card  
+### **Credit card**
+
+    信用卡卡號: 4242 4242 4242 4242
+    到期日: 01/23
+    CCV: 123
+
+For purchasing points:   
+<br> 
+<img src="/readme/testCreditCard.png"  style="width: 550px;" />
+
+<br>
+<br>
+
+
+# Seed Users   
 ### **Root owner**
 Have authority to [create studio](https://www.namaste-tw.com/admin/studio): 
     
@@ -56,12 +73,6 @@ For [Yoga with Lucie](https://www.namaste-tw.com/yogaWithLucie/admin) studio:
 
     email: test@test.com
     password: test1234
-
-### **Credit card**
-
-    信用卡卡號: 4242 4242 4242 4242
-    到期日: 01/23
-    CCV: 123
 
 <br>
 <br>
@@ -148,7 +159,7 @@ There are two way of live stream:
 </p>
 <hr>  
 
-2. **Ono-on-one yoga courses**: teacher and student can share their video & voice separately.
+2. **One-on-one yoga courses**: teacher and student can share their video & voice separately.
 <p align="center">
     <img src="/readme/livestream_2.gif" style="width: 550px;" />
     <img src="/readme/livestream_3.gif" style="width: 550px;" />
