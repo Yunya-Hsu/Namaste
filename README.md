@@ -47,10 +47,9 @@
     到期日: 01/23
     CCV: 123
 
-For purchasing points:
-<p align="center">
-    <img src="/readme/testCreditCard.png"  style="width: 450px;" />
-</p>
+For purchasing points:   
+<br> 
+<img src="/readme/testCreditCard.png"  style="width: 550px;" />
 
 <br>
 <br>
